@@ -1,808 +1,1199 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Camera Pro — Full Features Demo</title>
+<meta name="theme-color" content="#0a0a0f">
+<title>HARIOM MODDER — Premium APK Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-  body {
-    margin: 0; padding: 14px; padding-bottom: 90px;
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: #0b0d11; color: #e8eaed; line-height: 1.6;
-    overscroll-behavior: none;
-  }
-  .wrap { max-width: 760px; margin: 0 auto; }
+:root{
+  --bg:#08080c;--bg2:#0d0d15;
+  --glass:rgba(20,20,32,.72);--glass2:rgba(28,28,44,.6);
+  --border:rgba(255,255,255,.09);--border-hi:rgba(255,255,255,.18);
+  --txt:#f0f2f7;--txt2:#9aa0b5;--txt3:#5d6480;
+  --p1:#7c3aed;--p2:#a855f7;--c1:#06b6d4;--c2:#22d3ee;
+  --ok:#10b981;--warn:#f59e0b;--err:#ef4444;
+  --grad:linear-gradient(135deg,#7c3aed 0%,#a855f7 45%,#06b6d4 100%);
+  --glow:0 0 40px rgba(124,58,237,.35);
+  --r:16px;--r2:24px;
+}
+[data-theme="light"]{
+  --bg:#f4f5fa;--bg2:#ffffff;
+  --glass:rgba(255,255,255,.85);--glass2:rgba(255,255,255,.7);
+  --border:rgba(0,0,0,.08);--border-hi:rgba(0,0,0,.15);
+  --txt:#0d0d15;--txt2:#5d6480;--txt3:#9aa0b5;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Outfit',system-ui,sans-serif;
+  background:var(--bg);color:var(--txt);min-height:100vh;
+  overflow-x:hidden;line-height:1.6;transition:background .3s,color .3s;
+}
+body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.18),transparent 60%),
+    radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.14),transparent 60%),
+    radial-gradient(ellipse 90% 60% at 50% 100%,rgba(168,85,247,.1),transparent 65%);
+}
+[data-theme="light"] body::before{
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.1),transparent 60%),
+    radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.08),transparent 60%);
+}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#7c3aed,#06b6d4);border-radius:10px;border:2px solid var(--bg)}
+::selection{background:rgba(168,85,247,.35)}
 
-  h1 { font-size: 19px; margin: 0 0 4px; }
-  .sub { color: #8b93a1; font-size: 13px; margin-bottom: 16px; }
+.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border);border-radius:var(--r)}
+.gloss{position:relative;overflow:hidden}
+.gloss::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.02) 35%,transparent 60%);border-radius:inherit}
+.gloss::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%);transition:transform .8s;pointer-events:none}
+.gloss:hover::after{transform:translateX(100%)}
 
-  .panel {
-    background: #14171d; border: 1px solid #232832;
-    border-radius: 14px; padding: 14px; margin-bottom: 12px;
-  }
-  .panel h2 {
-    font-size: 15px; margin: 0 0 10px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .dot {
-    width: 8px; height: 8px; border-radius: 50%;
-    background: #2d6cdf; flex: 0 0 auto;
-  }
-  .dot.live { background: #ef4444; animation: blink 1s infinite; }
-  @keyframes blink { 50% { opacity: 0.25; } }
+nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--border);padding:12px 0}
+[data-theme="light"] nav{background:rgba(255,255,255,.78)}
+.navIn{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;font-size:19px;letter-spacing:-.5px;cursor:pointer;flex-shrink:0}
+.logoMark{width:40px;height:40px;border-radius:12px;background:var(--grad);display:grid;place-items:center;font-size:20px;font-weight:900;color:#fff;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.3);position:relative;overflow:hidden;flex-shrink:0}
+.logoMark::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35),transparent 50%)}
+.logoTxt{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
+.logoSub{font-size:10px;color:var(--txt3);font-weight:600;letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-4px}
+.searchWrap{flex:1;max-width:480px;position:relative}
+.searchWrap input{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:11px 44px 11px 16px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none;transition:.2s;backdrop-filter:blur(12px)}
+.searchWrap input:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18);background:var(--glass)}
+.searchWrap input::placeholder{color:var(--txt3)}
+.searchWrap .ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--txt3);pointer-events:none;font-size:16px}
+.navAct{display:flex;align-items:center;gap:8px;margin-left:auto}
+.iconBtn{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s;backdrop-filter:blur(12px)}
+.iconBtn:hover{border-color:var(--border-hi);background:var(--glass);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.iconBtn:active{transform:scale(.94)}
 
-  /* ---- Camera ---- */
-  .camBox {
-    position: relative; background: #000;
-    border-radius: 12px; overflow: hidden;
-    aspect-ratio: 4/3; display: grid; place-items: center;
-  }
-  video#vid, img#snap {
-    width: 100%; height: 100%; object-fit: cover; display: none;
-  }
-  video#vid.on, img#snap.on { display: block; }
-  .placeholder { color: #4a5262; font-size: 14px; text-align: center; padding: 20px; }
+.hero{max-width:1320px;margin:0 auto;padding:60px 20px 40px;text-align:center;position:relative}
+.heroBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;background:var(--glass2);border:1px solid var(--border-hi);backdrop-filter:blur(12px);font-size:12.5px;font-weight:600;color:var(--txt2);margin-bottom:22px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}70%{box-shadow:0 0 0 12px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+.hero h1{font-size:clamp(34px,6vw,62px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:16px}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(124,58,237,.4))}
+.hero p{color:var(--txt2);font-size:clamp(14px,2vw,17px);max-width:600px;margin:0 auto 32px}
+.heroCTA{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-  .badge {
-    position: absolute; top: 10px; left: 10px;
-    background: rgba(0,0,0,.65); backdrop-filter: blur(6px);
-    color: #fff; font-size: 11px; font-weight: 700;
-    padding: 4px 9px; border-radius: 20px; letter-spacing: .5px;
-    display: none; align-items: center; gap: 5px;
-  }
-  .badge.show { display: flex; }
-  .rec-dot { width: 7px; height: 7px; background: #ef4444; border-radius: 50%; animation: blink 1s infinite; }
+.btn{padding:13px 26px;border-radius:14px;border:0;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.22s;position:relative;overflow:hidden;text-decoration:none}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.28)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.5),inset 0 1px 0 rgba(255,255,255,.28)}
+.btn.primary:active{transform:translateY(0) scale(.97)}
+.btn.ghost{background:var(--glass2);color:var(--txt);border:1px solid var(--border-hi);backdrop-filter:blur(12px)}
+.btn.ghost:hover{background:var(--glass);transform:translateY(-2px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
 
-  .timerBig {
-    position: absolute; inset: 0;
-    display: none; place-items: center;
-    font-size: 90px; font-weight: 800; color: #fff;
-    text-shadow: 0 4px 30px rgba(0,0,0,.8);
-    background: rgba(0,0,0,.25);
-  }
-  .timerBig.show { display: grid; }
+.stats{max-width:1320px;margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{padding:20px 18px;text-align:center;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:.7}
+.stat .n{font-size:clamp(24px,4vw,34px);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+.stat .l{font-size:12px;color:var(--txt2);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
 
-  /* ---- Buttons ---- */
-  .row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
-  button {
-    background: #232832; color: #e8eaed; border: 0;
-    padding: 10px 14px; border-radius: 9px;
-    font-size: 14px; font-weight: 600; cursor: pointer;
-    display: inline-flex; align-items: center; gap: 6px;
-    transition: transform .08s, background .15s;
-  }
-  button:active { transform: scale(.95); }
-  button:disabled { opacity: .4; cursor: not-allowed; }
-  button.primary { background: #2d6cdf; color: #fff; }
-  button.green { background: #16a34a; color: #fff; }
-  button.red { background: #dc2626; color: #fff; }
-  button.amber { background: #d97706; color: #fff; }
-  button.on { background: #2d6cdf; color: #fff; }
-  button.icon { padding: 10px 12px; }
+.section{max-width:1320px;margin:0 auto 44px;padding:0 20px}
+.secHead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.secHead h2{font-size:clamp(20px,3vw,26px);font-weight:800;letter-spacing:-.8px;display:flex;align-items:center;gap:10px}
+.secHead h2::before{content:'';width:4px;height:22px;border-radius:2px;background:var(--grad);box-shadow:var(--glow)}
 
-  /* ---- Slider ---- */
-  .sliderRow {
-    display: flex; align-items: center; gap: 10px;
-    margin-top: 10px; font-size: 13px; color: #8b93a1;
-  }
-  input[type=range] {
-    flex: 1; -webkit-appearance: none; height: 4px;
-    background: #232832; border-radius: 4px; outline: none;
-  }
-  input[type=range]::-webkit-slider-thumb {
-    -webkit-appearance: none; width: 18px; height: 18px;
-    background: #2d6cdf; border-radius: 50%; cursor: pointer;
-    box-shadow: 0 0 0 3px rgba(45,108,223,.25);
-  }
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:9px 18px;border-radius:100px;background:var(--glass2);border:1px solid var(--border);color:var(--txt2);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;backdrop-filter:blur(12px);flex-shrink:0;font-family:inherit}
+.chip:hover{border-color:var(--border-hi);color:var(--txt)}
+.chip.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--glow)}
 
-  /* ---- Gallery ---- */
-  .gallery {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
-    gap: 8px; margin-top: 10px;
-  }
-  .gItem {
-    position: relative; aspect-ratio: 1;
-    border-radius: 10px; overflow: hidden;
-    background: #0b0d11; border: 1px solid #232832;
-  }
-  .gItem img, .gItem video {
-    width: 100%; height: 100%; object-fit: cover; cursor: pointer;
-  }
-  .gItem .del {
-    position: absolute; top: 4px; right: 4px;
-    width: 24px; height: 24px; border-radius: 50%;
-    background: rgba(220,38,38,.9); color: #fff;
-    border: 0; font-size: 14px; line-height: 1;
-    display: grid; place-items: center; cursor: pointer;
-    padding: 0;
-  }
-  .gItem .vt {
-    position: absolute; bottom: 4px; left: 4px;
-    background: rgba(0,0,0,.7); color: #fff;
-    font-size: 10px; padding: 2px 6px; border-radius: 4px;
-  }
-  .empty { color: #4a5262; font-size: 13px; text-align: center; padding: 14px; }
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
 
-  /* ---- Info grid ---- */
-  .info { display: grid; gap: 6px; font-size: 13.5px; }
-  .info .r {
-    display: flex; justify-content: space-between; gap: 10px;
-    padding: 7px 10px; background: #0b0d11; border-radius: 8px;
-  }
-  .info .k { color: #8b93a1; flex: 0 0 auto; }
-  .info .v {
-    color: #e8eaed; font-weight: 600; text-align: right;
-    word-break: break-word; font-family: ui-monospace, Menlo, monospace;
-    font-size: 12.5px;
-  }
-  .v.good { color: #4ade80; }
-  .v.bad { color: #f87171; }
+.card{padding:16px;cursor:pointer;position:relative;transition:.28s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;border-radius:var(--r)}
+.card:hover{transform:translateY(-6px);border-color:var(--border-hi);box-shadow:0 20px 44px rgba(0,0,0,.4),var(--glow)}
+.card:active{transform:translateY(-2px) scale(.98)}
+.card .top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.card .icon{width:56px;height:56px;border-radius:14px;object-fit:cover;flex-shrink:0;background:var(--grad);box-shadow:0 6px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25);display:grid;place-items:center;font-size:24px;color:#fff;font-weight:900}
+.card .meta{flex:1;min-width:0;padding-top:2px}
+.card .name{font-weight:800;font-size:15px;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .ver{font-size:11.5px;color:var(--txt3);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:2px}
+.card .cat{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;margin-top:6px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase;letter-spacing:.5px}
+.card .desc{font-size:12.5px;color:var(--txt2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px;min-height:38px}
+.card .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
+.card .stats2{display:flex;gap:12px;font-size:11.5px;color:var(--txt3);font-weight:600}
+.card .stats2 span{display:flex;align-items:center;gap:4px}
+.starF{color:#fbbf24}
+.badgeFeat{position:absolute;top:12px;right:12px;background:var(--grad);color:#fff;font-size:9.5px;font-weight:800;padding:4px 9px;border-radius:8px;letter-spacing:.8px;box-shadow:var(--glow)}
 
-  /* ---- Toast ---- */
-  #toast {
-    position: fixed; left: 50%; bottom: 24px;
-    transform: translateX(-50%) translateY(120%);
-    background: #232832; color: #fff;
-    padding: 11px 18px; border-radius: 11px;
-    font-size: 14px; font-weight: 600;
-    box-shadow: 0 10px 30px rgba(0,0,0,.5);
-    z-index: 999; max-width: 90vw; text-align: center;
-    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
-  }
-  #toast.show { transform: translateX(-50%) translateY(0); }
+.empty{text-align:center;padding:60px 20px;color:var(--txt3)}
+.empty .e{font-size:56px;margin-bottom:12px;opacity:.5}
+.empty p{font-size:15px}
 
-  /* ---- Fullscreen viewer ---- */
-  #viewer {
-    position: fixed; inset: 0; z-index: 1000;
-    background: rgba(0,0,0,.96); display: none;
-    place-items: center; padding: 20px;
-  }
-  #viewer.show { display: grid; }
-  #viewer img, #viewer video { max-width: 100%; max-height: 80vh; border-radius: 12px; }
-  #viewer .close {
-    position: absolute; top: 16px; right: 16px;
-    background: #232832; width: 40px; height: 40px;
-    border-radius: 50%; font-size: 20px; display: grid; place-items: center;
-  }
+footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:center;margin-top:60px;background:rgba(8,8,12,.4)}
+[data-theme="light"] footer{background:rgba(255,255,255,.5)}
+.footIn{max-width:1320px;margin:0 auto}
+.socials{display:flex;gap:10px;justify-content:center;margin:16px 0 20px;flex-wrap:wrap}
+.socials a{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);display:grid;place-items:center;color:var(--txt2);text-decoration:none;font-size:17px;transition:.2s}
+.socials a:hover{transform:translateY(-3px);color:var(--txt);border-color:var(--border-hi);box-shadow:var(--glow)}
+.footTxt{font-size:13px;color:var(--txt3)}
 
-  .note { font-size: 12px; color: #8b93a1; margin-top: 8px; }
+.modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none;place-items:center;padding:20px;overflow-y:auto}
+.modal.on{display:grid}
+.modalBox{background:var(--bg2);border:1px solid var(--border-hi);border-radius:var(--r2);width:100%;max-width:560px;max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(124,58,237,.15);animation:modalIn .35s cubic-bezier(.34,1.4,.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}}
+.modalBox::-webkit-scrollbar{width:6px}
+.modalBox::-webkit-scrollbar-thumb{background:var(--p1);border-radius:6px;border:0}
+.modalHead{position:sticky;top:0;z-index:2;background:linear-gradient(180deg,var(--bg2) 70%,transparent);padding:20px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.modalHead h3{font-size:18px;font-weight:800;letter-spacing:-.5px}
+.modalBody{padding:22px}
+.closeX{width:36px;height:36px;border-radius:10px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;font-size:16px;display:grid;place-items:center;transition:.2s}
+.closeX:hover{background:var(--err);color:#fff;border-color:var(--err)}
+
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
+.field input,.field textarea,.field select{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none;transition:.2s}
+.field textarea{resize:vertical;min-height:90px}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18);background:var(--glass)}
+.field select option{background:var(--bg2);color:var(--txt)}
+
+#toastBox{position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border-hi);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;min-width:240px;max-width:340px;box-shadow:0 14px 40px rgba(0,0,0,.4);animation:slideIn .35s cubic-bezier(.34,1.4,.64,1);pointer-events:auto}
+@keyframes slideIn{from{opacity:0;transform:translateX(120%)}}
+.toast.out{animation:slideOut .3s forwards}
+@keyframes slideOut{to{opacity:0;transform:translateX(120%)}}
+.toast .tIco{font-size:19px;flex-shrink:0}
+.toast.ok .tIco{color:var(--ok)}
+.toast.err .tIco{color:var(--err)}
+.toast.info .tIco{color:var(--c2)}
+.toast.warn .tIco{color:var(--warn)}
+
+.detailHead{display:flex;gap:16px;align-items:center;margin-bottom:20px}
+.detailHead .icon{width:82px;height:82px;border-radius:20px;object-fit:cover;flex-shrink:0;background:var(--grad);box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.3);display:grid;place-items:center;font-size:34px;color:#fff;font-weight:900}
+.detailHead .nm{font-size:22px;font-weight:900;letter-spacing:-.7px;line-height:1.2}
+.detailHead .vr{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--txt2);margin-top:4px}
+.detailHead .cat2{display:inline-block;font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:8px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase;letter-spacing:.6px;margin-top:8px}
+
+.metaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.metaItem{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center}
+.metaItem .v{font-size:16px;font-weight:800;color:var(--txt)}
+.metaItem .k{font-size:10.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;font-weight:600}
+
+.descBox{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;font-size:14px;color:var(--txt2);line-height:1.75;white-space:pre-wrap;word-break:break-word}
+
+.dlBtnBig{width:100%;padding:16px;border-radius:14px;border:0;background:var(--grad);color:#fff;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.3);transition:.22s;letter-spacing:-.3px}
+.dlBtnBig:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.55)}
+.dlBtnBig:active{transform:translateY(0) scale(.98)}
+
+.adminTabs{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.adminTabs::-webkit-scrollbar{display:none}
+.adminTab{padding:12px 16px;background:transparent;border:0;color:var(--txt2);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+.adminTab:hover{color:var(--txt)}
+.adminTab.on{color:var(--txt);border-bottom-color:var(--p1)}
+.adminPane{padding:20px 22px;display:none}
+.adminPane.on{display:block}
+
+.adminList{display:flex;flex-direction:column;gap:8px}
+.aRow{display:flex;align-items:center;gap:12px;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 13px;transition:.2s}
+.aRow:hover{border-color:var(--border-hi);background:var(--glass)}
+.aRow img,.aRow .ph{width:42px;height:42px;border-radius:10px;object-fit:cover;flex-shrink:0;background:var(--grad);display:grid;place-items:center;color:#fff;font-weight:900}
+.aRow .info{flex:1;min-width:0}
+.aRow .nm{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aRow .sb{font-size:11.5px;color:var(--txt3);font-family:'JetBrains Mono',monospace}
+.miniBtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--glass2);color:var(--txt2);cursor:pointer;display:grid;place-items:center;font-size:14px;transition:.2s;flex-shrink:0}
+.miniBtn:hover{background:var(--glass);color:var(--txt);border-color:var(--border-hi)}
+.miniBtn.del:hover{background:var(--err);color:#fff;border-color:var(--err)}
+
+.statsRow{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:16px}
+.statMini{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.statMini .v{font-size:20px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.statMini .k{font-size:10px;color:var(--txt3);text-transform:uppercase;font-weight:700;letter-spacing:.6px;margin-top:2px}
+
+.fab{position:fixed;bottom:22px;right:22px;z-index:60;width:54px;height:54px;border-radius:16px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-size:22px;box-shadow:var(--glow),0 10px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);display:grid;place-items:center;transition:.25s}
+.fab:hover{transform:translateY(-4px) scale(1.05)}
+.fab:active{transform:scale(.94)}
+.fab.hide{transform:translateY(90px);opacity:0;pointer-events:none}
+
+.notice{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:12px 14px;font-size:13px;color:#fbbf24;margin-bottom:16px;line-height:1.6}
+.notice.ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#4ade80}
+.notice.err{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171}
+
+@media(max-width:768px){
+  .navIn{gap:10px;padding:0 14px}
+  .logoSub{display:none}
+  .logo{font-size:16px}
+  .logoMark{width:36px;height:36px}
+  .searchWrap{max-width:none}
+  .hero{padding:40px 16px 30px}
+  .heroCTA .btn{padding:12px 20px;font-size:14px}
+  .section{padding:0 14px;margin-bottom:34px}
+  .modalBody{padding:18px}
+  .modalHead{padding:16px 18px 12px}
+  .adminPane{padding:16px 18px}
+  .adminTabs{padding:0 18px}
+}
+@media(max-width:420px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr 1fr}
+  .card{padding:13px}
+  .card .icon{width:46px;height:46px;font-size:19px}
+  .card .name{font-size:13.5px}
+}
+.hidden{display:none!important}
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <h1>🎥 Camera Pro — Full Features</h1>
-  <div class="sub">Camera • Video • Torch • Zoom • Timer • Gallery • Location • IP • Device Info</div>
-
-  <!-- ================= CAMERA ================= -->
-  <div class="panel">
-    <h2><span class="dot" id="camDot"></span> Camera</h2>
-
-    <div class="camBox">
-      <video id="vid" autoplay playsinline muted></video>
-      <img id="snap" alt="">
-      <div class="placeholder" id="ph">Camera OFF<br><span style="font-size:12px">Neeche "Camera ON" dabao</span></div>
-      <div class="badge" id="recBadge"><span class="rec-dot"></span> REC <span id="recTime">00:00</span></div>
-      <div class="badge" id="torchBadge" style="left:auto;right:10px">🔦 TORCH</div>
-      <div class="timerBig" id="timerBig">3</div>
+<nav>
+  <div class="navIn">
+    <div class="logo" onclick="scrollTo({top:0,behavior:'smooth'})">
+      <div class="logoMark">H</div>
+      <div>
+        <span class="logoTxt">HARIOM MODDER</span>
+        <span class="logoSub">Premium APK Hub</span>
+      </div>
     </div>
-
-    <!-- Zoom -->
-    <div class="sliderRow" id="zoomRow" style="display:none">
-      <span>🔍 Zoom</span>
-      <input type="range" id="zoom" min="1" max="5" step="0.1" value="1">
-      <span id="zoomVal" style="width:36px;text-align:right">1x</span>
+    <div class="searchWrap">
+      <input type="text" id="searchInput" placeholder="Search apps..." autocomplete="off">
+      <span class="ico">🔍</span>
     </div>
-
-    <!-- Main controls -->
-    <div class="row">
-      <button class="primary" id="btnOn"  onclick="camOn()">📷 Camera ON</button>
-      <button id="btnOff" onclick="camOff()" disabled>⏹ Off</button>
-      <button class="icon" id="btnSwitch" onclick="switchCam()" disabled title="Front/Back">🔄</button>
-      <button class="icon" id="btnTorch"  onclick="toggleTorch()" disabled title="Torch">🔦</button>
-    </div>
-
-    <div class="row">
-      <button class="green" id="btnSnap" onclick="takePhoto()" disabled>📸 Photo</button>
-      <button class="red"   id="btnRec"  onclick="toggleRec()"   disabled>⏺ Video</button>
-      <button class="amber" id="btnTimer" onclick="toggleTimer()" disabled>⏱ <span id="timerLabel">Off</span></button>
-      <button class="icon" id="btnMirror" onclick="toggleMirror()" disabled title="Mirror">🪞</button>
+    <div class="navAct">
+      <button class="iconBtn" id="themeBtn" title="Theme">🌙</button>
+      <button class="iconBtn" id="menuBtn" title="Menu">⋮</button>
     </div>
   </div>
+</nav>
 
-  <!-- ================= GALLERY ================= -->
-  <div class="panel">
-    <h2><span class="dot"></span> Gallery <span id="gCount" style="color:#8b93a1;font-weight:400;font-size:12px">(0)</span></h2>
-
-    <div class="row" style="margin-top:0">
-      <button class="green" id="btnDlAll" onclick="downloadAll()" disabled>⬇️ Sab Download</button>
-      <button id="btnShareAll" onclick="shareAll()" disabled>📤 Sab Share</button>
-      <button class="red" id="btnClear" onclick="clearAll()" disabled>🗑 Clear</button>
-    </div>
-
-    <div class="gallery" id="gallery"></div>
-    <div class="empty" id="gEmpty">Abhi koi photo/video nahi</div>
-    <div class="note">💡 Photo pe tap karo → fullscreen. Mobile pe Share → "Save to Gallery".</div>
+<section class="hero">
+  <div class="heroBadge">
+    <span class="pulse"></span>
+    <span id="heroLive">Live • Loading...</span>
   </div>
+  <h1>Download <span class="g">Premium Mods</span><br>& APKs — Free</h1>
+  <p>Hand-picked, virus-scanned, and always up-to-date. Made with ❤️ by HARIOM MODDER</p>
+  <div class="heroCTA">
+    <button class="btn primary" onclick="document.getElementById('appsSection').scrollIntoView({behavior:'smooth'})">
+      ⬇️ Browse Apps
+    </button>
+    <button class="btn ghost" onclick="openContact()">💬 Request App</button>
+  </div>
+</section>
 
-  <!-- ================= LOCATION ================= -->
-  <div class="panel">
-    <h2><span class="dot"></span> 📍 Exact Location</h2>
-    <div class="row" style="margin-top:0">
-      <button class="primary" onclick="getLoc()">Location Allow</button>
-      <button class="icon" onclick="copyText(document.getElementById('locV').dataset.raw || '')" title="Copy">📋</button>
+<section class="stats">
+  <div class="stat glass gloss"><div class="n" id="stApps">0</div><div class="l">Total Apps</div></div>
+  <div class="stat glass gloss"><div class="n" id="stDl">0</div><div class="l">Downloads</div></div>
+  <div class="stat glass gloss"><div class="n" id="stCat">0</div><div class="l">Categories</div></div>
+  <div class="stat glass gloss"><div class="n" id="stRate">0.0</div><div class="l">Avg Rating</div></div>
+</section>
+
+<section class="section">
+  <div class="chips" id="chipsRow">
+    <button class="chip on" data-cat="all">All Apps</button>
+    <button class="chip" data-cat="Games">🎮 Games</button>
+    <button class="chip" data-cat="Tools">🛠 Tools</button>
+    <button class="chip" data-cat="Social">💬 Social</button>
+    <button class="chip" data-cat="Photo">📷 Photo</button>
+    <button class="chip" data-cat="Video">🎬 Video</button>
+    <button class="chip" data-cat="Music">🎵 Music</button>
+    <button class="chip" data-cat="Productivity">📊 Productivity</button>
+    <button class="chip" data-cat="Security">🔒 Security</button>
+    <button class="chip" data-cat="Mod">⚡ Mods</button>
+  </div>
+</section>
+
+<section class="section hidden" id="featSection">
+  <div class="secHead"><h2>⭐ Featured</h2></div>
+  <div class="grid" id="featGrid"></div>
+</section>
+
+<section class="section" id="appsSection">
+  <div class="secHead">
+    <h2 id="appsTitle">All Apps</h2>
+    <select class="chip" id="sortSel" style="padding:9px 14px;cursor:pointer;font-family:inherit">
+      <option value="new">Newest First</option>
+      <option value="pop">Most Downloaded</option>
+      <option value="rate">Top Rated</option>
+      <option value="name">A → Z</option>
+      <option value="size">Smallest Size</option>
+    </select>
+  </div>
+  <div class="grid" id="appsGrid"></div>
+  <div class="empty hidden" id="emptyBox">
+    <div class="e">📦</div>
+    <p>Koi app nahi mili. Admin se upload karwao.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footIn">
+    <div class="logo" style="justify-content:center;margin-bottom:14px">
+      <div class="logoMark">H</div>
+      <div><span class="logoTxt">HARIOM MODDER</span></div>
     </div>
-    <div class="info" style="margin-top:10px">
-      <div class="r"><span class="k">Latitude</span>  <span class="v" id="locLat">—</span></div>
-      <div class="r"><span class="k">Longitude</span> <span class="v" id="locLng">—</span></div>
-      <div class="r"><span class="k">Accuracy</span>  <span class="v" id="locAcc">—</span></div>
-      <div class="r"><span class="k">Maps Link</span> <span class="v" id="locV" data-raw="">—</span></div>
+    <div class="socials" id="socials">
+      <a href="#" title="Telegram" data-s="tg">✈️</a>
+      <a href="#" title="WhatsApp" data-s="wa">💬</a>
+      <a href="#" title="YouTube" data-s="yt">▶️</a>
+      <a href="#" title="Instagram" data-s="ig">📷</a>
+    </div>
+    <div class="footTxt">
+      © <span id="yr"></span> HARIOM MODDER • Sab apps sirf educational purpose ke liye<br>
+      Made with <span style="color:#ef4444">❤</span> in India
     </div>
   </div>
+</footer>
 
-  <!-- ================= IP ================= -->
-  <div class="panel">
-    <h2><span class="dot"></span> 🌐 IP & Network</h2>
-    <div class="row" style="margin-top:0">
-      <button class="primary" onclick="getIP()">IP Check</button>
-      <button class="icon" onclick="copyText(buildIPText())" title="Copy">📋</button>
-    </div>
-    <div class="info" style="margin-top:10px">
-      <div class="r"><span class="k">IP</span>      <span class="v" id="ip">—</span></div>
-      <div class="r"><span class="k">City</span>    <span class="v" id="ipCity">—</span></div>
-      <div class="r"><span class="k">Region</span>  <span class="v" id="ipReg">—</span></div>
-      <div class="r"><span class="k">Country</span> <span class="v" id="ipCo">—</span></div>
-      <div class="r"><span class="k">ISP</span>     <span class="v" id="ipISP">—</span></div>
-    </div>
-  </div>
+<button class="fab hide" id="topFab" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div id="toastBox"></div>
 
-  <!-- ================= DEVICE INFO ================= -->
-  <div class="panel">
-    <h2><span class="dot"></span> 📱 Device Info</h2>
-    <div class="row" style="margin-top:0">
-      <button class="primary" onclick="loadDevice()">Scan Device</button>
-      <button class="icon" onclick="copyText(buildDevText())" title="Copy">📋</button>
+<!-- Detail Modal -->
+<div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
+  <div class="modalBox">
+    <div class="modalHead">
+      <h3>App Details</h3>
+      <button class="closeX" onclick="closeModal('detailModal')">✕</button>
     </div>
-    <div class="info" style="margin-top:10px">
-      <div class="r"><span class="k">Platform</span>  <span class="v" id="dPlat">—</span></div>
-      <div class="r"><span class="k">Screen</span>    <span class="v" id="dScr">—</span></div>
-      <div class="r"><span class="k">CPU Cores</span> <span class="v" id="dCpu">—</span></div>
-      <div class="r"><span class="k">RAM (approx)</span><span class="v" id="dRam">—</span></div>
-      <div class="r"><span class="k">Battery</span>   <span class="v" id="dBat">—</span></div>
-      <div class="r"><span class="k">Net Type</span>  <span class="v" id="dNet">—</span></div>
-      <div class="r"><span class="k">Language</span>  <span class="v" id="dLang">—</span></div>
-      <div class="r"><span class="k">Timezone</span>  <span class="v" id="dTz">—</span></div>
-      <div class="r"><span class="k">Touch</span>     <span class="v" id="dTouch">—</span></div>
-    </div>
-  </div>
-
-  <div class="note" style="text-align:center;margin:20px 0">
-    ⚠️ Permission tumhare haath me hai. Unknown link pe Allow/OTP/form-fill mat karo.
+    <div class="modalBody" id="detailBody"></div>
   </div>
 </div>
 
-<!-- Fullscreen viewer -->
-<div id="viewer" onclick="closeViewer(event)">
-  <button class="close" onclick="closeViewer()">✕</button>
-  <div id="viewerBody"></div>
+<!-- Contact Modal -->
+<div class="modal" id="contactModal" onclick="if(event.target===this)closeModal('contactModal')">
+  <div class="modalBox">
+    <div class="modalHead">
+      <h3>💬 App Request</h3>
+      <button class="closeX" onclick="closeModal('contactModal')">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="notice">Apni pasand ka app batao — main try karunga upload karne ki.</div>
+      <div class="field">
+        <label>App Name</label>
+        <input id="reqName" placeholder="e.g. Spotify Mod">
+      </div>
+      <div class="field">
+        <label>Your Contact (optional)</label>
+        <input id="reqContact" placeholder="Telegram / Email">
+      </div>
+      <div class="field">
+        <label>Message</label>
+        <textarea id="reqMsg" placeholder="Kya chahiye..."></textarea>
+      </div>
+      <button class="btn primary" style="width:100%;justify-content:center" onclick="sendReq()">
+        📤 Send Request
+      </button>
+    </div>
+  </div>
 </div>
 
-<!-- Toast -->
-<div id="toast"></div>
+<!-- Menu Modal -->
+<div class="modal" id="menuModal" onclick="if(event.target===this)closeModal('menuModal')">
+  <div class="modalBox" style="max-width:380px">
+    <div class="modalHead">
+      <h3>Menu</h3>
+      <button class="closeX" onclick="closeModal('menuModal')">✕</button>
+    </div>
+    <div class="modalBody" style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn ghost" style="justify-content:flex-start" onclick="closeModal('menuModal');openContact()">💬 Request App</button>
+      <button class="btn ghost" style="justify-content:flex-start" onclick="closeModal('menuModal');toggleTheme()">🌗 Toggle Theme</button>
+      <button class="btn ghost" style="justify-content:flex-start" onclick="closeModal('menuModal');shareSite()">🔗 Share Website</button>
+      <button class="btn ghost" style="justify-content:flex-start;color:var(--p2)" onclick="closeModal('menuModal');openAdmin()">🔐 Admin Login</button>
+    </div>
+  </div>
+</div>
 
-<script>
-/* ═══════════════ HELPERS ═══════════════ */
-let toastT;
-function toast(msg, ms = 2200) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  clearTimeout(toastT);
-  toastT = setTimeout(() => t.classList.remove('show'), ms);
-}
-function fmtBytes(b) {
-  if (!b) return '0 B';
-  const u = ['B','KB','MB','GB'];
-  const i = Math.floor(Math.log(b) / Math.log(1024));
-  return (b / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + u[i];
-}
-function copyText(txt) {
-  if (!txt || txt === '—') return toast('Kuch copy karne ko nahi');
-  navigator.clipboard.writeText(txt)
-    .then(() => toast('📋 Copy ho gaya'))
-    .catch(() => toast('Copy fail'));
-}
+<!-- Login Modal -->
+<div class="modal" id="loginModal" onclick="if(event.target===this)closeModal('loginModal')">
+  <div class="modalBox" style="max-width:420px">
+    <div class="modalHead">
+      <h3>🔐 Admin Login</h3>
+      <button class="closeX" onclick="closeModal('loginModal')">✕</button>
+    </div>
+    <div class="modalBody">
+      <div class="field">
+        <label>Email</label>
+        <input type="email" id="logEmail" placeholder="admin@hariom.com">
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="logPass" placeholder="••••••••">
+      </div>
+      <button class="btn primary" style="width:100%;justify-content:center" id="logBtn" onclick="doLogin()">
+        Login
+      </button>
+      <div id="logErr" style="margin-top:14px"></div>
+    </div>
+  </div>
+</div>
 
-/* ═══════════════ CAMERA ═══════════════ */
-let stream = null;
-let facing = 'environment';
-let torchOn = false;
-let mirrorOn = false;
-let timerSec = 0;          // 0 = off, 3, 5, 10
-let timerCycle = [0, 3, 5, 10];
-let timerIdx = 0;
-let zoomSupported = false;
+<!-- Admin Panel Modal -->
+<div class="modal" id="adminModal" onclick="if(event.target===this)closeModal('adminModal')">
+  <div class="modalBox" style="max-width:720px">
+    <div class="modalHead">
+      <h3>⚙️ Admin Panel</h3>
+      <div style="display:flex;gap:8px">
+        <button class="closeX" onclick="doLogout()" title="Logout">⎋</button>
+        <button class="closeX" onclick="closeModal('adminModal')">✕</button>
+      </div>
+    </div>
+    <div class="adminTabs">
+      <button class="adminTab on" data-tab="upload">⬆️ Upload</button>
+      <button class="adminTab" data-tab="manage">📦 Manage</button>
+      <button class="adminTab" data-tab="settings">⚙️ Site</button>
+      <button class="adminTab" data-tab="data">💾 Data</button>
+    </div>
 
-const vid      = document.getElementById('vid');
-const snapImg  = document.getElementById('snap');
-const ph       = document.getElementById('ph');
-const camDot   = document.getElementById('camDot');
-const zoomRow  = document.getElementById('zoomRow');
-const zoomEl   = document.getElementById('zoom');
-const zoomVal  = document.getElementById('zoomVal');
+    <!-- Upload -->
+    <div class="adminPane on" data-pane="upload">
+      <div class="notice ok">
+        💡 <b>Google Drive Method:</b><br>
+        1. Drive pe APK upload karo<br>
+        2. Right-click → Share → "Anyone with the link" → Copy<br>
+        3. Neeche paste karo — code khud direct-download link bana lega
+      </div>
 
-const BTN = {
-  on:     document.getElementById('btnOn'),
-  off:    document.getElementById('btnOff'),
-  swap:   document.getElementById('btnSwitch'),
-  torch:  document.getElementById('btnTorch'),
-  snap:   document.getElementById('btnSnap'),
-  rec:    document.getElementById('btnRec'),
-  timer:  document.getElementById('btnTimer'),
-  mirror: document.getElementById('btnMirror'),
+      <div class="field">
+        <label>App Name *</label>
+        <input id="upName" placeholder="e.g. Spotify Premium Mod">
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="field">
+          <label>Version *</label>
+          <input id="upVer" placeholder="e.g. 8.9.1">
+        </div>
+        <div class="field">
+          <label>Category *</label>
+          <select id="upCat">
+            <option>Games</option><option>Tools</option><option>Social</option>
+            <option>Photo</option><option>Video</option><option>Music</option>
+            <option>Productivity</option><option>Security</option><option>Mod</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Description</label>
+        <textarea id="upDesc" placeholder="Features, mod info, changelog..."></textarea>
+      </div>
+
+      <div class="field">
+        <label>APK File Size (MB) *</label>
+        <input type="number" id="upSize" placeholder="e.g. 45" step="0.1" min="0">
+      </div>
+
+      <div class="field">
+        <label>📦 APK — Drive Link *</label>
+        <input id="upApkLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view">
+        <div id="apkLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
+      </div>
+
+      <div class="field">
+        <label>🖼 App Icon — Drive Link (optional)</label>
+        <input id="upIconLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view">
+        <div id="iconLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
+      </div>
+
+      <div class="field">
+        <label>Featured</label>
+        <select id="upFeat">
+          <option value="no">No</option>
+          <option value="yes">Yes ⭐</option>
+        </select>
+      </div>
+
+      <button class="btn primary" style="width:100%;justify-content:center;margin-top:14px" id="upBtn" onclick="uploadApp()">
+        🚀 Save App
+      </button>
+    </div>
+
+    <!-- Manage -->
+    <div class="adminPane" data-pane="manage">
+      <div class="statsRow">
+        <div class="statMini"><div class="v" id="mApps">0</div><div class="k">Apps</div></div>
+        <div class="statMini"><div class="v" id="mDl">0</div><div class="k">Downloads</div></div>
+        <div class="statMini"><div class="v" id="mFeat">0</div><div class="k">Featured</div></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <input type="text" id="admSearch" placeholder="Search..." style="flex:1;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--txt);font-family:inherit;font-size:14px;outline:none">
+        <button class="miniBtn" onclick="deleteAllApps()" title="Delete ALL" style="width:44px;height:44px;font-size:16px">🗑</button>
+      </div>
+      <div class="adminList" id="admList"></div>
+    </div>
+
+    <!-- Settings -->
+    <div class="adminPane" data-pane="settings">
+      <div class="field">
+        <label>Site Title</label>
+        <input id="setTitle" placeholder="HARIOM MODDER">
+      </div>
+      <div class="field">
+        <label>Tagline</label>
+        <input id="setTag" placeholder="Premium APK Hub">
+      </div>
+      <div class="field">
+        <label>Telegram</label>
+        <input id="setTg" placeholder="https://t.me/...">
+      </div>
+      <div class="field">
+        <label>WhatsApp</label>
+        <input id="setWa" placeholder="https://wa.me/...">
+      </div>
+      <div class="field">
+        <label>YouTube</label>
+        <input id="setYt" placeholder="https://youtube.com/...">
+      </div>
+      <button class="btn primary" style="width:100%;justify-content:center" onclick="saveSettings()">
+        💾 Save Settings
+      </button>
+    </div>
+
+    <!-- Data -->
+    <div class="adminPane" data-pane="data">
+      <div class="notice">Yahan se saara data export/import kar sakte ho. Backup ke liye useful.</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn ghost" onclick="exportData()">📥 Export JSON</button>
+        <button class="btn ghost" onclick="document.getElementById('importFile').click()">📤 Import JSON</button>
+        <input type="file" id="importFile" accept=".json" class="hidden">
+        <button class="btn ghost" style="color:#f87171" onclick="deleteAllApps()">🗑 Delete All Apps</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore, collection, doc, addDoc, getDoc, deleteDoc,
+  updateDoc, onSnapshot, query, serverTimestamp, increment, writeBatch,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* ═══════════════════════════════════════════════
+   ⚠️  YAHAN APNA FIREBASE CONFIG DAALO  ⚠️
+   ═══════════════════════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_PROJECT.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
 };
 
-async function camOn() {
-  if (stream) return;
-  try {
-    stream = await navigator.mediaDevices.getUserMedia({
-      video: {
-        facingMode: { ideal: facing },
-        width:  { ideal: 1920 },
-        height: { ideal: 1080 }
-      },
-      audio: true   // video recording ke liye
-    });
-
-    vid.srcObject = stream;
-    vid.classList.add('on');
-    snapImg.classList.remove('on');
-    ph.style.display = 'none';
-    camDot.classList.add('live');
-
-    BTN.on.disabled = true;
-    [BTN.off, BTN.swap, BTN.snap, BTN.rec, BTN.timer, BTN.mirror]
-      .forEach(b => b.disabled = false);
-
-    // Torch support?
-    const track = stream.getVideoTracks()[0];
-    const caps = track.getCapabilities ? track.getCapabilities() : {};
-    BTN.torch.disabled = !caps.torch;
-    zoomSupported = !!caps.zoom;
-    if (zoomSupported) {
-      zoomEl.min = caps.zoom.min;
-      zoomEl.max = caps.zoom.max;
-      zoomEl.step = caps.zoom.step || 0.1;
-      zoomRow.style.display = 'flex';
-    } else {
-      zoomRow.style.display = 'none';
-    }
-
-    toast('✅ Camera ON' + (caps.torch ? ' • Torch available' : ''));
-  } catch (e) {
-    toast('❌ ' + e.name + ': ' + e.message, 3500);
-  }
+let app, auth, db;
+try {
+  app = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db = getFirestore(app);
+  window.__fb = { app, auth, db };
+  console.log('%c🔥 Firebase ready','color:#a855f7;font-weight:bold');
+} catch(e) {
+  console.error('Firebase init fail:', e);
 }
 
-function camOff() {
-  if (recOn) stopRec();
-  if (stream) {
-    stream.getTracks().forEach(t => t.stop());
-    stream = null;
-  }
-  vid.srcObject = null;
-  vid.classList.remove('on');
-  ph.style.display = 'block';
-  camDot.classList.remove('live');
-  BTN.on.disabled = false;
-  [BTN.off, BTN.swap, BTN.snap, BTN.rec, BTN.timer, BTN.mirror, BTN.torch]
-    .forEach(b => b.disabled = true);
-  BTN.torch.classList.remove('on');
-  torchOn = false;
-  zoomRow.style.display = 'none';
-  document.getElementById('torchBadge').classList.remove('show');
-  toast('Camera OFF');
-}
+/* ═══════════ STATE ═══════════ */
+let APPS = [];
+let siteCfg = {};
+let currentCat = 'all';
+let currentSort = 'new';
+let searchQ = '';
+let isAdmin = false;
 
-async function switchCam() {
-  const wasRec = recOn;
-  if (wasRec) stopRec();
-  facing = facing === 'environment' ? 'user' : 'environment';
-  camOff();
-  await new Promise(r => setTimeout(r, 120));
-  await camOn();
-  if (facing === 'user') mirrorOn = true; else mirrorOn = false;
-  applyMirror();
-  if (wasRec) toast('Camera switch — recording band ho gayi');
-}
+/* ═══════════ HELPERS ═══════════ */
+function $(id){ return document.getElementById(id); }
 
-function applyMirror() {
-  vid.style.transform = mirrorOn ? 'scaleX(-1)' : 'none';
-}
-function toggleMirror() {
-  mirrorOn = !mirrorOn;
-  applyMirror();
-  BTN.mirror.classList.toggle('on', mirrorOn);
-  toast(mirrorOn ? '🪞 Mirror ON' : '🪞 Mirror OFF');
-}
-
-/* ---- Torch ---- */
-async function toggleTorch() {
-  if (!stream) return;
-  const track = stream.getVideoTracks()[0];
-  try {
-    torchOn = !torchOn;
-    await track.applyConstraints({ advanced: [{ torch: torchOn }] });
-    BTN.torch.classList.toggle('on', torchOn);
-    document.getElementById('torchBadge').classList.toggle('show', torchOn);
-    toast(torchOn ? '🔦 Torch ON' : '🔦 Torch OFF');
-  } catch (e) {
-    toast('Torch support nahi');
-    torchOn = false;
-  }
-}
-
-/* ---- Zoom ---- */
-zoomEl.addEventListener('input', async () => {
-  if (!stream || !zoomSupported) return;
-  const track = stream.getVideoTracks()[0];
-  const v = parseFloat(zoomEl.value);
-  zoomVal.textContent = v.toFixed(1) + 'x';
-  try { await track.applyConstraints({ advanced: [{ zoom: v }] }); } catch (e) {}
-});
-
-/* ---- Timer ---- */
-function toggleTimer() {
-  timerIdx = (timerIdx + 1) % timerCycle.length;
-  timerSec = timerCycle[timerIdx];
-  document.getElementById('timerLabel').textContent =
-    timerSec === 0 ? 'Off' : timerSec + 's';
-  BTN.timer.classList.toggle('on', timerSec > 0);
-}
-
-/* ---- Photo ---- */
-async function takePhoto() {
-  if (!stream) return;
-  if (timerSec > 0) {
-    const t = document.getElementById('timerBig');
-    t.classList.add('show');
-    for (let i = timerSec; i > 0; i--) {
-      t.textContent = i;
-      await new Promise(r => setTimeout(r, 1000));
-    }
-    t.classList.remove('show');
-  }
-  captureNow();
-  toast('📸 Photo!');
-}
-
-function captureNow() {
-  const c = document.createElement('canvas');
-  c.width  = vid.videoWidth  || 1280;
-  c.height = vid.videoHeight || 720;
-  const ctx = c.getContext('2d');
-
-  if (mirrorOn || facing === 'user') {
-    ctx.translate(c.width, 0);
-    ctx.scale(-1, 1);
-  }
-  ctx.drawImage(vid, 0, 0, c.width, c.height);
-
-  // Flash effect
-  snapImg.src = c.toDataURL('image/png');
-  snapImg.classList.add('on');
-  vid.classList.remove('on');
+function toast(msg, type='info', ms=2800){
+  const box = $('toastBox');
+  const icons = {ok:'✓', err:'✕', info:'ℹ', warn:'⚠'};
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  el.innerHTML = `<span class="tIco">${icons[type]||'ℹ'}</span><span>${msg}</span>`;
+  box.appendChild(el);
   setTimeout(() => {
-    snapImg.classList.remove('on');
-    vid.classList.add('on');
-  }, 180);
+    el.classList.add('out');
+    setTimeout(() => el.remove(), 300);
+  }, ms);
+}
+window.toast = toast;
 
-  c.toBlob(blob => {
-    addItem({ type: 'image', blob, url: URL.createObjectURL(blob) });
-  }, 'image/png', 0.95);
+function fmtSize(b){
+  if(!b) return '0 B';
+  const u = ['B','KB','MB','GB'];
+  const i = Math.floor(Math.log(b)/Math.log(1024));
+  return (b/Math.pow(1024,i)).toFixed(i?1:0) + ' ' + u[i];
+}
+function fmtNum(n){
+  n = n||0;
+  if(n>=1e6) return (n/1e6).toFixed(1)+'M';
+  if(n>=1e3) return (n/1e3).toFixed(1)+'K';
+  return String(n);
+}
+function esc(s){
+  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function timeAgo(ts){
+  if(!ts) return 'just now';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const s = (Date.now() - d.getTime())/1000;
+  if(s<60) return 'just now';
+  if(s<3600) return Math.floor(s/60)+'m ago';
+  if(s<86400) return Math.floor(s/3600)+'h ago';
+  if(s<2592000) return Math.floor(s/86400)+'d ago';
+  return d.toLocaleDateString();
 }
 
-/* ═══════════════ VIDEO RECORDING ═══════════════ */
-let recorder = null, chunks = [], recOn = false, recTimer = null, recStart = 0;
-
-function pickMime() {
-  const opts = [
-    'video/webm;codecs=vp9,opus',
-    'video/webm;codecs=vp8,opus',
-    'video/webm',
-    'video/mp4'
-  ];
-  for (const m of opts) if (MediaRecorder.isTypeSupported(m)) return m;
+/* ═══════════ DRIVE HELPERS ═══════════ */
+function driveId(url){
+  if(!url) return '';
+  let m = url.match(/\/file\/d\/([a-zA-Z0-9_-]{20,})/);
+  if(m) return m[1];
+  m = url.match(/[?&]id=([a-zA-Z0-9_-]{20,})/);
+  if(m) return m[1];
+  m = url.match(/\/d\/([a-zA-Z0-9_-]{20,})/);
+  if(m) return m[1];
   return '';
 }
-
-function toggleRec() {
-  recOn ? stopRec() : startRec();
+function driveDirect(url){
+  const id = driveId(url);
+  return id ? `https://drive.google.com/uc?export=download&id=${id}` : '';
 }
-function startRec() {
-  if (!stream) return;
-  const mime = pickMime();
-  try {
-    recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
-  } catch (e) {
-    return toast('❌ Recording support nahi');
+function drivePreview(url){
+  const id = driveId(url);
+  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w400` : '';
+}
+window.driveId = driveId;
+
+/* ═══════════ THEME ═══════════ */
+const savedTheme = localStorage.getItem('hm_theme') || 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+$('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  localStorage.setItem('hm_theme', next);
+  $('themeBtn').textContent = next === 'dark' ? '🌙' : '☀️';
+  toast(next === 'dark' ? '🌙 Dark mode' : '☀️ Light mode', 'info', 1500);
+}
+window.toggleTheme = toggleTheme;
+$('themeBtn').onclick = toggleTheme;
+
+/* ═══════════ MODAL ═══════════ */
+function openModal(id){ $(id).classList.add('on'); document.body.style.overflow='hidden'; }
+function closeModal(id){ $(id).classList.remove('on'); document.body.style.overflow=''; }
+window.openModal = openModal;
+window.closeModal = closeModal;
+
+$('menuBtn').onclick = () => openModal('menuModal');
+
+/* ═══════════ ADMIN LOGIN ═══════════ */
+function openAdmin(){
+  if(isAdmin){ openModal('adminModal'); loadAdminData(); }
+  else openModal('loginModal');
+}
+window.openAdmin = openAdmin;
+
+async function doLogin(){
+  const email = $('logEmail').value.trim();
+  const pass = $('logPass').value;
+  if(!email || !pass){
+    $('logErr').innerHTML = '<div class="notice err">Email & password daalo</div>';
+    return;
   }
-  chunks = [];
-  recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
-  recorder.onstop = () => {
-    const blob = new Blob(chunks, { type: mime || 'video/webm' });
-    if (blob.size) addItem({ type: 'video', blob, url: URL.createObjectURL(blob) });
-    chunks = [];
-  };
-  recorder.start(1000);
-  recOn = true;
-  recStart = Date.now();
-  document.getElementById('recBadge').classList.add('show');
-  BTN.rec.textContent = '⏹ Stop';
-  BTN.rec.classList.add('on');
-  recTimer = setInterval(() => {
-    const s = Math.floor((Date.now() - recStart) / 1000);
-    const m = String(Math.floor(s / 60)).padStart(2, '0');
-    const ss = String(s % 60).padStart(2, '0');
-    document.getElementById('recTime').textContent = m + ':' + ss;
-  }, 500);
-  toast('⏺ Recording shuru...');
+  $('logBtn').disabled = true;
+  $('logBtn').textContent = 'Logging in...';
+  $('logErr').innerHTML = '';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    toast('✅ Login successful', 'ok');
+  } catch(e){
+    $('logErr').innerHTML = `<div class="notice err">${esc(e.message)}</div>`;
+  } finally {
+    $('logBtn').disabled = false;
+    $('logBtn').textContent = 'Login';
+  }
 }
-function stopRec() {
-  if (!recOn || !recorder) return;
-  try { recorder.stop(); } catch (e) {}
-  recOn = false;
-  clearInterval(recTimer);
-  document.getElementById('recBadge').classList.remove('show');
-  document.getElementById('recTime').textContent = '00:00';
-  BTN.rec.textContent = '⏺ Video';
-  BTN.rec.classList.remove('on');
-  toast('✅ Recording save ho gayi');
+window.doLogin = doLogin;
+
+async function doLogout(){
+  await signOut(auth);
+  closeModal('adminModal');
+  toast('Logged out', 'info');
 }
+window.doLogout = doLogout;
 
-/* ═══════════════ GALLERY ═══════════════ */
-const items = [];
-const gallery = document.getElementById('gallery');
-const gEmpty  = document.getElementById('gEmpty');
-const gCount  = document.getElementById('gCount');
+onAuthStateChanged(auth, user => {
+  isAdmin = !!user;
+  if(user){
+    closeModal('loginModal');
+    openModal('adminModal');
+    loadAdminData();
+  }
+});
 
-function addItem(it) {
-  it.id = 'i' + Date.now() + Math.random().toString(36).slice(2, 6);
-  it.name = (it.type === 'image' ? 'IMG_' : 'VID_') +
-            new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19) +
-            (it.type === 'image' ? '.png' : '.webm');
-  items.push(it);
-  renderGallery();
-}
-
-function renderGallery() {
-  gallery.innerHTML = '';
-  items.forEach(it => {
-    const d = document.createElement('div');
-    d.className = 'gItem';
-
-    const media = it.type === 'image'
-      ? Object.assign(document.createElement('img'), { src: it.url, alt: '' })
-      : Object.assign(document.createElement('video'), { src: it.url, muted: true });
-    media.onclick = () => openViewer(it);
-    d.appendChild(media);
-
-    if (it.type === 'video') {
-      const vt = document.createElement('div');
-      vt.className = 'vt';
-      vt.textContent = 'VIDEO';
-      d.appendChild(vt);
-    }
-
-    const del = document.createElement('button');
-    del.className = 'del';
-    del.textContent = '✕';
-    del.onclick = e => { e.stopPropagation(); removeItem(it.id); };
-    d.appendChild(del);
-
-    gallery.appendChild(d);
+/* ═══════════ LOAD APPS ═══════════ */
+function loadApps(){
+  if(!db){ showEmpty(); return; }
+  const q = query(collection(db, 'apps'));
+  onSnapshot(q, snap => {
+    APPS = [];
+    snap.forEach(d => APPS.push({ id: d.id, ...d.data() }));
+    renderAll();
+    updateStats();
+    if(isAdmin) renderAdminList();
+  }, err => {
+    console.error(err);
+    showEmpty();
   });
-
-  const n = items.length;
-  gCount.textContent = '(' + n + ')';
-  gEmpty.style.display = n ? 'none' : 'block';
-  document.getElementById('btnDlAll').disabled = !n;
-  document.getElementById('btnShareAll').disabled = !n;
-  document.getElementById('btnClear').disabled = !n;
 }
 
-function removeItem(id) {
-  const i = items.findIndex(x => x.id === id);
-  if (i < 0) return;
-  URL.revokeObjectURL(items[i].url);
-  items.splice(i, 1);
-  renderGallery();
-  toast('🗑 Delete ho gaya');
+function showEmpty(){
+  $('appsGrid').innerHTML = '';
+  $('emptyBox').classList.remove('hidden');
 }
 
-function clearAll() {
-  if (!items.length) return;
-  if (!confirm('Sab photos/videos delete karne hain?')) return;
-  items.forEach(i => URL.revokeObjectURL(i.url));
-  items.length = 0;
-  renderGallery();
-  toast('Sab clear');
+/* ═══════════ RENDER ═══════════ */
+function filtered(){
+  let list = APPS.filter(a => {
+    if(currentCat !== 'all' && a.category !== currentCat) return false;
+    if(searchQ){
+      const s = searchQ.toLowerCase();
+      const hay = ((a.name||'')+' '+(a.desc||'')+' '+(a.category||'')).toLowerCase();
+      if(!hay.includes(s)) return false;
+    }
+    return true;
+  });
+  const s = currentSort;
+  list.sort((a,b) => {
+    if(s === 'new') return (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0);
+    if(s === 'pop') return (b.downloads||0) - (a.downloads||0);
+    if(s === 'rate') return (b.rating||0) - (a.rating||0);
+    if(s === 'name') return (a.name||'').localeCompare(b.name||'');
+    if(s === 'size') return (a.size||0) - (b.size||0);
+    return 0;
+  });
+  return list;
 }
 
-/* ---- Download single ---- */
-function downloadBlob(blob, name) {
+function renderAll(){
+  const list = filtered();
+  const grid = $('appsGrid');
+  const feat = $('featGrid');
+  const featSec = $('featSection');
+
+  if(!list.length){ showEmpty(); }
+  else {
+    $('emptyBox').classList.add('hidden');
+    grid.innerHTML = list.map(cardHTML).join('');
+  }
+
+  const featured = list.filter(a => a.featured);
+  if(featured.length && currentCat === 'all' && !searchQ){
+    featSec.classList.remove('hidden');
+    feat.innerHTML = featured.slice(0,4).map(cardHTML).join('');
+  } else {
+    featSec.classList.add('hidden');
+  }
+}
+
+function cardHTML(a){
+  const icon = a.iconUrl
+    ? `<img class="icon" src="${esc(a.iconUrl)}" alt="" onerror="this.outerHTML='<div class=&quot;icon&quot;>${esc((a.name||'?')[0].toUpperCase())}</div>'">`
+    : `<div class="icon">${esc((a.name||'?')[0].toUpperCase())}</div>`;
+  const stars = a.rating ? `<span class="starF">★</span> ${a.rating.toFixed(1)}` : `<span>☆ New</span>`;
+  return `
+    <div class="card glass gloss" onclick="openDetail('${a.id}')">
+      ${a.featured ? '<span class="badgeFeat">⭐ FEATURED</span>' : ''}
+      <div class="top">
+        ${icon}
+        <div class="meta">
+          <div class="name">${esc(a.name)}</div>
+          <div class="ver">v${esc(a.version||'1.0')}</div>
+          <span class="cat">${esc(a.category||'App')}</span>
+        </div>
+      </div>
+      <div class="desc">${esc(a.desc||'No description')}</div>
+      <div class="foot">
+        <div class="stats2">
+          <span>⬇ ${fmtNum(a.downloads||0)}</span>
+          <span>${stars}</span>
+        </div>
+        <span style="font-size:11px;color:var(--txt3);font-family:monospace">${fmtSize(a.size)}</span>
+      </div>
+    </div>
+  `;
+}
+
+function updateStats(){
+  $('stApps').textContent = fmtNum(APPS.length);
+  const dl = APPS.reduce((s,a) => s + (a.downloads||0), 0);
+  $('stDl').textContent = fmtNum(dl);
+  const cats = new Set(APPS.map(a => a.category).filter(Boolean));
+  $('stCat').textContent = cats.size || 0;
+  const rated = APPS.filter(a => a.rating);
+  const avg = rated.length ? rated.reduce((s,a) => s+a.rating,0)/rated.length : 0;
+  $('stRate').textContent = avg ? avg.toFixed(1) : '0.0';
+  $('heroLive').textContent = `${APPS.length} apps • ${fmtNum(dl)} downloads`;
+}
+
+/* ═══════════ DETAIL ═══════════ */
+function openDetail(id){
+  const a = APPS.find(x => x.id === id);
+  if(!a) return;
+  const icon = a.iconUrl
+    ? `<img class="icon" src="${esc(a.iconUrl)}" alt="">`
+    : `<div class="icon">${esc((a.name||'?')[0].toUpperCase())}</div>`;
+  const stars = a.rating ? `${a.rating.toFixed(1)} ★` : 'New';
+  $('detailBody').innerHTML = `
+    <div class="detailHead">
+      ${icon}
+      <div style="flex:1;min-width:0">
+        <div class="nm">${esc(a.name)}</div>
+        <div class="vr">v${esc(a.version||'1.0')} • ${fmtSize(a.size)}</div>
+        <span class="cat2">${esc(a.category||'App')}</span>
+      </div>
+    </div>
+    <div class="metaGrid">
+      <div class="metaItem"><div class="v">${fmtNum(a.downloads||0)}</div><div class="k">Downloads</div></div>
+      <div class="metaItem"><div class="v">${stars}</div><div class="k">Rating</div></div>
+      <div class="metaItem"><div class="v">${timeAgo(a.createdAt)}</div><div class="k">Added</div></div>
+    </div>
+    <div class="descBox">${esc(a.desc||'No description available.')}</div>
+    <button class="dlBtnBig" onclick="downloadApp('${a.id}')">⬇ Download APK</button>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn ghost" style="flex:1;justify-content:center" onclick="shareApp('${a.id}')">🔗 Share</button>
+      <button class="btn ghost" style="flex:1;justify-content:center" onclick="copyLink('${a.id}')">📋 Copy Link</button>
+    </div>
+  `;
+  openModal('detailModal');
+}
+window.openDetail = openDetail;
+
+async function downloadApp(id){
+  const a = APPS.find(x => x.id === id);
+  if(!a || !a.apkUrl){ toast('APK link missing', 'err'); return; }
+  try { await updateDoc(doc(db,'apps',id), { downloads: increment(1) }); } catch(e){}
+  toast('⬇ Drive pe le ja rahe hain...', 'info', 1500);
+  setTimeout(() => {
+    window.open(a.apkUrl, '_blank');
+    toast('💡 "Virus scan warning" aaye to "Download anyway" dabao', 'warn', 5000);
+  }, 350);
+  closeModal('detailModal');
+}
+window.downloadApp = downloadApp;
+
+function shareApp(id){
+  const a = APPS.find(x => x.id === id);
+  const url = location.origin + location.pathname + '#app=' + id;
+  if(navigator.share){
+    navigator.share({title: a.name, text: `Download ${a.name} v${a.version}`, url}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(url).then(() => toast('🔗 Link copy', 'ok'));
+  }
+}
+window.shareApp = shareApp;
+
+function copyLink(id){
+  const url = location.origin + location.pathname + '#app=' + id;
+  navigator.clipboard.writeText(url).then(() => toast('📋 Copy ho gaya', 'ok'));
+}
+window.copyLink = copyLink;
+
+/* ═══════════ CONTACT ═══════════ */
+function openContact(){ openModal('contactModal'); }
+window.openContact = openContact;
+
+async function sendReq(){
+  const n = $('reqName').value.trim();
+  if(!n){ toast('App name daalo', 'warn'); return; }
+  try {
+    await addDoc(collection(db, 'requests'), {
+      name: n,
+      contact: $('reqContact').value.trim(),
+      message: $('reqMsg').value.trim(),
+      createdAt: serverTimestamp()
+    });
+    toast('✅ Request bhej di!', 'ok');
+    closeModal('contactModal');
+    $('reqName').value = $('reqContact').value = $('reqMsg').value = '';
+  } catch(e){
+    toast('Fail: ' + e.message, 'err');
+  }
+}
+window.sendReq = sendReq;
+
+/* ═══════════ UPLOAD (Drive links) ═══════════ */
+document.addEventListener('input', e => {
+  if(e.target.id === 'upApkLink'){
+    const ok = driveId(e.target.value);
+    const el = $('apkLinkStatus');
+    if(!e.target.value){ el.textContent = ''; return; }
+    el.innerHTML = ok
+      ? '<span style="color:#10b981">✅ Valid Drive link</span>'
+      : '<span style="color:#ef4444">❌ Galat link — file/d/ID wala link paste karo</span>';
+  }
+  if(e.target.id === 'upIconLink'){
+    const ok = driveId(e.target.value);
+    const el = $('iconLinkStatus');
+    if(!e.target.value){ el.textContent = ''; return; }
+    el.innerHTML = ok
+      ? '<span style="color:#10b981">✅ Valid Drive link</span>'
+      : '<span style="color:#ef4444">❌ Galat link</span>';
+  }
+});
+
+async function uploadApp(){
+  if(!db){ toast('Firebase ready nahi', 'err'); return; }
+
+  const name = $('upName').value.trim();
+  const version = $('upVer').value.trim();
+  const cat = $('upCat').value;
+  const desc = $('upDesc').value.trim();
+  const feat = $('upFeat').value === 'yes';
+  const sizeMB = parseFloat($('upSize').value) || 0;
+  const apkLink = $('upApkLink').value.trim();
+  const iconLink = $('upIconLink').value.trim();
+
+  if(!name || !version){ toast('Name & version zaroori', 'warn'); return; }
+  if(!apkLink){ toast('APK Drive link daalo', 'warn'); return; }
+  if(!driveId(apkLink)){ toast('APK link galat hai', 'err'); return; }
+  if(!sizeMB){ toast('File size (MB) daalo', 'warn'); return; }
+
+  const apkUrl = driveDirect(apkLink);
+  const iconUrl = iconLink && driveId(iconLink) ? drivePreview(iconLink) : '';
+
+  const btn = $('upBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    await addDoc(collection(db, 'apps'), {
+      name, version,
+      category: cat,
+      desc,
+      featured: feat,
+      iconUrl,
+      apkUrl,
+      apkLink,
+      size: Math.round(sizeMB * 1024 * 1024),
+      downloads: 0,
+      rating: 0,
+      ratingCount: 0,
+      createdAt: serverTimestamp()
+    });
+
+    toast('🚀 App save ho gayi!', 'ok', 3000);
+
+    ['upName','upVer','upDesc','upSize','upApkLink','upIconLink']
+      .forEach(id => $(id).value = '');
+    $('apkLinkStatus').textContent = '';
+    $('iconLinkStatus').textContent = '';
+  } catch(e){
+    console.error(e);
+    toast('Save fail: ' + e.message, 'err', 4000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 Save App';
+  }
+}
+window.uploadApp = uploadApp;
+
+/* ═══════════ ADMIN DATA ═══════════ */
+function loadAdminData(){
+  renderAdminList();
+  loadSettings();
+}
+
+function renderAdminList(){
+  const list = $('admList');
+  if(!list) return;
+  const q = ($('admSearch')?.value || '').toLowerCase();
+  const filtered = APPS.filter(a => !q || (a.name||'').toLowerCase().includes(q));
+  if(!filtered.length){
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3)">Koi app nahi</div>';
+    return;
+  }
+  list.innerHTML = filtered.map(a => `
+    <div class="aRow">
+      ${a.iconUrl
+        ? `<img src="${esc(a.iconUrl)}" alt="">`
+        : `<div class="ph">${esc((a.name||'?')[0])}</div>`}
+      <div class="info">
+        <div class="nm">${esc(a.name)}</div>
+        <div class="sb">v${esc(a.version)} • ${fmtNum(a.downloads||0)} dl • ${fmtSize(a.size)}</div>
+      </div>
+      <button class="miniBtn" onclick="toggleFeat('${a.id}')" title="Feature">${a.featured?'⭐':'☆'}</button>
+      <button class="miniBtn del" onclick="deleteApp('${a.id}')" title="Delete">🗑</button>
+    </div>
+  `).join('');
+  $('mApps').textContent = APPS.length;
+  $('mDl').textContent = fmtNum(APPS.reduce((s,a)=>s+(a.downloads||0),0));
+  $('mFeat').textContent = APPS.filter(a=>a.featured).length;
+}
+window.renderAdminList = renderAdminList;
+
+async function deleteApp(id){
+  const a = APPS.find(x => x.id === id);
+  if(!confirm(`"${a.name}" delete karni hai?`)) return;
+  try {
+    await deleteDoc(doc(db, 'apps', id));
+    toast('🗑 Delete ho gayi', 'ok');
+  } catch(e){ toast('Fail: ' + e.message, 'err'); }
+}
+window.deleteApp = deleteApp;
+
+async function toggleFeat(id){
+  const a = APPS.find(x => x.id === id);
+  try {
+    await updateDoc(doc(db,'apps',id), { featured: !a.featured });
+    toast(a.featured ? 'Featured OFF' : '⭐ Featured ON', 'ok');
+  } catch(e){ toast('Fail', 'err'); }
+}
+window.toggleFeat = toggleFeat;
+
+async function deleteAllApps(){
+  if(!APPS.length) return toast('Kuch nahi hai', 'warn');
+  if(!confirm(`SAB ${APPS.length} apps delete karne hain?`)) return;
+  if(!confirm('Pakka? Soch lo.')) return;
+  try {
+    const batch = writeBatch(db);
+    APPS.forEach(a => batch.delete(doc(db, 'apps', a.id)));
+    await batch.commit();
+    toast('💥 Sab delete ho gayi', 'ok');
+  } catch(e){ toast('Fail: ' + e.message, 'err'); }
+}
+window.deleteAllApps = deleteAllApps;
+
+/* ═══════════ SETTINGS ═══════════ */
+async function loadSettings(){
+  try {
+    const d = await getDoc(doc(db, 'settings', 'site'));
+    if(d.exists()){
+      siteCfg = d.data();
+      $('setTitle').value = siteCfg.title || '';
+      $('setTag').value = siteCfg.tagline || '';
+      $('setTg').value = siteCfg.telegram || '';
+      $('setWa').value = siteCfg.whatsapp || '';
+      $('setYt').value = siteCfg.youtube || '';
+      applySettings();
+    }
+  } catch(e){}
+}
+
+function applySettings(){
+  if(siteCfg.telegram) document.querySelector('[data-s="tg"]').href = siteCfg.telegram;
+  if(siteCfg.whatsapp) document.querySelector('[data-s="wa"]').href = siteCfg.whatsapp;
+  if(siteCfg.youtube) document.querySelector('[data-s="yt"]').href = siteCfg.youtube;
+}
+
+async function saveSettings(){
+  try {
+    await setDoc(doc(db,'settings','site'), {
+      title: $('setTitle').value.trim(),
+      tagline: $('setTag').value.trim(),
+      telegram: $('setTg').value.trim(),
+      whatsapp: $('setWa').value.trim(),
+      youtube: $('setYt').value.trim(),
+      updatedAt: serverTimestamp()
+    });
+    toast('💾 Save ho gaya', 'ok');
+  } catch(e){ toast('Fail: ' + e.message, 'err'); }
+}
+window.saveSettings = saveSettings;
+
+/* ═══════════ EXPORT / IMPORT ═══════════ */
+function exportData(){
+  const data = JSON.stringify(APPS, null, 2);
+  const blob = new Blob([data], {type:'application/json'});
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = name;
-  document.body.appendChild(a);
+  a.download = `hariom_backup_${Date.now()}.json`;
   a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 4000);
+  URL.revokeObjectURL(url);
+  toast('📥 Export ho gaya', 'ok');
 }
+window.exportData = exportData;
 
-/* ---- Download all ---- */
-async function downloadAll() {
-  if (!items.length) return;
-  toast('⬇️ ' + items.length + ' file download ho rahi...', 2500);
-  for (let i = 0; i < items.length; i++) {
-    downloadBlob(items[i].blob, items[i].name);
-    await new Promise(r => setTimeout(r, 500)); // browser gap
-  }
-  toast('✅ Android: Gallery/Downloads • iPhone: Files', 3500);
-}
-
-/* ---- Share single ---- */
-async function shareItem(it) {
-  const file = new File([it.blob], it.name, { type: it.blob.type });
-  if (navigator.canShare && navigator.canShare({ files: [file] })) {
-    try {
-      await navigator.share({ files: [file], title: it.name });
-      toast('✅ Share sheet — Save to Gallery choose karo');
-      return true;
-    } catch (e) {
-      if (e.name !== 'AbortError') toast('Share cancel/fail');
-      return false;
-    }
-  }
-  toast('Share support nahi — Download karo');
-  return false;
-}
-
-/* ---- Share all ---- */
-async function shareAll() {
-  if (!items.length) return;
-  const files = items.map(it => new File([it.blob], it.name, { type: it.blob.type }));
-  if (navigator.canShare && navigator.canShare({ files })) {
-    try {
-      await navigator.share({ files, title: 'My Media' });
-      toast('✅ Share sheet khul gaya');
-    } catch (e) {
-      if (e.name !== 'AbortError') toast('Share fail');
-    }
-  } else {
-    toast('Multi-share support nahi — Download All use karo');
-  }
-}
-
-/* ═══════════════ VIEWER ═══════════════ */
-function openViewer(it) {
-  const v = document.getElementById('viewer');
-  const b = document.getElementById('viewerBody');
-  b.innerHTML = '';
-  if (it.type === 'image') {
-    b.innerHTML = '<img src="' + it.url + '">';
-  } else {
-    b.innerHTML = '<video src="' + it.url + '" controls autoplay playsinline></video>';
-  }
-  v.classList.add('show');
-}
-function closeViewer(e) {
-  if (e && e.target && e.target.id !== 'viewer' && !e.target.classList.contains('close')) return;
-  document.getElementById('viewer').classList.remove('show');
-  document.getElementById('viewerBody').innerHTML = '';
-}
-
-/* ═══════════════ LOCATION ═══════════════ */
-function getLoc() {
-  if (!navigator.geolocation) return toast('Geolocation support nahi');
-  toast('Permission ka wait...');
-  navigator.geolocation.getCurrentPosition(
-    p => {
-      const { latitude: la, longitude: lo, accuracy: ac } = p.coords;
-      document.getElementById('locLat').textContent = la.toFixed(6);
-      document.getElementById('locLng').textContent = lo.toFixed(6);
-      document.getElementById('locAcc').textContent = '~' + Math.round(ac) + ' meter';
-      const link = `https://maps.google.com/?q=${la},${lo}`;
-      const el = document.getElementById('locV');
-      el.textContent = 'Open Maps';
-      el.dataset.raw = link;
-      el.style.cursor = 'pointer';
-      el.onclick = () => window.open(link, '_blank');
-      toast('✅ Location mil gayi');
-    },
-    err => toast('❌ ' + err.message, 3000),
-    { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
-  );
-}
-
-/* ═══════════════ IP ═══════════════ */
-let ipData = {};
-async function getIP() {
-  toast('IP check...');
+$('importFile').onchange = async e => {
+  const f = e.target.files[0];
+  if(!f) return;
   try {
-    const r = await fetch('https://ipapi.co/json/');
-    ipData = await r.json();
-    document.getElementById('ip').textContent     = ipData.ip || '—';
-    document.getElementById('ipCity').textContent = ipData.city || '—';
-    document.getElementById('ipReg').textContent  = ipData.region || '—';
-    document.getElementById('ipCo').textContent   = ipData.country_name || '—';
-    document.getElementById('ipISP').textContent  = ipData.org || '—';
-    toast('✅ IP mil gaya');
-  } catch (e) {
-    toast('❌ IP service block (adblock?)', 3000);
+    const txt = await f.text();
+    const arr = JSON.parse(txt);
+    if(!Array.isArray(arr)) throw new Error('Invalid format');
+    if(!confirm(`${arr.length} apps import karne hain?`)) return;
+    for(const a of arr){
+      const {id, ...data} = a;
+      await addDoc(collection(db, 'apps'), data);
+    }
+    toast('📤 Import ho gaya', 'ok');
+  } catch(err){
+    toast('Import fail: ' + err.message, 'err');
+  }
+};
+
+/* ═══════════ SHARE SITE ═══════════ */
+function shareSite(){
+  if(navigator.share){
+    navigator.share({title:'HARIOM MODDER', text:'Premium APKs — free download', url:location.href}).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(location.href).then(() => toast('🔗 Link copy', 'ok'));
   }
 }
-function buildIPText() {
-  return `IP: ${ipData.ip || '-'}
-City: ${ipData.city || '-'}
-Region: ${ipData.region || '-'}
-Country: ${ipData.country_name || '-'}
-ISP: ${ipData.org || '-'}`;
-}
+window.shareSite = shareSite;
 
-/* ═══════════════ DEVICE INFO ═══════════════ */
-let devData = {};
-async function loadDevice() {
-  const d = devData = {};
-  d.platform = navigator.platform || '—';
-  d.screen   = `${screen.width}×${screen.height} @${window.devicePixelRatio}x`;
-  d.cpu      = navigator.hardwareConcurrency ? navigator.hardwareConcurrency + ' cores' : '—';
-  d.ram      = navigator.deviceMemory ? '~' + navigator.deviceMemory + ' GB' : '—';
-  d.lang     = navigator.language || '—';
-  d.tz       = Intl.DateTimeFormat().resolvedOptions().timeZone || '—';
-  d.touch    = ('ontouchstart' in window) ? 'Yes' : 'No';
-
-  // Network
-  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  if (c) {
-    d.net = `${c.effectiveType || '?'} • ${c.downlink || '?'} Mbps`;
-  } else d.net = '—';
-
-  // Battery
-  if (navigator.getBattery) {
-    try {
-      const b = await navigator.getBattery();
-      d.bat = Math.round(b.level * 100) + '%' + (b.charging ? ' ⚡ charging' : '');
-    } catch { d.bat = '—'; }
-  } else d.bat = '—';
-
-  document.getElementById('dPlat').textContent  = d.platform;
-  document.getElementById('dScr').textContent   = d.screen;
-  document.getElementById('dCpu').textContent   = d.cpu;
-  document.getElementById('dRam').textContent   = d.ram;
-  document.getElementById('dBat').textContent   = d.bat;
-  document.getElementById('dNet').textContent   = d.net;
-  document.getElementById('dLang').textContent  = d.lang;
-  document.getElementById('dTz').textContent    = d.tz;
-  document.getElementById('dTouch').textContent = d.touch;
-
-  toast('✅ Device info scan ho gaya');
-}
-function buildDevText() {
-  const d = devData;
-  return Object.entries({
-    Platform: d.platform, Screen: d.screen, CPU: d.cpu, RAM: d.ram,
-    Battery: d.bat, Network: d.net, Language: d.lang,
-    Timezone: d.tz, Touch: d.touch
-  }).map(([k, v]) => `${k}: ${v || '-'}`).join('\n');
-}
-
-/* ═══════════════ CLEANUP ═══════════════ */
-window.addEventListener('beforeunload', () => {
-  if (stream) stream.getTracks().forEach(t => t.stop());
+/* ═══════════ EVENTS ═══════════ */
+$('searchInput').addEventListener('input', e => {
+  searchQ = e.target.value.trim();
+  renderAll();
 });
+
+$('sortSel').addEventListener('change', e => {
+  currentSort = e.target.value;
+  renderAll();
+});
+
+document.querySelectorAll('.chip[data-cat]').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.chip[data-cat]').forEach(x => x.classList.remove('on'));
+    c.classList.add('on');
+    currentCat = c.dataset.cat;
+    $('appsTitle').textContent = currentCat === 'all' ? 'All Apps' : currentCat;
+    renderAll();
+  });
+});
+
+document.querySelectorAll('.adminTab').forEach(t => {
+  t.onclick = () => {
+    document.querySelectorAll('.adminTab').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    document.querySelectorAll('.adminPane').forEach(p => p.classList.remove('on'));
+    document.querySelector(`[data-pane="${t.dataset.tab}"]`).classList.add('on');
+  };
+});
+
+if($('admSearch')) $('admSearch').oninput = renderAdminList;
+
+window.addEventListener('scroll', () => {
+  $('topFab').classList.toggle('hide', scrollY < 400);
+});
+
+/* ═══════════ INIT ═══════════ */
+$('yr').textContent = new Date().getFullYear();
+loadApps();
+
+if(location.hash.startsWith('#app=')){
+  const id = location.hash.slice(5);
+  setTimeout(() => APPS.find(a => a.id === id) && openDetail(id), 1200);
+}
+
+console.log('%c⚡ HARIOM MODDER v2.0','color:#a855f7;font-size:18px;font-weight:bold');
+console.log('%cAdmin: three-dot menu → Admin Login','color:#06b6d4');
 </script>
 </body>
-  </html>
+</html>
