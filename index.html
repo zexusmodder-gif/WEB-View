@@ -486,37 +486,7 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 
 <script type="module">
 /* =====================================================================
-   HARIOM MODDER — Hardened Edition
-   ---------------------------------------------------------------------
-   SECURITY NOTES (important — read before going live):
-   1. Client-side checks are NOT security. Lock down Firestore rules:
-      https://console.firebase.google.com → Firestore → Rules
-      Example (paste & adapt):
-      ---------------------------------------------------------------
-      rules_version = '2';
-      service cloud.firestore {
-        match /databases/{database}/documents {
-          match /apps/{id} {
-            allow read: if true;
-            allow write: if request.auth != null;
-          }
-          match /requests/{id} {
-            allow create: if true;
-            allow read, update, delete: if request.auth != null;
-          }
-          match /settings/{id} {
-            allow read: if true;
-            allow write: if request.auth != null;
-          }
-        }
-      }
-      ---------------------------------------------------------------
-   2. In Firebase Console → Authentication → Users, create ONE admin
-      user. Turn OFF "Enable create (sign-up)" so nobody can register.
-   3. Set ADMIN_EMAILS below to that admin's email for an extra
-      client-side guard (belt & braces).
-   4. All user text is HTML-escaped; inline on* handlers were removed
-      to prevent XSS.
+   HARIOM MODDER — Hardened Edition (Fixed Google Drive Download)
    ===================================================================== */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
@@ -538,8 +508,6 @@ const firebaseConfig = {
   measurementId: "G-CEPT6GQZQS"
 };
 
-/* Optional extra guard — put your admin email(s) here.
-   Leave empty [] to allow any authenticated user. */
 const ADMIN_EMAILS = [];
 
 /* ───────── INIT ───────── */
@@ -569,7 +537,7 @@ function esc(s){
     {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
   ));
 }
-const escAttr = esc; // same rules apply inside quoted attributes
+const escAttr = esc;
 
 function isHttps(url){
   try { const u = new URL(url); return u.protocol === 'https:'; }
@@ -619,18 +587,17 @@ function toast(msg, type='info', ms=2800){
   ico.className = 'tIco';
   ico.textContent = icons[type] || 'ℹ';
   const txt = document.createElement('span');
-  txt.textContent = String(msg);           // safe — no HTML
+  txt.textContent = String(msg);
   el.append(ico, txt);
   box.appendChild(el);
   setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 300); }, ms);
 }
 
-/* ───────── SAFE ICON BUILDER (no inline onerror injection) ───────── */
+/* ───────── SAFE ICON BUILDER ───────── */
 function iconHTML(app, sizeClass){
   const name = String(app?.name || '?');
   const letter = (name.trim().charAt(0) || '?').toUpperCase();
   const url = (app?.iconUrl && isHttps(app.iconUrl)) ? app.iconUrl : '';
-  // onerror removes the <img> so the ::before letter shows through
   const img = url
     ? `<img src="${escAttr(url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
     : '';
@@ -688,7 +655,7 @@ function closeModal(id){
 /* ───────── AUTH ───────── */
 function isAllowedAdmin(user){
   if (!user) return false;
-  if (!ADMIN_EMAILS.length) return true;   // permissive mode
+  if (!ADMIN_EMAILS.length) return true;
   const em = String(user.email || '').toLowerCase();
   return ADMIN_EMAILS.map(x => x.toLowerCase()).includes(em);
 }
@@ -869,7 +836,7 @@ function openDetail(id){
   openModal('detailModal');
 }
 
-/* ───────── DOWNLOAD ───────── */
+/* ═══════════ DOWNLOAD — GOOGLE DRIVE FIXED ═══════════ */
 function resetDlModal(a){
   const wrap = $('dlAppIconWrap');
   if (wrap) wrap.innerHTML = iconHTML(a, 'dl-ic');
@@ -887,13 +854,17 @@ function resetDlModal(a){
   $('dlBytes').textContent = '0 B / ' + (a.size ? fmtSize(a.size) : '?');
   $('dlSpeed').textContent = '—';
   $('dlNote').innerHTML = '⏳ Preparing download...<br>File will be saved by your browser';
+
+  // Remove any previously added manual button
+  const oldBtn = document.getElementById('dlManualBtn');
+  if (oldBtn) oldBtn.remove();
+
   dlController = null;
 }
 
 async function downloadApp(id){
   const a = APPS.find(x => x.id === id);
-  if (!a || !a.apkUrl) { toast('APK link missing', 'err'); return; }
-  if (!isHttps(a.apkUrl)) { toast('Unsafe APK link blocked', 'err'); return; }
+  if (!a || (!a.apkUrl && !a.apkLink)) { toast('APK link missing', 'err'); return; }
 
   closeModal('detailModal');
   resetDlModal(a);
@@ -902,120 +873,58 @@ async function downloadApp(id){
   // Fire-and-forget download counter
   try { await updateDoc(doc(db, 'apps', id), { downloads: increment(1) }); } catch {}
 
-  dlController = new AbortController();
-  dlStartTime = Date.now();
-
   const bar    = $('dlBar');
   const pct    = $('dlPct');
   const status = $('dlStatus');
-  const bytes  = $('dlBytes');
-  const speed  = $('dlSpeed');
   const note   = $('dlNote');
 
-  // Abort after 6s if the host blocks CORS (typical for Drive)
-  const timeoutId = setTimeout(() => {
-    try { dlController?.abort(); } catch {}
-  }, 6000);
+  // UI: instantly show "redirecting" state
+  bar.style.width = '100%';
+  bar.classList.add('dlSuccess');
+  pct.textContent = '✅';
+  pct.style.color = 'var(--ok)';
+  status.textContent = 'Redirecting to Drive...';
+  status.style.color = 'var(--ok)';
+  $('dlBytes').textContent = 'Opening link...';
+  $('dlSpeed').textContent = 'redirect';
 
-  // Fake creep-up so the bar feels alive during connection
-  let simP = 0;
-  const simInt = setInterval(() => {
-    if (simP < 85){
-      simP += 4;
-      const cur = parseFloat(bar.style.width) || 0;
-      if (cur < simP) bar.style.width = simP + '%';
-    }
-  }, 180);
-
-  let lastUI = 0;
-
-  try {
-    status.textContent = '🌐 Connecting...';
-    const res = await fetch(a.apkUrl, {
-      signal: dlController.signal,
-      mode: 'cors',
-      cache: 'no-store',
-      credentials: 'omit',
-      referrerPolicy: 'no-referrer'
-    });
-
-    clearTimeout(timeoutId);
-    clearInterval(simInt);
-
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    if (!res.body) throw new Error('No stream available');
-
-    const total = parseInt(res.headers.get('content-length') || '0', 10) || (a.size || 0);
-    const reader = res.body.getReader();
-    const chunks = [];
-    let received = 0;
-
-    status.textContent = '⬇ Downloading...';
-    bar.style.width = '0%';
-
-    while (true){
-      const { done, value } = await reader.read();
-      if (done) break;
-      chunks.push(value);
-      received += value.length;
-
-      const now = Date.now();
-      if (now - lastUI > 100 || (total && received >= total)){
-        lastUI = now;
-        const p = total ? Math.min(received / total * 100, 99.5) : 0;
-        bar.style.width = p + '%';
-        pct.textContent = Math.floor(p) + '%';
-        bytes.textContent = fmtSize(received) + ' / ' + (total ? fmtSize(total) : '?');
-        const elapsed = (now - dlStartTime) / 1000;
-        if (elapsed > 0.5) speed.textContent = fmtSize(received / elapsed) + '/s';
-      }
-    }
-
-    bar.style.width = '100%';
-    bar.classList.add('dlSuccess');
-    pct.textContent = '100%';
-    pct.style.color = 'var(--ok)';
-    status.textContent = '✅ Complete!';
-    status.style.color = 'var(--ok)';
-    note.textContent = '📁 Saving file...';
-
-    const blob = new Blob(chunks, { type: 'application/vnd.android.package-archive' });
-    const url  = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = String(a.name || 'app').replace(/[^\w\d\-]+/g, '_').slice(0, 60) +
-                    `_v${String(a.version || '1.0').replace(/[^\w.\-]/g, '')}.apk`;
-    document.body.appendChild(link);
-    link.click();
-    link.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 60000);
-
-    note.innerHTML = '✅ File saved to your <b>Downloads</b> folder.';
-    setTimeout(() => closeModal('dlModal'), 2200);
-
-  } catch (err) {
-    clearTimeout(timeoutId);
-    clearInterval(simInt);
-
-    // Fallback: open the Drive page in a new tab (Google blocks direct CORS)
-    status.textContent = '⚠️ Opening Drive...';
-    status.style.color = 'var(--warn)';
-    bar.style.width = '100%';
-    bar.classList.add('dlFail');
-    pct.textContent = '→';
-    pct.style.color = 'var(--warn)';
-    speed.textContent = 'redirect';
-    note.innerHTML = '📱 The Drive page will open — tap <b style="color:#fbbf24">"Download anyway"</b>' +
-                     '<br><span style="font-size:11px;opacity:.7">(Google Drive blocks direct downloads)</span>';
-
-    setTimeout(() => {
-      try {
-        const w = window.open(a.apkUrl, '_blank', 'noopener,noreferrer');
-        if (w) w.opener = null;
-      } catch {}
-      setTimeout(() => closeModal('dlModal'), 2200);
-    }, 800);
+  // Build the safest possible Drive URL (prefer the original share link)
+  let driveUrl = a.apkLink && isHttps(a.apkLink) ? a.apkLink : '';
+  if (!driveUrl) {
+    const did = driveId(a.apkUrl || '');
+    driveUrl = did ? `https://drive.google.com/file/d/${did}/view` : '';
   }
+  if (!driveUrl) {
+    toast('Invalid Drive link', 'err');
+    closeModal('dlModal');
+    return;
+  }
+
+  // Show instructions + manual fallback button
+  note.innerHTML = `
+    <div style="margin-bottom:12px;color:var(--txt2)">
+      📱 Google Drive page khulega.<br>
+      Wahan <b style="color:#fbbf24">"Download anyway"</b> button dabana.
+    </div>
+    <a id="dlManualBtn" href="${escAttr(driveUrl)}" target="_blank" rel="noopener noreferrer"
+       class="btn primary"
+       style="width:100%;justify-content:center;text-decoration:none;margin-top:8px;padding:12px;font-size:14px">
+      ⬇️ Open Google Drive Link
+    </a>
+    <div style="font-size:11px;opacity:.7;margin-top:8px;color:var(--txt3)">
+      Agar page automatically nahi khula toh upar wala button dabao.
+    </div>
+  `;
+
+  // Try auto-opening after a short delay (gives user time to see instructions)
+  setTimeout(() => {
+    try {
+      const w = window.open(driveUrl, '_blank', 'noopener,noreferrer');
+      if (w) w.opener = null;
+    } catch (e) {
+      console.log('Popup blocked — user can use manual button');
+    }
+  }, 900);
 }
 
 function cancelDownload(){
@@ -1044,7 +953,6 @@ async function copyText(t){
     await navigator.clipboard.writeText(t);
     toast('📋 Copied', 'ok');
   } catch {
-    // Fallback for old browsers
     const ta = document.createElement('textarea');
     ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
     document.body.appendChild(ta); ta.select();
@@ -1066,7 +974,6 @@ async function shareSite(){
 /* ───────── CONTACT / REQUESTS ───────── */
 function openContact(){ openModal('contactModal'); }
 
-/* simple client-side rate limit: 1 request / 30s */
 const REQ_COOLDOWN_MS = 30_000;
 async function sendReq(){
   const name = clampStr($('reqName').value, 80);
@@ -1235,7 +1142,6 @@ async function deleteAllApps(){
   if (!confirm(`Delete ALL ${APPS.length} apps?`)) return;
   if (!confirm('Are you absolutely sure?')) return;
   try {
-    // Firestore batches cap at 500 writes
     for (let i = 0; i < APPS.length; i += 450){
       const batch = writeBatch(db);
       APPS.slice(i, i + 450).forEach(a => batch.delete(doc(db, 'apps', a.id)));
@@ -1325,7 +1231,6 @@ $('importFile').addEventListener('change', async e => {
     const raw = JSON.parse(txt);
     if (!Array.isArray(raw)) throw new Error('Invalid format');
 
-    // Sanitize keys to avoid prototype pollution
     const safeKeys = ['name','version','category','desc','featured','iconUrl','apkUrl','apkLink','size','downloads','rating','ratingCount'];
     const arr = raw.slice(0, 500).map(o => {
       const out = {};
@@ -1365,16 +1270,14 @@ $('importFile').addEventListener('change', async e => {
   }
 });
 
-/* ───────── GLOBAL EVENT DELEGATION (no inline handlers) ───────── */
+/* ───────── GLOBAL EVENT DELEGATION ───────── */
 document.addEventListener('click', e => {
-  // Backdrop close
   const backdrop = e.target.closest('.modal[data-backdrop]');
   if (backdrop && e.target === backdrop){
     closeModal(backdrop.dataset.backdrop);
     return;
   }
 
-  // Action buttons
   const actBtn = e.target.closest('[data-act]');
   if (actBtn){
     const act = actBtn.dataset.act;
@@ -1405,12 +1308,10 @@ document.addEventListener('click', e => {
     return;
   }
 
-  // App cards
   const card = e.target.closest('[data-app-id]');
   if (card){ openDetail(card.dataset.appId); }
 });
 
-// Keyboard support for cards
 document.addEventListener('keydown', e => {
   if (e.key !== 'Enter' && e.key !== ' ') return;
   const card = e.target.closest?.('[data-app-id]');
@@ -1476,7 +1377,6 @@ if (auth){
     isAdmin = allowed;
 
     if (user && !allowed){
-      // Signed in but not on allowlist → force logout
       toast('This account is not authorized as admin', 'err', 4000);
       signOut(auth).catch(() => {});
       return;
@@ -1495,7 +1395,6 @@ if (auth){
 /* ───────── BOOT ───────── */
 loadApps();
 
-// Deep-link support: #app=<id>
 if (location.hash.startsWith('#app=')){
   const id = decodeURIComponent(location.hash.slice(5));
   setTimeout(() => { if (APPS.find(a => a.id === id)) openDetail(id); }, 1200);
