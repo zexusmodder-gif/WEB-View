@@ -28,34 +28,18 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{
-  font-family:'Outfit',system-ui,sans-serif;
-  background:var(--bg);color:var(--txt);min-height:100vh;
-  overflow-x:hidden;line-height:1.6;transition:background .3s,color .3s;
-}
-body::before{
-  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.18),transparent 60%),
-    radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.14),transparent 60%),
-    radial-gradient(ellipse 90% 60% at 50% 100%,rgba(168,85,247,.1),transparent 65%);
-}
-[data-theme="light"] body::before{
-  background:
-    radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.1),transparent 60%),
-    radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.08),transparent 60%);
-}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.6;transition:background .3s,color .3s}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.18),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.14),transparent 60%),radial-gradient(ellipse 90% 60% at 50% 100%,rgba(168,85,247,.1),transparent 65%)}
+[data-theme="light"] body::before{background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.1),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.08),transparent 60%)}
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#7c3aed,#06b6d4);border-radius:10px;border:2px solid var(--bg)}
 ::selection{background:rgba(168,85,247,.35)}
-
 .glass{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border);border-radius:var(--r)}
 .gloss{position:relative;overflow:hidden}
 .gloss::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.02) 35%,transparent 60%);border-radius:inherit}
 .gloss::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%);transition:transform .8s;pointer-events:none}
 .gloss:hover::after{transform:translateX(100%)}
-
 nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--border);padding:12px 0}
 [data-theme="light"] nav{background:rgba(255,255,255,.78)}
 .navIn{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px}
@@ -73,7 +57,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .iconBtn{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s;backdrop-filter:blur(12px)}
 .iconBtn:hover{border-color:var(--border-hi);background:var(--glass);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .iconBtn:active{transform:scale(.94)}
-
 .hero{max-width:1320px;margin:0 auto;padding:60px 20px 40px;text-align:center;position:relative}
 .heroBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;background:var(--glass2);border:1px solid var(--border-hi);backdrop-filter:blur(12px);font-size:12.5px;font-weight:600;color:var(--txt2);margin-bottom:22px}
 .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.8s infinite}
@@ -82,7 +65,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(124,58,237,.4))}
 .hero p{color:var(--txt2);font-size:clamp(14px,2vw,17px);max-width:600px;margin:0 auto 32px}
 .heroCTA{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-
 .btn{padding:13px 26px;border-radius:14px;border:0;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.22s;position:relative;overflow:hidden;text-decoration:none}
 .btn.primary{background:var(--grad);color:#fff;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.28)}
 .btn.primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.5),inset 0 1px 0 rgba(255,255,255,.28)}
@@ -90,27 +72,22 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .btn.ghost{background:var(--glass2);color:var(--txt);border:1px solid var(--border-hi);backdrop-filter:blur(12px)}
 .btn.ghost:hover{background:var(--glass);transform:translateY(-2px)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
-
 .stats{max-width:1320px;margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
 .stat{padding:20px 18px;text-align:center;position:relative;overflow:hidden}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:.7}
 .stat .n{font-size:clamp(24px,4vw,34px);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
 .stat .l{font-size:12px;color:var(--txt2);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-
 .section{max-width:1320px;margin:0 auto 44px;padding:0 20px}
 .secHead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
 .secHead h2{font-size:clamp(20px,3vw,26px);font-weight:800;letter-spacing:-.8px;display:flex;align-items:center;gap:10px}
 .secHead h2::before{content:'';width:4px;height:22px;border-radius:2px;background:var(--grad);box-shadow:var(--glow)}
-
 .chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
 .chip{padding:9px 18px;border-radius:100px;background:var(--glass2);border:1px solid var(--border);color:var(--txt2);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;backdrop-filter:blur(12px);flex-shrink:0;font-family:inherit}
 .chip:hover{border-color:var(--border-hi);color:var(--txt)}
 .chip.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--glow)}
-
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
 @media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
-
 .card{padding:16px;cursor:pointer;position:relative;transition:.28s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;border-radius:var(--r)}
 .card:hover{transform:translateY(-6px);border-color:var(--border-hi);box-shadow:0 20px 44px rgba(0,0,0,.4),var(--glow)}
 .card:active{transform:translateY(-2px) scale(.98)}
@@ -126,11 +103,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .card .stats2 span{display:flex;align-items:center;gap:4px}
 .starF{color:#fbbf24}
 .badgeFeat{position:absolute;top:12px;right:12px;background:var(--grad);color:#fff;font-size:9.5px;font-weight:800;padding:4px 9px;border-radius:8px;letter-spacing:.8px;box-shadow:var(--glow)}
-
 .empty{text-align:center;padding:60px 20px;color:var(--txt3)}
 .empty .e{font-size:56px;margin-bottom:12px;opacity:.5}
 .empty p{font-size:15px}
-
 footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:center;margin-top:60px;background:rgba(8,8,12,.4)}
 [data-theme="light"] footer{background:rgba(255,255,255,.5)}
 .footIn{max-width:1320px;margin:0 auto}
@@ -138,7 +113,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .socials a{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);display:grid;place-items:center;color:var(--txt2);text-decoration:none;font-size:17px;transition:.2s}
 .socials a:hover{transform:translateY(-3px);color:var(--txt);border-color:var(--border-hi);box-shadow:var(--glow)}
 .footTxt{font-size:13px;color:var(--txt3)}
-
 .modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none;place-items:center;padding:20px;overflow-y:auto}
 .modal.on{display:grid}
 .modalBox{background:var(--bg2);border:1px solid var(--border-hi);border-radius:var(--r2);width:100%;max-width:560px;max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(124,58,237,.15);animation:modalIn .35s cubic-bezier(.34,1.4,.64,1)}
@@ -150,14 +124,12 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .modalBody{padding:22px}
 .closeX{width:36px;height:36px;border-radius:10px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;font-size:16px;display:grid;place-items:center;transition:.2s}
 .closeX:hover{background:var(--err);color:#fff;border-color:var(--err)}
-
 .field{margin-bottom:16px}
 .field label{display:block;font-size:12px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
 .field input,.field textarea,.field select{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none;transition:.2s}
 .field textarea{resize:vertical;min-height:90px}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18);background:var(--glass)}
 .field select option{background:var(--bg2);color:var(--txt)}
-
 #toastBox{position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
 .toast{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border-hi);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;min-width:240px;max-width:340px;box-shadow:0 14px 40px rgba(0,0,0,.4);animation:slideIn .35s cubic-bezier(.34,1.4,.64,1);pointer-events:auto}
 @keyframes slideIn{from{opacity:0;transform:translateX(120%)}}
@@ -168,24 +140,19 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .toast.err .tIco{color:var(--err)}
 .toast.info .tIco{color:var(--c2)}
 .toast.warn .tIco{color:var(--warn)}
-
 .detailHead{display:flex;gap:16px;align-items:center;margin-bottom:20px}
 .detailHead .icon{width:82px;height:82px;border-radius:20px;object-fit:cover;flex-shrink:0;background:var(--grad);box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.3);display:grid;place-items:center;font-size:34px;color:#fff;font-weight:900}
 .detailHead .nm{font-size:22px;font-weight:900;letter-spacing:-.7px;line-height:1.2}
 .detailHead .vr{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--txt2);margin-top:4px}
 .detailHead .cat2{display:inline-block;font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:8px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase;letter-spacing:.6px;margin-top:8px}
-
 .metaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
 .metaItem{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center}
 .metaItem .v{font-size:16px;font-weight:800;color:var(--txt)}
 .metaItem .k{font-size:10.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;font-weight:600}
-
 .descBox{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;font-size:14px;color:var(--txt2);line-height:1.75;white-space:pre-wrap;word-break:break-word}
-
 .dlBtnBig{width:100%;padding:16px;border-radius:14px;border:0;background:var(--grad);color:#fff;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.3);transition:.22s;letter-spacing:-.3px}
 .dlBtnBig:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.55)}
 .dlBtnBig:active{transform:translateY(0) scale(.98)}
-
 .adminTabs{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .adminTabs::-webkit-scrollbar{display:none}
 .adminTab{padding:12px 16px;background:transparent;border:0;color:var(--txt2);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
@@ -193,7 +160,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .adminTab.on{color:var(--txt);border-bottom-color:var(--p1)}
 .adminPane{padding:20px 22px;display:none}
 .adminPane.on{display:block}
-
 .adminList{display:flex;flex-direction:column;gap:8px}
 .aRow{display:flex;align-items:center;gap:12px;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 13px;transition:.2s}
 .aRow:hover{border-color:var(--border-hi);background:var(--glass)}
@@ -204,21 +170,17 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .miniBtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--glass2);color:var(--txt2);cursor:pointer;display:grid;place-items:center;font-size:14px;transition:.2s;flex-shrink:0}
 .miniBtn:hover{background:var(--glass);color:var(--txt);border-color:var(--border-hi)}
 .miniBtn.del:hover{background:var(--err);color:#fff;border-color:var(--err)}
-
 .statsRow{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:16px}
 .statMini{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
 .statMini .v{font-size:20px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .statMini .k{font-size:10px;color:var(--txt3);text-transform:uppercase;font-weight:700;letter-spacing:.6px;margin-top:2px}
-
 .fab{position:fixed;bottom:22px;right:22px;z-index:60;width:54px;height:54px;border-radius:16px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-size:22px;box-shadow:var(--glow),0 10px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);display:grid;place-items:center;transition:.25s}
 .fab:hover{transform:translateY(-4px) scale(1.05)}
 .fab:active{transform:scale(.94)}
 .fab.hide{transform:translateY(90px);opacity:0;pointer-events:none}
-
 .notice{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:12px 14px;font-size:13px;color:#fbbf24;margin-bottom:16px;line-height:1.6}
 .notice.ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#4ade80}
 .notice.err{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171}
-
 @media(max-width:768px){
   .navIn{gap:10px;padding:0 14px}
   .logoSub{display:none}
@@ -273,9 +235,7 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   <h1>Download <span class="g">Premium Mods</span><br>& APKs — Free</h1>
   <p>Hand-picked, virus-scanned, and always up-to-date. Made with ❤️ by HARIOM MODDER</p>
   <div class="heroCTA">
-    <button class="btn primary" onclick="document.getElementById('appsSection').scrollIntoView({behavior:'smooth'})">
-      ⬇️ Browse Apps
-    </button>
+    <button class="btn primary" onclick="document.getElementById('appsSection').scrollIntoView({behavior:'smooth'})">⬇️ Browse Apps</button>
     <button class="btn ghost" onclick="openContact()">💬 Request App</button>
   </div>
 </section>
@@ -347,52 +307,29 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 <button class="fab hide" id="topFab" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
 <div id="toastBox"></div>
 
-<!-- Detail Modal -->
 <div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
   <div class="modalBox">
-    <div class="modalHead">
-      <h3>App Details</h3>
-      <button class="closeX" onclick="closeModal('detailModal')">✕</button>
-    </div>
+    <div class="modalHead"><h3>App Details</h3><button class="closeX" onclick="closeModal('detailModal')">✕</button></div>
     <div class="modalBody" id="detailBody"></div>
   </div>
 </div>
 
-<!-- Contact Modal -->
 <div class="modal" id="contactModal" onclick="if(event.target===this)closeModal('contactModal')">
   <div class="modalBox">
-    <div class="modalHead">
-      <h3>💬 App Request</h3>
-      <button class="closeX" onclick="closeModal('contactModal')">✕</button>
-    </div>
+    <div class="modalHead"><h3>💬 App Request</h3><button class="closeX" onclick="closeModal('contactModal')">✕</button></div>
     <div class="modalBody">
       <div class="notice">Apni pasand ka app batao — main try karunga upload karne ki.</div>
-      <div class="field">
-        <label>App Name</label>
-        <input id="reqName" placeholder="e.g. Spotify Mod">
-      </div>
-      <div class="field">
-        <label>Your Contact (optional)</label>
-        <input id="reqContact" placeholder="Telegram / Email">
-      </div>
-      <div class="field">
-        <label>Message</label>
-        <textarea id="reqMsg" placeholder="Kya chahiye..."></textarea>
-      </div>
-      <button class="btn primary" style="width:100%;justify-content:center" onclick="sendReq()">
-        📤 Send Request
-      </button>
+      <div class="field"><label>App Name</label><input id="reqName" placeholder="e.g. Spotify Mod"></div>
+      <div class="field"><label>Your Contact (optional)</label><input id="reqContact" placeholder="Telegram / Email"></div>
+      <div class="field"><label>Message</label><textarea id="reqMsg" placeholder="Kya chahiye..."></textarea></div>
+      <button class="btn primary" style="width:100%;justify-content:center" onclick="sendReq()">📤 Send Request</button>
     </div>
   </div>
 </div>
 
-<!-- Menu Modal -->
 <div class="modal" id="menuModal" onclick="if(event.target===this)closeModal('menuModal')">
   <div class="modalBox" style="max-width:380px">
-    <div class="modalHead">
-      <h3>Menu</h3>
-      <button class="closeX" onclick="closeModal('menuModal')">✕</button>
-    </div>
+    <div class="modalHead"><h3>Menu</h3><button class="closeX" onclick="closeModal('menuModal')">✕</button></div>
     <div class="modalBody" style="display:flex;flex-direction:column;gap:8px">
       <button class="btn ghost" style="justify-content:flex-start" onclick="closeModal('menuModal');openContact()">💬 Request App</button>
       <button class="btn ghost" style="justify-content:flex-start" onclick="closeModal('menuModal');toggleTheme()">🌗 Toggle Theme</button>
@@ -402,31 +339,18 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- Login Modal -->
 <div class="modal" id="loginModal" onclick="if(event.target===this)closeModal('loginModal')">
   <div class="modalBox" style="max-width:420px">
-    <div class="modalHead">
-      <h3>🔐 Admin Login</h3>
-      <button class="closeX" onclick="closeModal('loginModal')">✕</button>
-    </div>
+    <div class="modalHead"><h3>🔐 Admin Login</h3><button class="closeX" onclick="closeModal('loginModal')">✕</button></div>
     <div class="modalBody">
-      <div class="field">
-        <label>Email</label>
-        <input type="email" id="logEmail" placeholder="admin@hariom.com">
-      </div>
-      <div class="field">
-        <label>Password</label>
-        <input type="password" id="logPass" placeholder="••••••••">
-      </div>
-      <button class="btn primary" style="width:100%;justify-content:center" id="logBtn" onclick="doLogin()">
-        Login
-      </button>
+      <div class="field"><label>Email</label><input type="email" id="logEmail" placeholder="admin@hariom.com"></div>
+      <div class="field"><label>Password</label><input type="password" id="logPass" placeholder="••••••••"></div>
+      <button class="btn primary" style="width:100%;justify-content:center" id="logBtn" onclick="doLogin()">Login</button>
       <div id="logErr" style="margin-top:14px"></div>
     </div>
   </div>
 </div>
 
-<!-- Admin Panel Modal -->
 <div class="modal" id="adminModal" onclick="if(event.target===this)closeModal('adminModal')">
   <div class="modalBox" style="max-width:720px">
     <div class="modalHead">
@@ -443,27 +367,12 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
       <button class="adminTab" data-tab="data">💾 Data</button>
     </div>
 
-    <!-- Upload -->
     <div class="adminPane on" data-pane="upload">
-      <div class="notice ok">
-        💡 <b>Google Drive Method:</b><br>
-        1. Drive pe APK upload karo<br>
-        2. Right-click → Share → "Anyone with the link" → Copy<br>
-        3. Neeche paste karo — code khud direct-download link bana lega
-      </div>
-
-      <div class="field">
-        <label>App Name *</label>
-        <input id="upName" placeholder="e.g. Spotify Premium Mod">
-      </div>
-
+      <div class="notice ok">💡 <b>Google Drive Method:</b><br>1. Drive pe APK upload karo<br>2. Right-click → Share → "Anyone with the link" → Copy<br>3. Neeche paste karo</div>
+      <div class="field"><label>App Name *</label><input id="upName" placeholder="e.g. Spotify Premium Mod"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="field">
-          <label>Version *</label>
-          <input id="upVer" placeholder="e.g. 8.9.1">
-        </div>
-        <div class="field">
-          <label>Category *</label>
+        <div class="field"><label>Version *</label><input id="upVer" placeholder="e.g. 8.9.1"></div>
+        <div class="field"><label>Category *</label>
           <select id="upCat">
             <option>Games</option><option>Tools</option><option>Social</option>
             <option>Photo</option><option>Video</option><option>Music</option>
@@ -471,43 +380,24 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
           </select>
         </div>
       </div>
-
-      <div class="field">
-        <label>Description</label>
-        <textarea id="upDesc" placeholder="Features, mod info, changelog..."></textarea>
-      </div>
-
-      <div class="field">
-        <label>APK File Size (MB) *</label>
-        <input type="number" id="upSize" placeholder="e.g. 45" step="0.1" min="0">
-      </div>
-
+      <div class="field"><label>Description</label><textarea id="upDesc" placeholder="Features, mod info..."></textarea></div>
+      <div class="field"><label>APK File Size (MB) *</label><input type="number" id="upSize" placeholder="e.g. 45" step="0.1" min="0"></div>
       <div class="field">
         <label>📦 APK — Drive Link *</label>
         <input id="upApkLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view">
         <div id="apkLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
       </div>
-
       <div class="field">
         <label>🖼 App Icon — Drive Link (optional)</label>
         <input id="upIconLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view">
         <div id="iconLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
       </div>
-
-      <div class="field">
-        <label>Featured</label>
-        <select id="upFeat">
-          <option value="no">No</option>
-          <option value="yes">Yes ⭐</option>
-        </select>
+      <div class="field"><label>Featured</label>
+        <select id="upFeat"><option value="no">No</option><option value="yes">Yes ⭐</option></select>
       </div>
-
-      <button class="btn primary" style="width:100%;justify-content:center;margin-top:14px" id="upBtn" onclick="uploadApp()">
-        🚀 Save App
-      </button>
+      <button class="btn primary" style="width:100%;justify-content:center;margin-top:14px" id="upBtn" onclick="uploadApp()">🚀 Save App</button>
     </div>
 
-    <!-- Manage -->
     <div class="adminPane" data-pane="manage">
       <div class="statsRow">
         <div class="statMini"><div class="v" id="mApps">0</div><div class="k">Apps</div></div>
@@ -521,36 +411,17 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
       <div class="adminList" id="admList"></div>
     </div>
 
-    <!-- Settings -->
     <div class="adminPane" data-pane="settings">
-      <div class="field">
-        <label>Site Title</label>
-        <input id="setTitle" placeholder="HARIOM MODDER">
-      </div>
-      <div class="field">
-        <label>Tagline</label>
-        <input id="setTag" placeholder="Premium APK Hub">
-      </div>
-      <div class="field">
-        <label>Telegram</label>
-        <input id="setTg" placeholder="https://t.me/...">
-      </div>
-      <div class="field">
-        <label>WhatsApp</label>
-        <input id="setWa" placeholder="https://wa.me/...">
-      </div>
-      <div class="field">
-        <label>YouTube</label>
-        <input id="setYt" placeholder="https://youtube.com/...">
-      </div>
-      <button class="btn primary" style="width:100%;justify-content:center" onclick="saveSettings()">
-        💾 Save Settings
-      </button>
+      <div class="field"><label>Site Title</label><input id="setTitle" placeholder="HARIOM MODDER"></div>
+      <div class="field"><label>Tagline</label><input id="setTag" placeholder="Premium APK Hub"></div>
+      <div class="field"><label>Telegram</label><input id="setTg" placeholder="https://t.me/..."></div>
+      <div class="field"><label>WhatsApp</label><input id="setWa" placeholder="https://wa.me/..."></div>
+      <div class="field"><label>YouTube</label><input id="setYt" placeholder="https://youtube.com/..."></div>
+      <button class="btn primary" style="width:100%;justify-content:center" onclick="saveSettings()">💾 Save Settings</button>
     </div>
 
-    <!-- Data -->
     <div class="adminPane" data-pane="data">
-      <div class="notice">Yahan se saara data export/import kar sakte ho. Backup ke liye useful.</div>
+      <div class="notice">Backup ke liye export/import kar sakte ho.</div>
       <div style="display:flex;flex-direction:column;gap:10px">
         <button class="btn ghost" onclick="exportData()">📥 Export JSON</button>
         <button class="btn ghost" onclick="document.getElementById('importFile').click()">📤 Import JSON</button>
@@ -563,25 +434,18 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import {
-  getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import {
-  getFirestore, collection, doc, addDoc, getDoc, deleteDoc,
-  updateDoc, onSnapshot, query, serverTimestamp, increment, writeBatch,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, doc, addDoc, getDoc, deleteDoc, updateDoc, onSnapshot, query, serverTimestamp, increment, writeBatch, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* ═══════════════════════════════════════════════
-   ⚠️  YAHAN APNA FIREBASE CONFIG DAALO  ⚠️
-   ═══════════════════════════════════════════════ */
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
-  authDomain: "YOUR_PROJECT.firebaseapp.com",
-  projectId: "YOUR_PROJECT_ID",
-  storageBucket: "YOUR_PROJECT.appspot.com",
-  messagingSenderId: "YOUR_SENDER_ID",
-  appId: "YOUR_APP_ID"
+  apiKey: "AIzaSyDqVPnKIwuJzJVOaGqTzD4IIFysVpJ6g4Y",
+  authDomain: "website-hariom.firebaseapp.com",
+  databaseURL: "https://website-hariom-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "website-hariom",
+  storageBucket: "website-hariom.firebasestorage.app",
+  messagingSenderId: "602644625906",
+  appId: "1:602644625906:web:7db11a4e6eb16beeb7536b",
+  measurementId: "G-CEPT6GQZQS"
 };
 
 let app, auth, db;
@@ -589,21 +453,11 @@ try {
   app = initializeApp(firebaseConfig);
   auth = getAuth(app);
   db = getFirestore(app);
-  window.__fb = { app, auth, db };
   console.log('%c🔥 Firebase ready','color:#a855f7;font-weight:bold');
-} catch(e) {
-  console.error('Firebase init fail:', e);
-}
+} catch(e) { console.error('Firebase init fail:', e); }
 
-/* ═══════════ STATE ═══════════ */
-let APPS = [];
-let siteCfg = {};
-let currentCat = 'all';
-let currentSort = 'new';
-let searchQ = '';
-let isAdmin = false;
+let APPS = [], siteCfg = {}, currentCat = 'all', currentSort = 'new', searchQ = '', isAdmin = false;
 
-/* ═══════════ HELPERS ═══════════ */
 function $(id){ return document.getElementById(id); }
 
 function toast(msg, type='info', ms=2800){
@@ -613,10 +467,7 @@ function toast(msg, type='info', ms=2800){
   el.className = 'toast ' + type;
   el.innerHTML = `<span class="tIco">${icons[type]||'ℹ'}</span><span>${msg}</span>`;
   box.appendChild(el);
-  setTimeout(() => {
-    el.classList.add('out');
-    setTimeout(() => el.remove(), 300);
-  }, ms);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 300); }, ms);
 }
 window.toast = toast;
 
@@ -626,15 +477,8 @@ function fmtSize(b){
   const i = Math.floor(Math.log(b)/Math.log(1024));
   return (b/Math.pow(1024,i)).toFixed(i?1:0) + ' ' + u[i];
 }
-function fmtNum(n){
-  n = n||0;
-  if(n>=1e6) return (n/1e6).toFixed(1)+'M';
-  if(n>=1e3) return (n/1e3).toFixed(1)+'K';
-  return String(n);
-}
-function esc(s){
-  return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
+function fmtNum(n){ n=n||0; if(n>=1e6) return (n/1e6).toFixed(1)+'M'; if(n>=1e3) return (n/1e3).toFixed(1)+'K'; return String(n); }
+function esc(s){ return String(s||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function timeAgo(ts){
   if(!ts) return 'just now';
   const d = ts.toDate ? ts.toDate() : new Date(ts);
@@ -645,8 +489,6 @@ function timeAgo(ts){
   if(s<2592000) return Math.floor(s/86400)+'d ago';
   return d.toLocaleDateString();
 }
-
-/* ═══════════ DRIVE HELPERS ═══════════ */
 function driveId(url){
   if(!url) return '';
   let m = url.match(/\/file\/d\/([a-zA-Z0-9_-]{20,})/);
@@ -657,17 +499,10 @@ function driveId(url){
   if(m) return m[1];
   return '';
 }
-function driveDirect(url){
-  const id = driveId(url);
-  return id ? `https://drive.google.com/uc?export=download&id=${id}` : '';
-}
-function drivePreview(url){
-  const id = driveId(url);
-  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w400` : '';
-}
+function driveDirect(url){ const id = driveId(url); return id ? `https://drive.google.com/uc?export=download&id=${id}` : ''; }
+function drivePreview(url){ const id = driveId(url); return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w400` : ''; }
 window.driveId = driveId;
 
-/* ═══════════ THEME ═══════════ */
 const savedTheme = localStorage.getItem('hm_theme') || 'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 $('themeBtn').textContent = savedTheme === 'dark' ? '🌙' : '☀️';
@@ -682,7 +517,6 @@ function toggleTheme(){
 window.toggleTheme = toggleTheme;
 $('themeBtn').onclick = toggleTheme;
 
-/* ═══════════ MODAL ═══════════ */
 function openModal(id){ $(id).classList.add('on'); document.body.style.overflow='hidden'; }
 function closeModal(id){ $(id).classList.remove('on'); document.body.style.overflow=''; }
 window.openModal = openModal;
@@ -690,7 +524,6 @@ window.closeModal = closeModal;
 
 $('menuBtn').onclick = () => openModal('menuModal');
 
-/* ═══════════ ADMIN LOGIN ═══════════ */
 function openAdmin(){
   if(isAdmin){ openModal('adminModal'); loadAdminData(); }
   else openModal('loginModal');
@@ -700,10 +533,7 @@ window.openAdmin = openAdmin;
 async function doLogin(){
   const email = $('logEmail').value.trim();
   const pass = $('logPass').value;
-  if(!email || !pass){
-    $('logErr').innerHTML = '<div class="notice err">Email & password daalo</div>';
-    return;
-  }
+  if(!email || !pass){ $('logErr').innerHTML = '<div class="notice err">Email & password daalo</div>'; return; }
   $('logBtn').disabled = true;
   $('logBtn').textContent = 'Logging in...';
   $('logErr').innerHTML = '';
@@ -735,7 +565,6 @@ onAuthStateChanged(auth, user => {
   }
 });
 
-/* ═══════════ LOAD APPS ═══════════ */
 function loadApps(){
   if(!db){ showEmpty(); return; }
   const q = query(collection(db, 'apps'));
@@ -745,18 +574,11 @@ function loadApps(){
     renderAll();
     updateStats();
     if(isAdmin) renderAdminList();
-  }, err => {
-    console.error(err);
-    showEmpty();
-  });
+  }, err => { console.error(err); showEmpty(); });
 }
 
-function showEmpty(){
-  $('appsGrid').innerHTML = '';
-  $('emptyBox').classList.remove('hidden');
-}
+function showEmpty(){ $('appsGrid').innerHTML = ''; $('emptyBox').classList.remove('hidden'); }
 
-/* ═══════════ RENDER ═══════════ */
 function filtered(){
   let list = APPS.filter(a => {
     if(currentCat !== 'all' && a.category !== currentCat) return false;
@@ -784,20 +606,13 @@ function renderAll(){
   const grid = $('appsGrid');
   const feat = $('featGrid');
   const featSec = $('featSection');
-
   if(!list.length){ showEmpty(); }
-  else {
-    $('emptyBox').classList.add('hidden');
-    grid.innerHTML = list.map(cardHTML).join('');
-  }
-
+  else { $('emptyBox').classList.add('hidden'); grid.innerHTML = list.map(cardHTML).join(''); }
   const featured = list.filter(a => a.featured);
   if(featured.length && currentCat === 'all' && !searchQ){
     featSec.classList.remove('hidden');
     feat.innerHTML = featured.slice(0,4).map(cardHTML).join('');
-  } else {
-    featSec.classList.add('hidden');
-  }
+  } else { featSec.classList.add('hidden'); }
 }
 
 function cardHTML(a){
@@ -840,7 +655,6 @@ function updateStats(){
   $('heroLive').textContent = `${APPS.length} apps • ${fmtNum(dl)} downloads`;
 }
 
-/* ═══════════ DETAIL ═══════════ */
 function openDetail(id){
   const a = APPS.find(x => x.id === id);
   if(!a) return;
@@ -876,7 +690,7 @@ window.openDetail = openDetail;
 async function downloadApp(id){
   const a = APPS.find(x => x.id === id);
   if(!a || !a.apkUrl){ toast('APK link missing', 'err'); return; }
-  try { await updateDoc(doc(db,'apps',id), { downloads: increment(1) }); } catch(e){}
+  try { await updateDoc(doc(db,'apps',id), { downloads: increment(1) }); } catch(e){ console.warn('Counter fail:', e.message); }
   toast('⬇ Drive pe le ja rahe hain...', 'info', 1500);
   setTimeout(() => {
     window.open(a.apkUrl, '_blank');
@@ -889,11 +703,8 @@ window.downloadApp = downloadApp;
 function shareApp(id){
   const a = APPS.find(x => x.id === id);
   const url = location.origin + location.pathname + '#app=' + id;
-  if(navigator.share){
-    navigator.share({title: a.name, text: `Download ${a.name} v${a.version}`, url}).catch(()=>{});
-  } else {
-    navigator.clipboard.writeText(url).then(() => toast('🔗 Link copy', 'ok'));
-  }
+  if(navigator.share){ navigator.share({title: a.name, text: `Download ${a.name} v${a.version}`, url}).catch(()=>{}); }
+  else { navigator.clipboard.writeText(url).then(() => toast('🔗 Link copy', 'ok')); }
 }
 window.shareApp = shareApp;
 
@@ -903,7 +714,6 @@ function copyLink(id){
 }
 window.copyLink = copyLink;
 
-/* ═══════════ CONTACT ═══════════ */
 function openContact(){ openModal('contactModal'); }
 window.openContact = openContact;
 
@@ -920,13 +730,10 @@ async function sendReq(){
     toast('✅ Request bhej di!', 'ok');
     closeModal('contactModal');
     $('reqName').value = $('reqContact').value = $('reqMsg').value = '';
-  } catch(e){
-    toast('Fail: ' + e.message, 'err');
-  }
+  } catch(e){ toast('Fail: ' + e.message, 'err'); }
 }
 window.sendReq = sendReq;
 
-/* ═══════════ UPLOAD (Drive links) ═══════════ */
 document.addEventListener('input', e => {
   if(e.target.id === 'upApkLink'){
     const ok = driveId(e.target.value);
@@ -934,7 +741,7 @@ document.addEventListener('input', e => {
     if(!e.target.value){ el.textContent = ''; return; }
     el.innerHTML = ok
       ? '<span style="color:#10b981">✅ Valid Drive link</span>'
-      : '<span style="color:#ef4444">❌ Galat link — file/d/ID wala link paste karo</span>';
+      : '<span style="color:#ef4444">❌ Galat link</span>';
   }
   if(e.target.id === 'upIconLink'){
     const ok = driveId(e.target.value);
@@ -948,7 +755,6 @@ document.addEventListener('input', e => {
 
 async function uploadApp(){
   if(!db){ toast('Firebase ready nahi', 'err'); return; }
-
   const name = $('upName').value.trim();
   const version = $('upVer').value.trim();
   const cat = $('upCat').value;
@@ -957,39 +763,23 @@ async function uploadApp(){
   const sizeMB = parseFloat($('upSize').value) || 0;
   const apkLink = $('upApkLink').value.trim();
   const iconLink = $('upIconLink').value.trim();
-
   if(!name || !version){ toast('Name & version zaroori', 'warn'); return; }
   if(!apkLink){ toast('APK Drive link daalo', 'warn'); return; }
   if(!driveId(apkLink)){ toast('APK link galat hai', 'err'); return; }
   if(!sizeMB){ toast('File size (MB) daalo', 'warn'); return; }
-
   const apkUrl = driveDirect(apkLink);
   const iconUrl = iconLink && driveId(iconLink) ? drivePreview(iconLink) : '';
-
   const btn = $('upBtn');
   btn.disabled = true;
   btn.textContent = 'Saving...';
-
   try {
     await addDoc(collection(db, 'apps'), {
-      name, version,
-      category: cat,
-      desc,
-      featured: feat,
-      iconUrl,
-      apkUrl,
-      apkLink,
+      name, version, category: cat, desc, featured: feat, iconUrl, apkUrl, apkLink,
       size: Math.round(sizeMB * 1024 * 1024),
-      downloads: 0,
-      rating: 0,
-      ratingCount: 0,
-      createdAt: serverTimestamp()
+      downloads: 0, rating: 0, ratingCount: 0, createdAt: serverTimestamp()
     });
-
     toast('🚀 App save ho gayi!', 'ok', 3000);
-
-    ['upName','upVer','upDesc','upSize','upApkLink','upIconLink']
-      .forEach(id => $(id).value = '');
+    ['upName','upVer','upDesc','upSize','upApkLink','upIconLink'].forEach(id => $(id).value = '');
     $('apkLinkStatus').textContent = '';
     $('iconLinkStatus').textContent = '';
   } catch(e){
@@ -1002,26 +792,17 @@ async function uploadApp(){
 }
 window.uploadApp = uploadApp;
 
-/* ═══════════ ADMIN DATA ═══════════ */
-function loadAdminData(){
-  renderAdminList();
-  loadSettings();
-}
+function loadAdminData(){ renderAdminList(); loadSettings(); }
 
 function renderAdminList(){
   const list = $('admList');
   if(!list) return;
   const q = ($('admSearch')?.value || '').toLowerCase();
   const filtered = APPS.filter(a => !q || (a.name||'').toLowerCase().includes(q));
-  if(!filtered.length){
-    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3)">Koi app nahi</div>';
-    return;
-  }
+  if(!filtered.length){ list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3)">Koi app nahi</div>'; return; }
   list.innerHTML = filtered.map(a => `
     <div class="aRow">
-      ${a.iconUrl
-        ? `<img src="${esc(a.iconUrl)}" alt="">`
-        : `<div class="ph">${esc((a.name||'?')[0])}</div>`}
+      ${a.iconUrl ? `<img src="${esc(a.iconUrl)}" alt="">` : `<div class="ph">${esc((a.name||'?')[0])}</div>`}
       <div class="info">
         <div class="nm">${esc(a.name)}</div>
         <div class="sb">v${esc(a.version)} • ${fmtNum(a.downloads||0)} dl • ${fmtSize(a.size)}</div>
@@ -1039,19 +820,15 @@ window.renderAdminList = renderAdminList;
 async function deleteApp(id){
   const a = APPS.find(x => x.id === id);
   if(!confirm(`"${a.name}" delete karni hai?`)) return;
-  try {
-    await deleteDoc(doc(db, 'apps', id));
-    toast('🗑 Delete ho gayi', 'ok');
-  } catch(e){ toast('Fail: ' + e.message, 'err'); }
+  try { await deleteDoc(doc(db, 'apps', id)); toast('🗑 Delete ho gayi', 'ok'); }
+  catch(e){ toast('Fail: ' + e.message, 'err'); }
 }
 window.deleteApp = deleteApp;
 
 async function toggleFeat(id){
   const a = APPS.find(x => x.id === id);
-  try {
-    await updateDoc(doc(db,'apps',id), { featured: !a.featured });
-    toast(a.featured ? 'Featured OFF' : '⭐ Featured ON', 'ok');
-  } catch(e){ toast('Fail', 'err'); }
+  try { await updateDoc(doc(db,'apps',id), { featured: !a.featured }); toast(a.featured ? 'Featured OFF' : '⭐ Featured ON', 'ok'); }
+  catch(e){ toast('Fail', 'err'); }
 }
 window.toggleFeat = toggleFeat;
 
@@ -1068,7 +845,6 @@ async function deleteAllApps(){
 }
 window.deleteAllApps = deleteAllApps;
 
-/* ═══════════ SETTINGS ═══════════ */
 async function loadSettings(){
   try {
     const d = await getDoc(doc(db, 'settings', 'site'));
@@ -1083,7 +859,6 @@ async function loadSettings(){
     }
   } catch(e){}
 }
-
 function applySettings(){
   if(siteCfg.telegram) document.querySelector('[data-s="tg"]').href = siteCfg.telegram;
   if(siteCfg.whatsapp) document.querySelector('[data-s="wa"]').href = siteCfg.whatsapp;
@@ -1105,7 +880,6 @@ async function saveSettings(){
 }
 window.saveSettings = saveSettings;
 
-/* ═══════════ EXPORT / IMPORT ═══════════ */
 function exportData(){
   const data = JSON.stringify(APPS, null, 2);
   const blob = new Blob([data], {type:'application/json'});
@@ -1127,36 +901,19 @@ $('importFile').onchange = async e => {
     const arr = JSON.parse(txt);
     if(!Array.isArray(arr)) throw new Error('Invalid format');
     if(!confirm(`${arr.length} apps import karne hain?`)) return;
-    for(const a of arr){
-      const {id, ...data} = a;
-      await addDoc(collection(db, 'apps'), data);
-    }
+    for(const a of arr){ const {id, ...data} = a; await addDoc(collection(db, 'apps'), data); }
     toast('📤 Import ho gaya', 'ok');
-  } catch(err){
-    toast('Import fail: ' + err.message, 'err');
-  }
+  } catch(err){ toast('Import fail: ' + err.message, 'err'); }
 };
 
-/* ═══════════ SHARE SITE ═══════════ */
 function shareSite(){
-  if(navigator.share){
-    navigator.share({title:'HARIOM MODDER', text:'Premium APKs — free download', url:location.href}).catch(()=>{});
-  } else {
-    navigator.clipboard.writeText(location.href).then(() => toast('🔗 Link copy', 'ok'));
-  }
+  if(navigator.share){ navigator.share({title:'HARIOM MODDER', text:'Premium APKs — free download', url:location.href}).catch(()=>{}); }
+  else { navigator.clipboard.writeText(location.href).then(() => toast('🔗 Link copy', 'ok')); }
 }
 window.shareSite = shareSite;
 
-/* ═══════════ EVENTS ═══════════ */
-$('searchInput').addEventListener('input', e => {
-  searchQ = e.target.value.trim();
-  renderAll();
-});
-
-$('sortSel').addEventListener('change', e => {
-  currentSort = e.target.value;
-  renderAll();
-});
+$('searchInput').addEventListener('input', e => { searchQ = e.target.value.trim(); renderAll(); });
+$('sortSel').addEventListener('change', e => { currentSort = e.target.value; renderAll(); });
 
 document.querySelectorAll('.chip[data-cat]').forEach(c => {
   c.addEventListener('click', () => {
@@ -1179,11 +936,8 @@ document.querySelectorAll('.adminTab').forEach(t => {
 
 if($('admSearch')) $('admSearch').oninput = renderAdminList;
 
-window.addEventListener('scroll', () => {
-  $('topFab').classList.toggle('hide', scrollY < 400);
-});
+window.addEventListener('scroll', () => { $('topFab').classList.toggle('hide', scrollY < 400); });
 
-/* ═══════════ INIT ═══════════ */
 $('yr').textContent = new Date().getFullYear();
 loadApps();
 
