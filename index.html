@@ -256,6 +256,7 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
     </div>
     <div class="navAct">
       <button class="iconBtn" id="themeBtn" title="Theme">🌙</button>
+      <button class="iconBtn" id="menuBtn" title="Menu">⋮</button>
       <button class="userBtn guest" id="userBtn" title="Account">👤</button>
     </div>
   </div>
@@ -268,6 +269,7 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   <div class="heroCTA">
     <button class="btn primary" data-act="scroll-apps">⬇️ Browse Apps</button>
     <button class="btn gold" data-act="scroll-vip">👑 VIP Apps</button>
+    <button class="btn ghost" data-act="contact">💬 Request App</button>
   </div>
 </section>
 
@@ -358,6 +360,33 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
       </div>
       <div id="dlNote" style="font-size:12.5px;color:var(--txt3);text-align:center;margin-top:14px">⏳ Preparing...</div>
       <button class="btn ghost" style="width:100%;justify-content:center;margin-top:16px" data-act="cancel-dl">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- MENU MODAL -->
+<div class="modal" id="menuModal" data-backdrop="menuModal">
+  <div class="modalBox" style="max-width:380px">
+    <div class="modalHead"><h3>Menu</h3><button class="closeX" data-act="close" data-modal="menuModal">✕</button></div>
+    <div class="modalBody" style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn ghost" style="justify-content:flex-start" data-act="contact">💬 Request App</button>
+      <button class="btn ghost" style="justify-content:flex-start" data-act="toggle-theme">🌗 Toggle Theme</button>
+      <button class="btn ghost" style="justify-content:flex-start" data-act="share-site">🔗 Share Website</button>
+      <button class="btn ghost" style="justify-content:flex-start;color:var(--p2)" data-act="open-admin">🔐 Admin Login</button>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT / REQUEST MODAL -->
+<div class="modal" id="contactModal" data-backdrop="contactModal">
+  <div class="modalBox">
+    <div class="modalHead"><h3>💬 App Request</h3><button class="closeX" data-act="close" data-modal="contactModal">✕</button></div>
+    <div class="modalBody">
+      <div class="notice">Apni pasand ka app batao — main try karunga upload karne ki.</div>
+      <div class="field"><label>App Name *</label><input id="reqName" placeholder="e.g. Spotify Mod" maxlength="80" autocomplete="off"></div>
+      <div class="field"><label>Your Contact (optional)</label><input id="reqContact" placeholder="Telegram / Email" maxlength="80" autocomplete="off"></div>
+      <div class="field"><label>Message</label><textarea id="reqMsg" placeholder="Kya chahiye..." maxlength="500"></textarea></div>
+      <button class="btn primary" style="width:100%;justify-content:center" data-act="send-req">📤 Send Request</button>
     </div>
   </div>
 </div>
@@ -515,8 +544,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged,
          createUserWithEmailAndPassword, sendPasswordResetEmail, updateProfile }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, doc, addDoc, getDoc, getDocs, setDoc, deleteDoc, updateDoc,
-         onSnapshot, query, where, serverTimestamp, increment, writeBatch, orderBy }
+import { getFirestore, collection, doc, addDoc, getDoc, setDoc, deleteDoc, updateDoc,
+         onSnapshot, query, where, serverTimestamp, increment, writeBatch }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 const firebaseConfig = {
@@ -550,7 +579,6 @@ const isEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||''));
 
 function fmtSize(b){ b=Number(b)||0; if(b<=0) return '0 B'; const u=['B','KB','MB','GB']; const i=Math.min(Math.floor(Math.log(b)/Math.log(1024)),u.length-1); return (b/Math.pow(1024,i)).toFixed(i?1:0)+' '+u[i]; }
 function fmtNum(n){ n=Number(n)||0; if(n>=1e9)return (n/1e9).toFixed(1)+'B'; if(n>=1e6)return (n/1e6).toFixed(1)+'M'; if(n>=1e3)return (n/1e3).toFixed(1)+'K'; return String(n); }
-function timeAgo(ts){ if(!ts) return 'just now'; let d; try{ d = ts.toDate?ts.toDate():new Date(ts);}catch{ return 'recently'; } const s=(Date.now()-d.getTime())/1000; if(!isFinite(s)||s<0) return 'just now'; if(s<60) return 'just now'; if(s<3600) return Math.floor(s/60)+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; }
 function fmtDate(ts){ if(!ts) return '-'; try { const d = ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('en-IN'); } catch { return '-'; } }
 
 function toast(msg, type='info', ms=2800){
@@ -589,6 +617,7 @@ function toggleTheme(){
   document.documentElement.setAttribute('data-theme', next);
   try{ localStorage.setItem('hm_theme', next); }catch{}
   $('themeBtn').textContent = next==='dark'?'🌙':'☀️';
+  toast(next==='dark'?'🌙 Dark mode':'☀️ Light mode', 'info', 1400);
 }
 
 /* MODALS */
@@ -673,6 +702,35 @@ async function doAdminLogin(){
   } finally { btn.disabled = false; btn.textContent = 'Login as Admin'; }
 }
 
+/* ───────── CONTACT / REQUEST ───────── */
+async function sendReq(){
+  const name = clampStr($('reqName').value, 80);
+  const contact = clampStr($('reqContact').value, 80);
+  const message = clampStr($('reqMsg').value, 500);
+  if(name.length < 2){ toast('App name daalo', 'warn'); return; }
+  try {
+    await addDoc(collection(db, 'requests'), {
+      name, contact, message,
+      ua: navigator.userAgent.slice(0, 200),
+      createdAt: serverTimestamp()
+    });
+    toast('✅ Request bhej di!', 'ok');
+    closeModal('contactModal');
+    $('reqName').value = $('reqContact').value = $('reqMsg').value = '';
+  } catch(e){ toast('Failed: ' + (e.message||'Try again'), 'err'); }
+}
+
+/* ───────── SHARE ───────── */
+async function shareSite(){
+  if(navigator.share){
+    try { await navigator.share({ title:'HARIOM MODDER', text:'Free + VIP premium APKs', url: location.href }); }
+    catch {}
+  } else {
+    try { await navigator.clipboard.writeText(location.href); toast('📋 Link copy', 'ok'); }
+    catch { toast('Copy failed', 'err'); }
+  }
+}
+
 /* ───────── FIRESTORE LISTENERS ───────── */
 function loadApps(){
   if(!db) return;
@@ -686,7 +744,6 @@ function loadApps(){
 
 function loadPurchases(){
   if(!db) return;
-  // Admin sees all
   if(purchasesUnsub) purchasesUnsub();
   purchasesUnsub = onSnapshot(query(collection(db, 'purchases')), snap => {
     PURCHASES = [];
@@ -701,7 +758,7 @@ function loadMyPurchases(uid){
   myPurchUnsub = onSnapshot(query(collection(db, 'purchases'), where('userId','==',uid)), snap => {
     MY_PURCHASES = [];
     snap.forEach(d => MY_PURCHASES.push({ id: d.id, ...d.data() }));
-    renderAll(); // re-render to update VIP badges
+    renderAll();
     if($('profileModal').classList.contains('on')) renderProfile();
   });
 }
@@ -726,12 +783,8 @@ function applySettings(){
 }
 
 /* ───────── RENDER ───────── */
-function hasPurchased(appId){
-  return MY_PURCHASES.some(p => p.appId === appId && p.status === 'approved');
-}
-function pendingPurchase(appId){
-  return MY_PURCHASES.find(p => p.appId === appId && p.status === 'pending');
-}
+function hasPurchased(appId){ return MY_PURCHASES.some(p => p.appId === appId && p.status === 'approved'); }
+function pendingPurchase(appId){ return MY_PURCHASES.find(p => p.appId === appId && p.status === 'pending'); }
 function isPaid(a){ return (a.price || 0) > 0; }
 
 function filtered(){
@@ -984,7 +1037,7 @@ function renderProfile(){
       <div style="color:var(--txt3);font-size:13px">${esc(currentUser.email)}</div>
     </div>
 
-    <div class="statsRow" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
       <div class="metaItem"><div class="v">${mine.length}</div><div class="k">Purchases</div></div>
       <div class="metaItem"><div class="v">${mine.filter(p=>p.status==='approved').length}</div><div class="k">Approved</div></div>
       <div class="metaItem"><div class="v">${mine.filter(p=>p.status==='pending').length}</div><div class="k">Pending</div></div>
@@ -1191,6 +1244,16 @@ document.addEventListener('click', e => {
       case 'upload-app': uploadApp(); break;
       case 'save-settings': saveSettings(); break;
       case 'export': exportData(); break;
+      /* Purane features wapas */
+      case 'contact': closeModal('menuModal'); openModal('contactModal'); break;
+      case 'toggle-theme': closeModal('menuModal'); toggleTheme(); break;
+      case 'share-site': closeModal('menuModal'); shareSite(); break;
+      case 'open-admin': 
+        closeModal('menuModal'); 
+        if(isAdmin){ openModal('adminModal'); loadPurchases(); loadSettings(); }
+        else openModal('loginModal');
+        break;
+      case 'send-req': sendReq(); break;
     }
     return;
   }
@@ -1200,6 +1263,7 @@ document.addEventListener('click', e => {
 });
 
 $('themeBtn').addEventListener('click', toggleTheme);
+$('menuBtn').addEventListener('click', () => openModal('menuModal'));
 
 $('userBtn').addEventListener('click', () => {
   if(currentUser){ renderProfile(); openModal('profileModal'); }
@@ -1258,7 +1322,6 @@ onAuthStateChanged(auth, async user => {
     $('userBtn').classList.remove('guest');
     $('userBtn').textContent = (user.displayName || user.email || 'U')[0].toUpperCase();
 
-    // Load/create profile
     try {
       const pd = await getDoc(doc(db, 'users', user.uid));
       userProfile = pd.exists() ? pd.data() : null;
@@ -1268,6 +1331,7 @@ onAuthStateChanged(auth, async user => {
 
     if(isAdmin){
       closeModal('userLoginModal');
+      closeModal('loginModal');
       loadPurchases();
       openModal('adminModal');
       loadSettings();
