@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Camera Pro — Full Features Demo</title>
+<style>
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  body {
+    margin: 0; padding: 14px; padding-bottom: 90px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #0b0d11; color: #e8eaed; line-height: 1.6;
+    overscroll-behavior: none;
+  }
+  .wrap { max-width: 760px; margin: 0 auto; }
+
+  h1 { font-size: 19px; margin: 0 0 4px; }
+  .sub { color: #8b93a1; font-size: 13px; margin-bottom: 16px; }
+
+  .panel {
+    background: #14171d; border: 1px solid #232832;
+    border-radius: 14px; padding: 14px; margin-bottom: 12px;
+  }
+  .panel h2 {
+    font-size: 15px; margin: 0 0 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #2d6cdf; flex: 0 0 auto;
+  }
+  .dot.live { background: #ef4444; animation: blink 1s infinite; }
+  @keyframes blink { 50% { opacity: 0.25; } }
+
+  /* ---- Camera ---- */
+  .camBox {
+    position: relative; background: #000;
+    border-radius: 12px; overflow: hidden;
+    aspect-ratio: 4/3; display: grid; place-items: center;
+  }
+  video#vid, img#snap {
+    width: 100%; height: 100%; object-fit: cover; display: none;
+  }
+  video#vid.on, img#snap.on { display: block; }
+  .placeholder { color: #4a5262; font-size: 14px; text-align: center; padding: 20px; }
+
+  .badge {
+    position: absolute; top: 10px; left: 10px;
+    background: rgba(0,0,0,.65); backdrop-filter: blur(6px);
+    color: #fff; font-size: 11px; font-weight: 700;
+    padding: 4px 9px; border-radius: 20px; letter-spacing: .5px;
+    display: none; align-items: center; gap: 5px;
+  }
+  .badge.show { display: flex; }
+  .rec-dot { width: 7px; height: 7px; background: #ef4444; border-radius: 50%; animation: blink 1s infinite; }
+
+  .timerBig {
+    position: absolute; inset: 0;
+    display: none; place-items: center;
+    font-size: 90px; font-weight: 800; color: #fff;
+    text-shadow: 0 4px 30px rgba(0,0,0,.8);
+    background: rgba(0,0,0,.25);
+  }
+  .timerBig.show { display: grid; }
+
+  /* ---- Buttons ---- */
+  .row { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 10px; }
+  button {
+    background: #232832; color: #e8eaed; border: 0;
+    padding: 10px 14px; border-radius: 9px;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: transform .08s, background .15s;
+  }
+  button:active { transform: scale(.95); }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  button.primary { background: #2d6cdf; color: #fff; }
+  button.green { background: #16a34a; color: #fff; }
+  button.red { background: #dc2626; color: #fff; }
+  button.amber { background: #d97706; color: #fff; }
+  button.on { background: #2d6cdf; color: #fff; }
+  button.icon { padding: 10px 12px; }
+
+  /* ---- Slider ---- */
+  .sliderRow {
+    display: flex; align-items: center; gap: 10px;
+    margin-top: 10px; font-size: 13px; color: #8b93a1;
+  }
+  input[type=range] {
+    flex: 1; -webkit-appearance: none; height: 4px;
+    background: #232832; border-radius: 4px; outline: none;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 18px; height: 18px;
+    background: #2d6cdf; border-radius: 50%; cursor: pointer;
+    box-shadow: 0 0 0 3px rgba(45,108,223,.25);
+  }
+
+  /* ---- Gallery ---- */
+  .gallery {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 8px; margin-top: 10px;
+  }
+  .gItem {
+    position: relative; aspect-ratio: 1;
+    border-radius: 10px; overflow: hidden;
+    background: #0b0d11; border: 1px solid #232832;
+  }
+  .gItem img, .gItem video {
+    width: 100%; height: 100%; object-fit: cover; cursor: pointer;
+  }
+  .gItem .del {
+    position: absolute; top: 4px; right: 4px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(220,38,38,.9); color: #fff;
+    border: 0; font-size: 14px; line-height: 1;
+    display: grid; place-items: center; cursor: pointer;
+    padding: 0;
+  }
+  .gItem .vt {
+    position: absolute; bottom: 4px; left: 4px;
+    background: rgba(0,0,0,.7); color: #fff;
+    font-size: 10px; padding: 2px 6px; border-radius: 4px;
+  }
+  .empty { color: #4a5262; font-size: 13px; text-align: center; padding: 14px; }
+
+  /* ---- Info grid ---- */
+  .info { display: grid; gap: 6px; font-size: 13.5px; }
+  .info .r {
+    display: flex; justify-content: space-between; gap: 10px;
+    padding: 7px 10px; background: #0b0d11; border-radius: 8px;
+  }
+  .info .k { color: #8b93a1; flex: 0 0 auto; }
+  .info .v {
+    color: #e8eaed; font-weight: 600; text-align: right;
+    word-break: break-word; font-family: ui-monospace, Menlo, monospace;
+    font-size: 12.5px;
+  }
+  .v.good { color: #4ade80; }
+  .v.bad { color: #f87171; }
+
+  /* ---- Toast ---- */
+  #toast {
+    position: fixed; left: 50%; bottom: 24px;
+    transform: translateX(-50%) translateY(120%);
+    background: #232832; color: #fff;
+    padding: 11px 18px; border-radius: 11px;
+    font-size: 14px; font-weight: 600;
+    box-shadow: 0 10px 30px rgba(0,0,0,.5);
+    z-index: 999; max-width: 90vw; text-align: center;
+    transition: transform .3s cubic-bezier(.34,1.56,.64,1);
+  }
+  #toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ---- Fullscreen viewer ---- */
+  #viewer {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.96); display: none;
+    place-items: center; padding: 20px;
+  }
+  #viewer.show { display: grid; }
+  #viewer img, #viewer video { max-width: 100%; max-height: 80vh; border-radius: 12px; }
+  #viewer .close {
+    position: absolute; top: 16px; right: 16px;
+    background: #232832; width: 40px; height: 40px;
+    border-radius: 50%; font-size: 20px; display: grid; place-items: center;
+  }
+
+  .note { font-size: 12px; color: #8b93a1; margin-top: 8px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>🎥 Camera Pro — Full Features</h1>
+  <div class="sub">Camera • Video • Torch • Zoom • Timer • Gallery • Location • IP • Device Info</div>
+
+  <!-- ================= CAMERA ================= -->
+  <div class="panel">
+    <h2><span class="dot" id="camDot"></span> Camera</h2>
+
+    <div class="camBox">
+      <video id="vid" autoplay playsinline muted></video>
+      <img id="snap" alt="">
+      <div class="placeholder" id="ph">Camera OFF<br><span style="font-size:12px">Neeche "Camera ON" dabao</span></div>
+      <div class="badge" id="recBadge"><span class="rec-dot"></span> REC <span id="recTime">00:00</span></div>
+      <div class="badge" id="torchBadge" style="left:auto;right:10px">🔦 TORCH</div>
+      <div class="timerBig" id="timerBig">3</div>
+    </div>
+
+    <!-- Zoom -->
+    <div class="sliderRow" id="zoomRow" style="display:none">
+      <span>🔍 Zoom</span>
+      <input type="range" id="zoom" min="1" max="5" step="0.1" value="1">
+      <span id="zoomVal" style="width:36px;text-align:right">1x</span>
+    </div>
+
+    <!-- Main controls -->
+    <div class="row">
+      <button class="primary" id="btnOn"  onclick="camOn()">📷 Camera ON</button>
+      <button id="btnOff" onclick="camOff()" disabled>⏹ Off</button>
+      <button class="icon" id="btnSwitch" onclick="switchCam()" disabled title="Front/Back">🔄</button>
+      <button class="icon" id="btnTorch"  onclick="toggleTorch()" disabled title="Torch">🔦</button>
+    </div>
+
+    <div class="row">
+      <button class="green" id="btnSnap" onclick="takePhoto()" disabled>📸 Photo</button>
+      <button class="red"   id="btnRec"  onclick="toggleRec()"   disabled>⏺ Video</button>
+      <button class="amber" id="btnTimer" onclick="toggleTimer()" disabled>⏱ <span id="timerLabel">Off</span></button>
+      <button class="icon" id="btnMirror" onclick="toggleMirror()" disabled title="Mirror">🪞</button>
+    </div>
+  </div>
+
+  <!-- ================= GALLERY ================= -->
+  <div class="panel">
+    <h2><span class="dot"></span> Gallery <span id="gCount" style="color:#8b93a1;font-weight:400;font-size:12px">(0)</span></h2>
+
+    <div class="row" style="margin-top:0">
+      <button class="green" id="btnDlAll" onclick="downloadAll()" disabled>⬇️ Sab Download</button>
+      <button id="btnShareAll" onclick="shareAll()" disabled>📤 Sab Share</button>
+      <button class="red" id="btnClear" onclick="clearAll()" disabled>🗑 Clear</button>
+    </div>
+
+    <div class="gallery" id="gallery"></div>
+    <div class="empty" id="gEmpty">Abhi koi photo/video nahi</div>
+    <div class="note">💡 Photo pe tap karo → fullscreen. Mobile pe Share → "Save to Gallery".</div>
+  </div>
+
+  <!-- ================= LOCATION ================= -->
+  <div class="panel">
+    <h2><span class="dot"></span> 📍 Exact Location</h2>
+    <div class="row" style="margin-top:0">
+      <button class="primary" onclick="getLoc()">Location Allow</button>
+      <button class="icon" onclick="copyText(document.getElementById('locV').dataset.raw || '')" title="Copy">📋</button>
+    </div>
+    <div class="info" style="margin-top:10px">
+      <div class="r"><span class="k">Latitude</span>  <span class="v" id="locLat">—</span></div>
+      <div class="r"><span class="k">Longitude</span> <span class="v" id="locLng">—</span></div>
+      <div class="r"><span class="k">Accuracy</span>  <span class="v" id="locAcc">—</span></div>
+      <div class="r"><span class="k">Maps Link</span> <span class="v" id="locV" data-raw="">—</span></div>
+    </div>
+  </div>
+
+  <!-- ================= IP ================= -->
+  <div class="panel">
+    <h2><span class="dot"></span> 🌐 IP & Network</h2>
+    <div class="row" style="margin-top:0">
+      <button class="primary" onclick="getIP()">IP Check</button>
+      <button class="icon" onclick="copyText(buildIPText())" title="Copy">📋</button>
+    </div>
+    <div class="info" style="margin-top:10px">
+      <div class="r"><span class="k">IP</span>      <span class="v" id="ip">—</span></div>
+      <div class="r"><span class="k">City</span>    <span class="v" id="ipCity">—</span></div>
+      <div class="r"><span class="k">Region</span>  <span class="v" id="ipReg">—</span></div>
+      <div class="r"><span class="k">Country</span> <span class="v" id="ipCo">—</span></div>
+      <div class="r"><span class="k">ISP</span>     <span class="v" id="ipISP">—</span></div>
+    </div>
+  </div>
+
+  <!-- ================= DEVICE INFO ================= -->
+  <div class="panel">
+    <h2><span class="dot"></span> 📱 Device Info</h2>
+    <div class="row" style="margin-top:0">
+      <button class="primary" onclick="loadDevice()">Scan Device</button>
+      <button class="icon" onclick="copyText(buildDevText())" title="Copy">📋</button>
+    </div>
+    <div class="info" style="margin-top:10px">
+      <div class="r"><span class="k">Platform</span>  <span class="v" id="dPlat">—</span></div>
+      <div class="r"><span class="k">Screen</span>    <span class="v" id="dScr">—</span></div>
+      <div class="r"><span class="k">CPU Cores</span> <span class="v" id="dCpu">—</span></div>
+      <div class="r"><span class="k">RAM (approx)</span><span class="v" id="dRam">—</span></div>
+      <div class="r"><span class="k">Battery</span>   <span class="v" id="dBat">—</span></div>
+      <div class="r"><span class="k">Net Type</span>  <span class="v" id="dNet">—</span></div>
+      <div class="r"><span class="k">Language</span>  <span class="v" id="dLang">—</span></div>
+      <div class="r"><span class="k">Timezone</span>  <span class="v" id="dTz">—</span></div>
+      <div class="r"><span class="k">Touch</span>     <span class="v" id="dTouch">—</span></div>
+    </div>
+  </div>
+
+  <div class="note" style="text-align:center;margin:20px 0">
+    ⚠️ Permission tumhare haath me hai. Unknown link pe Allow/OTP/form-fill mat karo.
+  </div>
+</div>
+
+<!-- Fullscreen viewer -->
+<div id="viewer" onclick="closeViewer(event)">
+  <button class="close" onclick="closeViewer()">✕</button>
+  <div id="viewerBody"></div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<script>
+/* ═══════════════ HELPERS ═══════════════ */
+let toastT;
+function toast(msg, ms = 2200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), ms);
+}
+function fmtBytes(b) {
+  if (!b) return '0 B';
+  const u = ['B','KB','MB','GB'];
+  const i = Math.floor(Math.log(b) / Math.log(1024));
+  return (b / Math.pow(1024, i)).toFixed(i ? 1 : 0) + ' ' + u[i];
+}
+function copyText(txt) {
+  if (!txt || txt === '—') return toast('Kuch copy karne ko nahi');
+  navigator.clipboard.writeText(txt)
+    .then(() => toast('📋 Copy ho gaya'))
+    .catch(() => toast('Copy fail'));
+}
+
+/* ═══════════════ CAMERA ═══════════════ */
+let stream = null;
+let facing = 'environment';
+let torchOn = false;
+let mirrorOn = false;
+let timerSec = 0;          // 0 = off, 3, 5, 10
+let timerCycle = [0, 3, 5, 10];
+let timerIdx = 0;
+let zoomSupported = false;
+
+const vid      = document.getElementById('vid');
+const snapImg  = document.getElementById('snap');
+const ph       = document.getElementById('ph');
+const camDot   = document.getElementById('camDot');
+const zoomRow  = document.getElementById('zoomRow');
+const zoomEl   = document.getElementById('zoom');
+const zoomVal  = document.getElementById('zoomVal');
+
+const BTN = {
+  on:     document.getElementById('btnOn'),
+  off:    document.getElementById('btnOff'),
+  swap:   document.getElementById('btnSwitch'),
+  torch:  document.getElementById('btnTorch'),
+  snap:   document.getElementById('btnSnap'),
+  rec:    document.getElementById('btnRec'),
+  timer:  document.getElementById('btnTimer'),
+  mirror: document.getElementById('btnMirror'),
+};
+
+async function camOn() {
+  if (stream) return;
+  try {
+    stream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: { ideal: facing },
+        width:  { ideal: 1920 },
+        height: { ideal: 1080 }
+      },
+      audio: true   // video recording ke liye
+    });
+
+    vid.srcObject = stream;
+    vid.classList.add('on');
+    snapImg.classList.remove('on');
+    ph.style.display = 'none';
+    camDot.classList.add('live');
+
+    BTN.on.disabled = true;
+    [BTN.off, BTN.swap, BTN.snap, BTN.rec, BTN.timer, BTN.mirror]
+      .forEach(b => b.disabled = false);
+
+    // Torch support?
+    const track = stream.getVideoTracks()[0];
+    const caps = track.getCapabilities ? track.getCapabilities() : {};
+    BTN.torch.disabled = !caps.torch;
+    zoomSupported = !!caps.zoom;
+    if (zoomSupported) {
+      zoomEl.min = caps.zoom.min;
+      zoomEl.max = caps.zoom.max;
+      zoomEl.step = caps.zoom.step || 0.1;
+      zoomRow.style.display = 'flex';
+    } else {
+      zoomRow.style.display = 'none';
+    }
+
+    toast('✅ Camera ON' + (caps.torch ? ' • Torch available' : ''));
+  } catch (e) {
+    toast('❌ ' + e.name + ': ' + e.message, 3500);
+  }
+}
+
+function camOff() {
+  if (recOn) stopRec();
+  if (stream) {
+    stream.getTracks().forEach(t => t.stop());
+    stream = null;
+  }
+  vid.srcObject = null;
+  vid.classList.remove('on');
+  ph.style.display = 'block';
+  camDot.classList.remove('live');
+  BTN.on.disabled = false;
+  [BTN.off, BTN.swap, BTN.snap, BTN.rec, BTN.timer, BTN.mirror, BTN.torch]
+    .forEach(b => b.disabled = true);
+  BTN.torch.classList.remove('on');
+  torchOn = false;
+  zoomRow.style.display = 'none';
+  document.getElementById('torchBadge').classList.remove('show');
+  toast('Camera OFF');
+}
+
+async function switchCam() {
+  const wasRec = recOn;
+  if (wasRec) stopRec();
+  facing = facing === 'environment' ? 'user' : 'environment';
+  camOff();
+  await new Promise(r => setTimeout(r, 120));
+  await camOn();
+  if (facing === 'user') mirrorOn = true; else mirrorOn = false;
+  applyMirror();
+  if (wasRec) toast('Camera switch — recording band ho gayi');
+}
+
+function applyMirror() {
+  vid.style.transform = mirrorOn ? 'scaleX(-1)' : 'none';
+}
+function toggleMirror() {
+  mirrorOn = !mirrorOn;
+  applyMirror();
+  BTN.mirror.classList.toggle('on', mirrorOn);
+  toast(mirrorOn ? '🪞 Mirror ON' : '🪞 Mirror OFF');
+}
+
+/* ---- Torch ---- */
+async function toggleTorch() {
+  if (!stream) return;
+  const track = stream.getVideoTracks()[0];
+  try {
+    torchOn = !torchOn;
+    await track.applyConstraints({ advanced: [{ torch: torchOn }] });
+    BTN.torch.classList.toggle('on', torchOn);
+    document.getElementById('torchBadge').classList.toggle('show', torchOn);
+    toast(torchOn ? '🔦 Torch ON' : '🔦 Torch OFF');
+  } catch (e) {
+    toast('Torch support nahi');
+    torchOn = false;
+  }
+}
+
+/* ---- Zoom ---- */
+zoomEl.addEventListener('input', async () => {
+  if (!stream || !zoomSupported) return;
+  const track = stream.getVideoTracks()[0];
+  const v = parseFloat(zoomEl.value);
+  zoomVal.textContent = v.toFixed(1) + 'x';
+  try { await track.applyConstraints({ advanced: [{ zoom: v }] }); } catch (e) {}
+});
+
+/* ---- Timer ---- */
+function toggleTimer() {
+  timerIdx = (timerIdx + 1) % timerCycle.length;
+  timerSec = timerCycle[timerIdx];
+  document.getElementById('timerLabel').textContent =
+    timerSec === 0 ? 'Off' : timerSec + 's';
+  BTN.timer.classList.toggle('on', timerSec > 0);
+}
+
+/* ---- Photo ---- */
+async function takePhoto() {
+  if (!stream) return;
+  if (timerSec > 0) {
+    const t = document.getElementById('timerBig');
+    t.classList.add('show');
+    for (let i = timerSec; i > 0; i--) {
+      t.textContent = i;
+      await new Promise(r => setTimeout(r, 1000));
+    }
+    t.classList.remove('show');
+  }
+  captureNow();
+  toast('📸 Photo!');
+}
+
+function captureNow() {
+  const c = document.createElement('canvas');
+  c.width  = vid.videoWidth  || 1280;
+  c.height = vid.videoHeight || 720;
+  const ctx = c.getContext('2d');
+
+  if (mirrorOn || facing === 'user') {
+    ctx.translate(c.width, 0);
+    ctx.scale(-1, 1);
+  }
+  ctx.drawImage(vid, 0, 0, c.width, c.height);
+
+  // Flash effect
+  snapImg.src = c.toDataURL('image/png');
+  snapImg.classList.add('on');
+  vid.classList.remove('on');
+  setTimeout(() => {
+    snapImg.classList.remove('on');
+    vid.classList.add('on');
+  }, 180);
+
+  c.toBlob(blob => {
+    addItem({ type: 'image', blob, url: URL.createObjectURL(blob) });
+  }, 'image/png', 0.95);
+}
+
+/* ═══════════════ VIDEO RECORDING ═══════════════ */
+let recorder = null, chunks = [], recOn = false, recTimer = null, recStart = 0;
+
+function pickMime() {
+  const opts = [
+    'video/webm;codecs=vp9,opus',
+    'video/webm;codecs=vp8,opus',
+    'video/webm',
+    'video/mp4'
+  ];
+  for (const m of opts) if (MediaRecorder.isTypeSupported(m)) return m;
+  return '';
+}
+
+function toggleRec() {
+  recOn ? stopRec() : startRec();
+}
+function startRec() {
+  if (!stream) return;
+  const mime = pickMime();
+  try {
+    recorder = new MediaRecorder(stream, mime ? { mimeType: mime } : undefined);
+  } catch (e) {
+    return toast('❌ Recording support nahi');
+  }
+  chunks = [];
+  recorder.ondataavailable = e => { if (e.data.size) chunks.push(e.data); };
+  recorder.onstop = () => {
+    const blob = new Blob(chunks, { type: mime || 'video/webm' });
+    if (blob.size) addItem({ type: 'video', blob, url: URL.createObjectURL(blob) });
+    chunks = [];
+  };
+  recorder.start(1000);
+  recOn = true;
+  recStart = Date.now();
+  document.getElementById('recBadge').classList.add('show');
+  BTN.rec.textContent = '⏹ Stop';
+  BTN.rec.classList.add('on');
+  recTimer = setInterval(() => {
+    const s = Math.floor((Date.now() - recStart) / 1000);
+    const m = String(Math.floor(s / 60)).padStart(2, '0');
+    const ss = String(s % 60).padStart(2, '0');
+    document.getElementById('recTime').textContent = m + ':' + ss;
+  }, 500);
+  toast('⏺ Recording shuru...');
+}
+function stopRec() {
+  if (!recOn || !recorder) return;
+  try { recorder.stop(); } catch (e) {}
+  recOn = false;
+  clearInterval(recTimer);
+  document.getElementById('recBadge').classList.remove('show');
+  document.getElementById('recTime').textContent = '00:00';
+  BTN.rec.textContent = '⏺ Video';
+  BTN.rec.classList.remove('on');
+  toast('✅ Recording save ho gayi');
+}
+
+/* ═══════════════ GALLERY ═══════════════ */
+const items = [];
+const gallery = document.getElementById('gallery');
+const gEmpty  = document.getElementById('gEmpty');
+const gCount  = document.getElementById('gCount');
+
+function addItem(it) {
+  it.id = 'i' + Date.now() + Math.random().toString(36).slice(2, 6);
+  it.name = (it.type === 'image' ? 'IMG_' : 'VID_') +
+            new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19) +
+            (it.type === 'image' ? '.png' : '.webm');
+  items.push(it);
+  renderGallery();
+}
+
+function renderGallery() {
+  gallery.innerHTML = '';
+  items.forEach(it => {
+    const d = document.createElement('div');
+    d.className = 'gItem';
+
+    const media = it.type === 'image'
+      ? Object.assign(document.createElement('img'), { src: it.url, alt: '' })
+      : Object.assign(document.createElement('video'), { src: it.url, muted: true });
+    media.onclick = () => openViewer(it);
+    d.appendChild(media);
+
+    if (it.type === 'video') {
+      const vt = document.createElement('div');
+      vt.className = 'vt';
+      vt.textContent = 'VIDEO';
+      d.appendChild(vt);
+    }
+
+    const del = document.createElement('button');
+    del.className = 'del';
+    del.textContent = '✕';
+    del.onclick = e => { e.stopPropagation(); removeItem(it.id); };
+    d.appendChild(del);
+
+    gallery.appendChild(d);
+  });
+
+  const n = items.length;
+  gCount.textContent = '(' + n + ')';
+  gEmpty.style.display = n ? 'none' : 'block';
+  document.getElementById('btnDlAll').disabled = !n;
+  document.getElementById('btnShareAll').disabled = !n;
+  document.getElementById('btnClear').disabled = !n;
+}
+
+function removeItem(id) {
+  const i = items.findIndex(x => x.id === id);
+  if (i < 0) return;
+  URL.revokeObjectURL(items[i].url);
+  items.splice(i, 1);
+  renderGallery();
+  toast('🗑 Delete ho gaya');
+}
+
+function clearAll() {
+  if (!items.length) return;
+  if (!confirm('Sab photos/videos delete karne hain?')) return;
+  items.forEach(i => URL.revokeObjectURL(i.url));
+  items.length = 0;
+  renderGallery();
+  toast('Sab clear');
+}
+
+/* ---- Download single ---- */
+function downloadBlob(blob, name) {
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = name;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 4000);
+}
+
+/* ---- Download all ---- */
+async function downloadAll() {
+  if (!items.length) return;
+  toast('⬇️ ' + items.length + ' file download ho rahi...', 2500);
+  for (let i = 0; i < items.length; i++) {
+    downloadBlob(items[i].blob, items[i].name);
+    await new Promise(r => setTimeout(r, 500)); // browser gap
+  }
+  toast('✅ Android: Gallery/Downloads • iPhone: Files', 3500);
+}
+
+/* ---- Share single ---- */
+async function shareItem(it) {
+  const file = new File([it.blob], it.name, { type: it.blob.type });
+  if (navigator.canShare && navigator.canShare({ files: [file] })) {
+    try {
+      await navigator.share({ files: [file], title: it.name });
+      toast('✅ Share sheet — Save to Gallery choose karo');
+      return true;
+    } catch (e) {
+      if (e.name !== 'AbortError') toast('Share cancel/fail');
+      return false;
+    }
+  }
+  toast('Share support nahi — Download karo');
+  return false;
+}
+
+/* ---- Share all ---- */
+async function shareAll() {
+  if (!items.length) return;
+  const files = items.map(it => new File([it.blob], it.name, { type: it.blob.type }));
+  if (navigator.canShare && navigator.canShare({ files })) {
+    try {
+      await navigator.share({ files, title: 'My Media' });
+      toast('✅ Share sheet khul gaya');
+    } catch (e) {
+      if (e.name !== 'AbortError') toast('Share fail');
+    }
+  } else {
+    toast('Multi-share support nahi — Download All use karo');
+  }
+}
+
+/* ═══════════════ VIEWER ═══════════════ */
+function openViewer(it) {
+  const v = document.getElementById('viewer');
+  const b = document.getElementById('viewerBody');
+  b.innerHTML = '';
+  if (it.type === 'image') {
+    b.innerHTML = '<img src="' + it.url + '">';
+  } else {
+    b.innerHTML = '<video src="' + it.url + '" controls autoplay playsinline></video>';
+  }
+  v.classList.add('show');
+}
+function closeViewer(e) {
+  if (e && e.target && e.target.id !== 'viewer' && !e.target.classList.contains('close')) return;
+  document.getElementById('viewer').classList.remove('show');
+  document.getElementById('viewerBody').innerHTML = '';
+}
+
+/* ═══════════════ LOCATION ═══════════════ */
+function getLoc() {
+  if (!navigator.geolocation) return toast('Geolocation support nahi');
+  toast('Permission ka wait...');
+  navigator.geolocation.getCurrentPosition(
+    p => {
+      const { latitude: la, longitude: lo, accuracy: ac } = p.coords;
+      document.getElementById('locLat').textContent = la.toFixed(6);
+      document.getElementById('locLng').textContent = lo.toFixed(6);
+      document.getElementById('locAcc').textContent = '~' + Math.round(ac) + ' meter';
+      const link = `https://maps.google.com/?q=${la},${lo}`;
+      const el = document.getElementById('locV');
+      el.textContent = 'Open Maps';
+      el.dataset.raw = link;
+      el.style.cursor = 'pointer';
+      el.onclick = () => window.open(link, '_blank');
+      toast('✅ Location mil gayi');
+    },
+    err => toast('❌ ' + err.message, 3000),
+    { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+  );
+}
+
+/* ═══════════════ IP ═══════════════ */
+let ipData = {};
+async function getIP() {
+  toast('IP check...');
+  try {
+    const r = await fetch('https://ipapi.co/json/');
+    ipData = await r.json();
+    document.getElementById('ip').textContent     = ipData.ip || '—';
+    document.getElementById('ipCity').textContent = ipData.city || '—';
+    document.getElementById('ipReg').textContent  = ipData.region || '—';
+    document.getElementById('ipCo').textContent   = ipData.country_name || '—';
+    document.getElementById('ipISP').textContent  = ipData.org || '—';
+    toast('✅ IP mil gaya');
+  } catch (e) {
+    toast('❌ IP service block (adblock?)', 3000);
+  }
+}
+function buildIPText() {
+  return `IP: ${ipData.ip || '-'}
+City: ${ipData.city || '-'}
+Region: ${ipData.region || '-'}
+Country: ${ipData.country_name || '-'}
+ISP: ${ipData.org || '-'}`;
+}
+
+/* ═══════════════ DEVICE INFO ═══════════════ */
+let devData = {};
+async function loadDevice() {
+  const d = devData = {};
+  d.platform = navigator.platform || '—';
+  d.screen   = `${screen.width}×${screen.height} @${window.devicePixelRatio}x`;
+  d.cpu      = navigator.hardwareConcurrency ? navigator.hardwareConcurrency + ' cores' : '—';
+  d.ram      = navigator.deviceMemory ? '~' + navigator.deviceMemory + ' GB' : '—';
+  d.lang     = navigator.language || '—';
+  d.tz       = Intl.DateTimeFormat().resolvedOptions().timeZone || '—';
+  d.touch    = ('ontouchstart' in window) ? 'Yes' : 'No';
+
+  // Network
+  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (c) {
+    d.net = `${c.effectiveType || '?'} • ${c.downlink || '?'} Mbps`;
+  } else d.net = '—';
+
+  // Battery
+  if (navigator.getBattery) {
+    try {
+      const b = await navigator.getBattery();
+      d.bat = Math.round(b.level * 100) + '%' + (b.charging ? ' ⚡ charging' : '');
+    } catch { d.bat = '—'; }
+  } else d.bat = '—';
+
+  document.getElementById('dPlat').textContent  = d.platform;
+  document.getElementById('dScr').textContent   = d.screen;
+  document.getElementById('dCpu').textContent   = d.cpu;
+  document.getElementById('dRam').textContent   = d.ram;
+  document.getElementById('dBat').textContent   = d.bat;
+  document.getElementById('dNet').textContent   = d.net;
+  document.getElementById('dLang').textContent  = d.lang;
+  document.getElementById('dTz').textContent    = d.tz;
+  document.getElementById('dTouch').textContent = d.touch;
+
+  toast('✅ Device info scan ho gaya');
+}
+function buildDevText() {
+  const d = devData;
+  return Object.entries({
+    Platform: d.platform, Screen: d.screen, CPU: d.cpu, RAM: d.ram,
+    Battery: d.bat, Network: d.net, Language: d.lang,
+    Timezone: d.tz, Touch: d.touch
+  }).map(([k, v]) => `${k}: ${v || '-'}`).join('\n');
+}
+
+/* ═══════════════ CLEANUP ═══════════════ */
+window.addEventListener('beforeunload', () => {
+  if (stream) stream.getTracks().forEach(t => t.stop());
+});
+</script>
+</body>
+  </html>
