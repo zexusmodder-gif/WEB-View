@@ -17,9 +17,7 @@
   --p1:#7c3aed;--p2:#a855f7;--c1:#06b6d4;--c2:#22d3ee;
   --ok:#10b981;--warn:#f59e0b;--err:#ef4444;
   --grad:linear-gradient(135deg,#7c3aed 0%,#a855f7 45%,#06b6d4 100%);
-  --grad2:linear-gradient(135deg,#06b6d4 0%,#a855f7 100%);
   --glow:0 0 40px rgba(124,58,237,.35);
-  --glow2:0 0 32px rgba(6,182,212,.3);
   --r:16px;--r2:24px;
 }
 [data-theme="light"]{
@@ -205,7 +203,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   .card .name{font-size:13.5px}
 }
 .hidden{display:none!important}
-/* ═══ DOWNLOAD PROGRESS ═══ */
 .spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--p2);border-radius:50%;animation:spin .8s linear infinite;margin:0 auto}
 @keyframes spin{to{transform:rotate(360deg)}}
 .dlSuccess{background:linear-gradient(135deg,#10b981,#059669)!important}
@@ -317,7 +314,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 <button class="fab hide" id="topFab" onclick="scrollTo({top:0,behavior:'smooth'})">↑</button>
 <div id="toastBox"></div>
 
-<!-- App Detail Modal -->
 <div class="modal" id="detailModal" onclick="if(event.target===this)closeModal('detailModal')">
   <div class="modalBox">
     <div class="modalHead"><h3>App Details</h3><button class="closeX" onclick="closeModal('detailModal')">✕</button></div>
@@ -325,7 +321,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- Download Progress Modal -->
 <div class="modal" id="dlModal">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead">
@@ -366,7 +361,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- Contact Modal -->
 <div class="modal" id="contactModal" onclick="if(event.target===this)closeModal('contactModal')">
   <div class="modalBox">
     <div class="modalHead"><h3>💬 App Request</h3><button class="closeX" onclick="closeModal('contactModal')">✕</button></div>
@@ -380,7 +374,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- Menu Modal -->
 <div class="modal" id="menuModal" onclick="if(event.target===this)closeModal('menuModal')">
   <div class="modalBox" style="max-width:380px">
     <div class="modalHead"><h3>Menu</h3><button class="closeX" onclick="closeModal('menuModal')">✕</button></div>
@@ -393,7 +386,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- Login Modal -->
 <div class="modal" id="loginModal" onclick="if(event.target===this)closeModal('loginModal')">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead"><h3>🔐 Admin Login</h3><button class="closeX" onclick="closeModal('loginModal')">✕</button></div>
@@ -406,7 +398,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- Admin Panel Modal -->
 <div class="modal" id="adminModal" onclick="if(event.target===this)closeModal('adminModal')">
   <div class="modalBox" style="max-width:720px">
     <div class="modalHead">
@@ -546,6 +537,8 @@ function timeAgo(ts){
   if(s<2592000) return Math.floor(s/86400)+'d ago';
   return d.toLocaleDateString();
 }
+
+/* ═══════════ DRIVE HELPERS ═══════════ */
 function driveId(url){
   if(!url) return '';
   let m = url.match(/\/file\/d\/([a-zA-Z0-9_-]{20,})/);
@@ -557,7 +550,11 @@ function driveId(url){
   return '';
 }
 function driveDirect(url){ const id = driveId(url); return id ? `https://drive.google.com/uc?export=download&id=${id}` : ''; }
-function drivePreview(url){ const id = driveId(url); return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w400` : ''; }
+// Better icon URL — zyada reliable
+function drivePreview(url){
+  const id = driveId(url);
+  return id ? `https://lh3.googleusercontent.com/d/${id}=w400` : '';
+}
 window.driveId = driveId;
 
 const savedTheme = localStorage.getItem('hm_theme') || 'dark';
@@ -673,9 +670,10 @@ function renderAll(){
 }
 
 function cardHTML(a){
+  const letter = esc((a.name||'?')[0].toUpperCase());
   const icon = a.iconUrl
-    ? `<img class="icon" src="${esc(a.iconUrl)}" alt="" onerror="this.outerHTML='<div class=&quot;icon&quot;>${esc((a.name||'?')[0].toUpperCase())}</div>'">`
-    : `<div class="icon">${esc((a.name||'?')[0].toUpperCase())}</div>`;
+    ? `<img class="icon" src="${esc(a.iconUrl)}" alt="" onerror="this.outerHTML='<div class=&quot;icon&quot;>${letter}</div>'">`
+    : `<div class="icon">${letter}</div>`;
   const stars = a.rating ? `<span class="starF">★</span> ${a.rating.toFixed(1)}` : `<span>☆ New</span>`;
   return `
     <div class="card glass gloss" onclick="openDetail('${a.id}')">
@@ -715,9 +713,10 @@ function updateStats(){
 function openDetail(id){
   const a = APPS.find(x => x.id === id);
   if(!a) return;
+  const letter = esc((a.name||'?')[0].toUpperCase());
   const icon = a.iconUrl
-    ? `<img class="icon" src="${esc(a.iconUrl)}" alt="">`
-    : `<div class="icon">${esc((a.name||'?')[0].toUpperCase())}</div>`;
+    ? `<img class="icon" src="${esc(a.iconUrl)}" alt="" onerror="this.outerHTML='<div class=&quot;icon&quot;>${letter}</div>'">`
+    : `<div class="icon">${letter}</div>`;
   const stars = a.rating ? `${a.rating.toFixed(1)} ★` : 'New';
   $('detailBody').innerHTML = `
     <div class="detailHead">
@@ -744,16 +743,16 @@ function openDetail(id){
 }
 window.openDetail = openDetail;
 
-/* ═══════════ DOWNLOAD WITH PROGRESS ═══════════ */
+/* ═══════════ DOWNLOAD — FIXED with timeout ═══════════ */
 function resetDlModal(a){
   const wrap = $('dlAppIconWrap');
+  const letter = esc((a.name||'A')[0].toUpperCase());
   if(a.iconUrl){
-    wrap.innerHTML = `<img src="${esc(a.iconUrl)}" style="width:100%;height:100%;object-fit:cover">`;
-    wrap.style.background = 'var(--grad)';
+    wrap.innerHTML = `<img src="${esc(a.iconUrl)}" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.innerHTML='<span style=\\'font-size:30px;color:#fff;font-weight:900\\'>${letter}</span>'">`;
   } else {
-    wrap.innerHTML = `<span style="font-size:30px;color:#fff;font-weight:900">${esc((a.name||'A')[0].toUpperCase())}</span>`;
-    wrap.style.background = 'var(--grad)';
+    wrap.innerHTML = `<span style="font-size:30px;color:#fff;font-weight:900">${letter}</span>`;
   }
+  wrap.style.background = 'var(--grad)';
   $('dlAppName').textContent = a.name || 'App';
   $('dlAppVer').textContent = `v${a.version || '1.0'} • ${fmtSize(a.size || 0)}`;
   const bar = $('dlBar');
@@ -791,6 +790,17 @@ async function downloadApp(id){
   const speed  = $('dlSpeed');
   const note   = $('dlNote');
 
+  // ⏰ 6 second timeout — Drive CORS block ke liye
+  const timeoutId = setTimeout(() => {
+    if(dlController) try { dlController.abort(); } catch(e){}
+  }, 6000);
+
+  // Simulated progress jab tak wait hai
+  let simP = 0;
+  const simInt = setInterval(() => {
+    if(simP < 85){ simP += 4; if(bar.style.width === '0%' || !bar.style.width || parseFloat(bar.style.width) < simP) bar.style.width = simP + '%'; }
+  }, 180);
+
   try {
     status.textContent = '🌐 Connect ho raha hai...';
 
@@ -799,6 +809,9 @@ async function downloadApp(id){
       mode: 'cors',
       cache: 'no-store'
     });
+
+    clearTimeout(timeoutId);
+    clearInterval(simInt);
 
     if(!res.ok) throw new Error('HTTP ' + res.status);
 
@@ -810,6 +823,7 @@ async function downloadApp(id){
     let received  = 0;
 
     status.textContent = '⬇ Download ho raha hai...';
+    bar.style.width = '0%';
 
     while(true){
       const { done, value } = await reader.read();
@@ -852,27 +866,24 @@ async function downloadApp(id){
     setTimeout(() => closeModal('dlModal'), 2000);
 
   } catch(err){
-    if(err.name === 'AbortError'){
-      toast('Download cancel', 'info');
-      closeModal('dlModal');
-      return;
-    }
-
+    clearTimeout(timeoutId);
+    clearInterval(simInt);
     console.warn('Direct fetch fail:', err.message);
 
+    // Fallback — Drive pe redirect
     status.textContent = '⚠️ Drive pe redirect...';
     status.style.color = 'var(--warn)';
     bar.style.width = '100%';
     bar.classList.add('dlFail');
     pct.textContent = '→';
     pct.style.color = 'var(--warn)';
-    note.innerHTML = '📱 Drive page khulega — <b>"Download anyway"</b> dabao';
-    speed.textContent = 'direct';
+    note.innerHTML = '📱 Drive page khulega — <b style="color:#fbbf24">"Download anyway"</b> dabao<br><span style="font-size:11px;opacity:.7">(Google Drive direct download block karta hai)</span>';
+    speed.textContent = 'redirect';
 
     setTimeout(() => {
       window.open(a.apkUrl, '_blank');
-      setTimeout(() => closeModal('dlModal'), 1800);
-    }, 700);
+      setTimeout(() => closeModal('dlModal'), 2500);
+    }, 800);
   }
 }
 window.downloadApp = downloadApp;
@@ -939,6 +950,7 @@ document.addEventListener('input', e => {
   }
 });
 
+/* ═══════════ UPLOAD — FIXED with timeout ═══════════ */
 async function uploadApp(){
   if(!db){ toast('Firebase ready nahi', 'err'); return; }
   const name = $('upName').value.trim();
@@ -949,28 +961,39 @@ async function uploadApp(){
   const sizeMB = parseFloat($('upSize').value) || 0;
   const apkLink = $('upApkLink').value.trim();
   const iconLink = $('upIconLink').value.trim();
+
   if(!name || !version){ toast('Name & version zaroori', 'warn'); return; }
   if(!apkLink){ toast('APK Drive link daalo', 'warn'); return; }
   if(!driveId(apkLink)){ toast('APK link galat hai', 'err'); return; }
   if(!sizeMB){ toast('File size (MB) daalo', 'warn'); return; }
+
   const apkUrl = driveDirect(apkLink);
   const iconUrl = iconLink && driveId(iconLink) ? drivePreview(iconLink) : '';
+
   const btn = $('upBtn');
   btn.disabled = true;
   btn.textContent = 'Saving...';
+
   try {
-    await addDoc(collection(db, 'apps'), {
+    // ⏰ 10-second timeout
+    const savePromise = addDoc(collection(db, 'apps'), {
       name, version, category: cat, desc, featured: feat, iconUrl, apkUrl, apkLink,
       size: Math.round(sizeMB * 1024 * 1024),
       downloads: 0, rating: 0, ratingCount: 0, createdAt: serverTimestamp()
     });
+    const timeoutPromise = new Promise((_, rej) =>
+      setTimeout(() => rej(new Error('Timeout — Firestore Rules check karo (apna admin email daala?)')), 10000)
+    );
+    await Promise.race([savePromise, timeoutPromise]);
+
     toast('🚀 App save ho gayi!', 'ok', 3000);
     ['upName','upVer','upDesc','upSize','upApkLink','upIconLink'].forEach(id => $(id).value = '');
     $('apkLinkStatus').textContent = '';
     $('iconLinkStatus').textContent = '';
+
   } catch(e){
     console.error(e);
-    toast('Save fail: ' + e.message, 'err', 4000);
+    toast('❌ ' + e.message, 'err', 6000);
   } finally {
     btn.disabled = false;
     btn.textContent = '🚀 Save App';
@@ -988,7 +1011,7 @@ function renderAdminList(){
   if(!filtered.length){ list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3)">Koi app nahi</div>'; return; }
   list.innerHTML = filtered.map(a => `
     <div class="aRow">
-      ${a.iconUrl ? `<img src="${esc(a.iconUrl)}" alt="">` : `<div class="ph">${esc((a.name||'?')[0])}</div>`}
+      ${a.iconUrl ? `<img src="${esc(a.iconUrl)}" alt="" onerror="this.outerHTML='<div class=&quot;ph&quot;>${esc((a.name||'?')[0])}</div>'">` : `<div class="ph">${esc((a.name||'?')[0])}</div>`}
       <div class="info">
         <div class="nm">${esc(a.name)}</div>
         <div class="sb">v${esc(a.version)} • ${fmtNum(a.downloads||0)} dl • ${fmtSize(a.size)}</div>
@@ -1132,8 +1155,8 @@ if(location.hash.startsWith('#app=')){
   setTimeout(() => APPS.find(a => a.id === id) && openDetail(id), 1200);
 }
 
-console.log('%c⚡ HARIOM MODDER v2.0','color:#a855f7;font-size:18px;font-weight:bold');
-console.log('%cAdmin: three-dot menu → Admin Login','color:#06b6d4');
+console.log('%c⚡ HARIOM MODDER v2.1','color:#a855f7;font-size:18px;font-weight:bold');
+console.log('%cFixes: Download timeout + Icon URL + Upload timeout','color:#06b6d4');
 </script>
 </body>
-  </html>
+</html>
