@@ -353,7 +353,61 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
       <button class="btn ghost" style="justify-content:flex-start" data-act="contact">💬 Request App</button>
       <button class="btn ghost" style="justify-content:flex-start" data-act="toggle-theme">🌗 Toggle Theme</button>
       <button class="btn ghost" style="justify-content:flex-start" data-act="share-site">🔗 Share Website</button>
+      <button class="btn ghost" style="justify-content:flex-start" data-act="open-about">ℹ️ About Me</button>
       <button class="btn ghost" style="justify-content:flex-start;color:var(--p2)" data-act="open-admin">🔐 Admin Login</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="aboutModal" data-backdrop="aboutModal">
+  <div class="modalBox">
+    <div class="modalHead"><h3>ℹ️ About Me</h3><button class="closeX" data-act="close" data-modal="aboutModal">✕</button></div>
+    <div class="modalBody">
+      <div style="text-align:center;margin-bottom:22px">
+        <div style="width:90px;height:90px;border-radius:24px;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:900;font-size:40px;box-shadow:var(--glow),inset 0 2px 0 rgba(255,255,255,.3);margin:0 auto 14px">H</div>
+        <div style="font-size:22px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent">HARIOM MODDER</div>
+        <div style="font-size:11px;color:var(--txt3);letter-spacing:3px;text-transform:uppercase;font-weight:700;margin-top:4px">Premium APK Hub</div>
+      </div>
+
+      <div class="descBox" style="text-align:center;font-size:13.5px;line-height:1.8">
+        Hi! 👋 Main ek independent Android developer aur modder hu.
+        Yeh platform maine banaya hai un logon ke liye jo <b>premium apps</b> aur <b>modded APKs</b> ka access chahte hain without paying heavy subscription fees.
+        <br><br>
+        Saare apps <b>hand-picked</b>, <b>virus-scanned</b>, aur <b>regularly updated</b> hain.
+        Koi bhi issue ho ya request ho — feel free to reach out!
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0">
+        <div class="metaItem"><div class="v" style="color:var(--p2)">500+</div><div class="k">Downloads</div></div>
+        <div class="metaItem"><div class="v" style="color:var(--p2)">50+</div><div class="k">Apps</div></div>
+        <div class="metaItem"><div class="v" style="color:var(--p2)">100%</div><div class="k">Scanned</div></div>
+      </div>
+
+      <div style="background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px">
+        <div style="font-size:11px;font-weight:800;color:var(--txt2);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px">📧 Connect With Me</div>
+        <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span>📧</span>
+            <a href="mailto:shilpishiva674@gmail.com" style="color:var(--c2);text-decoration:none;font-weight:600">shilpishiva674@gmail.com</a>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span>✈️</span>
+            <span style="color:var(--txt2)">Telegram: <b style="color:var(--p2)">@hariommodder</b></span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <span>💬</span>
+            <span style="color:var(--txt2)">WhatsApp: <b style="color:var(--p2)">Available on request</b></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="notice" style="font-size:12px">
+        <b>⚠️ Note:</b> Yeh site sirf educational purposes ke liye hai. Saare apps third-party sources se link kiye gaye hain. Copyright owner hain? Contact us for takedown — 24 hours response.
+      </div>
+
+      <button class="btn primary" style="width:100%;justify-content:center;margin-top:8px" data-act="close" data-modal="aboutModal">
+        ✨ Thanks for visiting!
+      </button>
     </div>
   </div>
 </div>
@@ -1203,6 +1257,10 @@ document.addEventListener('click', e => {
         if(currentUser){ renderProfile(); openModal('profileModal'); }
         else openModal('userLoginModal');
         break;
+      case 'open-about':
+        closeModal('menuModal');
+        openModal('aboutModal');
+        break;
       case 'open-admin':
         closeModal('menuModal');
         if(isAdmin){ openModal('adminModal'); loadPurchases(); loadSettings(); }
@@ -1306,4 +1364,4 @@ loadApps();
 loadSettings();
 </script>
 </body>
-  </html>
+</html>
