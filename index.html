@@ -60,10 +60,9 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .searchWrap input::placeholder{color:var(--txt3)}
 .searchWrap .ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--txt3);pointer-events:none}
 .navAct{display:flex;align-items:center;gap:8px;margin-left:auto}
-.iconBtn{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s}
+.iconBtn{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s;padding:0}
 .iconBtn:hover{border-color:var(--border-hi);transform:translateY(-1px)}
-.userBtn{position:relative;width:42px;height:42px;border-radius:12px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-weight:900;font-size:15px;box-shadow:var(--glow);display:grid;place-items:center}
-.userBtn.guest{background:var(--glass2);border:1px solid var(--border-hi);color:var(--txt);box-shadow:none}
+.iconBtn svg{width:20px;height:20px;fill:currentColor;display:block}
 .hero{max-width:1320px;margin:0 auto;padding:60px 20px 40px;text-align:center}
 .heroBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;background:var(--glass2);border:1px solid var(--border-hi);font-size:12.5px;font-weight:600;color:var(--txt2);margin-bottom:22px}
 .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.8s infinite}
@@ -233,8 +232,13 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
     </div>
     <div class="navAct">
       <button class="iconBtn" id="themeBtn" title="Theme">🌙</button>
-      <button class="iconBtn" id="menuBtn" title="Menu">⋮</button>
-      <button class="userBtn guest" id="userBtn" title="Account">👤</button>
+      <button class="iconBtn" id="menuBtn" title="Menu" aria-label="Menu">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="12" cy="5" r="1.8"/>
+          <circle cx="12" cy="12" r="1.8"/>
+          <circle cx="12" cy="19" r="1.8"/>
+        </svg>
+      </button>
     </div>
   </div>
 </nav>
@@ -343,6 +347,9 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   <div class="modalBox" style="max-width:380px">
     <div class="modalHead"><h3>Menu</h3><button class="closeX" data-act="close" data-modal="menuModal">✕</button></div>
     <div class="modalBody" style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn primary" style="justify-content:flex-start" data-act="open-user-account">
+        <span id="menuUserLabel">👤 Login / My Account</span>
+      </button>
       <button class="btn ghost" style="justify-content:flex-start" data-act="contact">💬 Request App</button>
       <button class="btn ghost" style="justify-content:flex-start" data-act="toggle-theme">🌗 Toggle Theme</button>
       <button class="btn ghost" style="justify-content:flex-start" data-act="share-site">🔗 Share Website</button>
@@ -524,7 +531,7 @@ const firebaseConfig = {
   appId: "1:602644625906:web:7db11a4e6eb16beeb7536b"
 };
 
-/* ⚠️⚠️⚠️ IMPORTANT — YAHAN APNI EMAIL DAALO ⚠️⚠️⚠️ */
+/* ⚠️ APNA ADMIN EMAIL YAHAN DAALO */
 const ADMIN_EMAILS = ["shilpishiva674@gmail.com"];
 
 let app, auth, db;
@@ -575,20 +582,20 @@ const drivePreview = u => { const id = driveId(u); return id ? `https://lh3.goog
 
 const savedTheme = localStorage.getItem('hm_theme')==='light'?'light':'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
-$('themeBtn').textContent = savedTheme==='dark'?'🌙':'☀️';
+if($('themeBtn')) $('themeBtn').textContent = savedTheme==='dark'?'🌙':'☀️';
 function toggleTheme(){
   const cur = document.documentElement.getAttribute('data-theme');
   const next = cur==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme', next);
   try{ localStorage.setItem('hm_theme', next); }catch{}
-  $('themeBtn').textContent = next==='dark'?'🌙':'☀️';
+  if($('themeBtn')) $('themeBtn').textContent = next==='dark'?'🌙':'☀️';
   toast(next==='dark'?'🌙 Dark mode':'☀️ Light mode', 'info', 1400);
 }
 
 function openModal(id){ const el=$(id); if(el){ el.classList.add('on'); document.body.style.overflow='hidden'; } }
 function closeModal(id){ const el=$(id); if(el){ el.classList.remove('on'); if(!document.querySelector('.modal.on')) document.body.style.overflow=''; } }
 
-window.addEventListener('load', () => setTimeout(() => $('splash').classList.add('hide'), 1400));
+window.addEventListener('load', () => setTimeout(() => { const s = $('splash'); if(s) s.classList.add('hide'); }, 1400));
 
 /* ───────── USER AUTH ───────── */
 async function doUserLogin(){
@@ -651,46 +658,30 @@ async function doLogout(){
   toast('Logged out', 'info');
 }
 
-/* ═══════════ ADMIN LOGIN — FIXED ═══════════ */
+/* ADMIN LOGIN */
 async function doAdminLogin(){
   const email = clampStr($('logEmail').value, 120);
   const pass = String($('logPass').value || '');
   const err = $('logErr'), btn = $('logBtn');
-
-  console.log('🔍 Admin login attempt:', { email, passLength: pass.length });
-
-  if(!isEmail(email)){ 
-    err.innerHTML = '<div class="notice err">❌ Invalid email format. Please check spelling.</div>'; 
-    return; 
-  }
-  if(pass.length < 6){ 
-    err.innerHTML = '<div class="notice err">❌ Password too short (minimum 6 characters).</div>'; 
-    return; 
-  }
-  
+  if(!isEmail(email)){ err.innerHTML = '<div class="notice err">❌ Invalid email format.</div>'; return; }
+  if(pass.length < 6){ err.innerHTML = '<div class="notice err">❌ Password too short.</div>'; return; }
   btn.disabled = true; btn.textContent = 'Logging in...'; err.innerHTML = '';
   try {
     await signInWithEmailAndPassword(auth, email, pass);
     $('logPass').value = '';
     toast('✅ Admin login successful!', 'ok');
-    // onAuthStateChanged will auto-open admin panel
   } catch(e){
     const code = String(e.code || e.message || 'unknown');
     let friendly = code;
-    if(code.includes('user-not-found')) friendly = '❌ Email Firebase me registered nahi hai. Authentication → Users me banao.';
-    else if(code.includes('wrong-password')) friendly = '❌ Password galat hai.';
-    else if(code.includes('invalid-email')) friendly = '❌ Email format galat hai.';
-    else if(code.includes('invalid-credential')) friendly = '❌ Email ya password galat hai.';
-    else if(code.includes('too-many-requests')) friendly = '❌ Bahut attempts ho gaye. 5 min wait karo.';
-    else if(code.includes('network-request-failed')) friendly = '❌ Internet connection check karo.';
+    if(code.includes('user-not-found')) friendly = '❌ Email Firebase me registered nahi hai.';
+    else if(code.includes('wrong-password') || code.includes('invalid-credential')) friendly = '❌ Email ya password galat hai.';
+    else if(code.includes('too-many-requests')) friendly = '❌ Bahut attempts. 5 min wait karo.';
+    else if(code.includes('network-request-failed')) friendly = '❌ Internet check karo.';
     err.innerHTML = `<div class="notice err">${esc(friendly)}</div>`;
-  } finally { 
-    btn.disabled = false; 
-    btn.textContent = 'Login as Admin'; 
-  }
+  } finally { btn.disabled = false; btn.textContent = 'Login as Admin'; }
 }
 
-/* ───────── CONTACT / REQUEST ───────── */
+/* CONTACT */
 async function sendReq(){
   const name = clampStr($('reqName').value, 80);
   const contact = clampStr($('reqContact').value, 80);
@@ -698,9 +689,7 @@ async function sendReq(){
   if(name.length < 2){ toast('App name daalo', 'warn'); return; }
   try {
     await addDoc(collection(db, 'requests'), {
-      name, contact, message,
-      ua: navigator.userAgent.slice(0, 200),
-      createdAt: serverTimestamp()
+      name, contact, message, ua: navigator.userAgent.slice(0, 200), createdAt: serverTimestamp()
     });
     toast('✅ Request bhej di!', 'ok');
     closeModal('contactModal');
@@ -710,15 +699,13 @@ async function sendReq(){
 
 async function shareSite(){
   if(navigator.share){
-    try { await navigator.share({ title:'HARIOM MODDER', text:'Free + VIP premium APKs', url: location.href }); }
-    catch {}
+    try { await navigator.share({ title:'HARIOM MODDER', text:'Free + VIP premium APKs', url: location.href }); } catch {}
   } else {
-    try { await navigator.clipboard.writeText(location.href); toast('📋 Link copy', 'ok'); }
-    catch { toast('Copy failed', 'err'); }
+    try { await navigator.clipboard.writeText(location.href); toast('📋 Link copy', 'ok'); } catch { toast('Copy failed', 'err'); }
   }
 }
 
-/* ───────── FIRESTORE LISTENERS ───────── */
+/* FIRESTORE LISTENERS */
 function loadApps(){
   if(!db) return;
   onSnapshot(query(collection(db, 'apps')), snap => {
@@ -728,7 +715,6 @@ function loadApps(){
     if(isAdmin) renderAdminList();
   });
 }
-
 function loadPurchases(){
   if(!db) return;
   if(purchasesUnsub) purchasesUnsub();
@@ -738,7 +724,6 @@ function loadPurchases(){
     if(isAdmin) renderPaymentsList();
   });
 }
-
 function loadMyPurchases(uid){
   if(!db) return;
   if(myPurchUnsub) myPurchUnsub();
@@ -749,7 +734,6 @@ function loadMyPurchases(uid){
     if($('profileModal').classList.contains('on')) renderProfile();
   });
 }
-
 function loadSettings(){
   if(!db) return;
   getDoc(doc(db, 'settings', 'site')).then(d => {
@@ -764,9 +748,9 @@ function loadSettings(){
   });
 }
 function applySettings(){
-  if(siteCfg.telegram) document.querySelector('[data-s="tg"]').href = siteCfg.telegram;
-  if(siteCfg.whatsapp) document.querySelector('[data-s="wa"]').href = siteCfg.whatsapp;
-  if(siteCfg.youtube) document.querySelector('[data-s="yt"]').href = siteCfg.youtube;
+  const tg = document.querySelector('[data-s="tg"]'); if(siteCfg.telegram && tg) tg.href = siteCfg.telegram;
+  const wa = document.querySelector('[data-s="wa"]'); if(siteCfg.whatsapp && wa) wa.href = siteCfg.whatsapp;
+  const yt = document.querySelector('[data-s="yt"]'); if(siteCfg.youtube && yt) yt.href = siteCfg.youtube;
 }
 
 function hasPurchased(appId){ return MY_PURCHASES.some(p => p.appId === appId && p.status === 'approved'); }
@@ -941,12 +925,10 @@ async function submitPayment(appId){
   const txnId = clampStr($('payTxnId').value, 60);
   const note = clampStr($('payNote').value, 200);
   if(txnId.length < 4){ toast('Enter valid transaction ID', 'warn'); return; }
-
   const btn = $('paySubmitBtn'); btn.disabled = true; btn.textContent = 'Submitting...';
   try {
     await addDoc(collection(db, 'purchases'), {
-      userId: currentUser.uid,
-      userEmail: currentUser.email,
+      userId: currentUser.uid, userEmail: currentUser.email,
       userName: currentUser.displayName || userProfile?.name || '',
       appId, appName: a.name, appVersion: a.version,
       amount: a.price, transactionId: txnId, note,
@@ -1004,7 +986,7 @@ function renderProfile(){
   const mine = MY_PURCHASES.slice().sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
   $('profileBody').innerHTML = `
     <div style="text-align:center;margin-bottom:20px">
-      <div class="userBtn" style="width:72px;height:72px;font-size:28px;margin:0 auto 12px">${esc((currentUser.displayName||currentUser.email||'U')[0].toUpperCase())}</div>
+      <div style="width:72px;height:72px;border-radius:12px;background:var(--grad);color:#fff;display:grid;place-items:center;font-weight:900;font-size:28px;box-shadow:var(--glow);margin:0 auto 12px">${esc((currentUser.displayName||currentUser.email||'U')[0].toUpperCase())}</div>
       <div style="font-weight:800;font-size:18px">${esc(currentUser.displayName || 'User')}</div>
       <div style="color:var(--txt3);font-size:13px">${esc(currentUser.email)}</div>
     </div>
@@ -1036,8 +1018,10 @@ function renderPaymentsList(){
     .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,20);
 
   const badge = $('pendingBadge');
-  if(pend.length){ badge.style.display = 'inline-block'; badge.textContent = pend.length; }
-  else badge.style.display = 'none';
+  if(badge){
+    if(pend.length){ badge.style.display = 'inline-block'; badge.textContent = pend.length; }
+    else badge.style.display = 'none';
+  }
 
   if(!PURCHASES.length){ list.innerHTML = '<div style="text-align:center;color:var(--txt3);padding:20px">No payments yet</div>'; return; }
 
@@ -1177,6 +1161,7 @@ function exportData(){
   toast('📥 Exported', 'ok');
 }
 
+/* ═══════════ EVENT DELEGATION ═══════════ */
 document.addEventListener('click', e => {
   const backdrop = e.target.closest('.modal[data-backdrop]');
   if(backdrop && e.target === backdrop){ closeModal(backdrop.dataset.backdrop); return; }
@@ -1213,8 +1198,13 @@ document.addEventListener('click', e => {
       case 'contact': closeModal('menuModal'); openModal('contactModal'); break;
       case 'toggle-theme': closeModal('menuModal'); toggleTheme(); break;
       case 'share-site': closeModal('menuModal'); shareSite(); break;
-      case 'open-admin': 
-        closeModal('menuModal'); 
+      case 'open-user-account':
+        closeModal('menuModal');
+        if(currentUser){ renderProfile(); openModal('profileModal'); }
+        else openModal('userLoginModal');
+        break;
+      case 'open-admin':
+        closeModal('menuModal');
         if(isAdmin){ openModal('adminModal'); loadPurchases(); loadSettings(); }
         else openModal('loginModal');
         break;
@@ -1227,13 +1217,8 @@ document.addEventListener('click', e => {
   if(card){ openDetail(card.dataset.appId); return; }
 });
 
-$('themeBtn').addEventListener('click', toggleTheme);
-$('menuBtn').addEventListener('click', () => openModal('menuModal'));
-
-$('userBtn').addEventListener('click', () => {
-  if(currentUser){ renderProfile(); openModal('profileModal'); }
-  else openModal('userLoginModal');
-});
+if($('themeBtn')) $('themeBtn').addEventListener('click', toggleTheme);
+if($('menuBtn')) $('menuBtn').addEventListener('click', () => openModal('menuModal'));
 
 $('searchInput').addEventListener('input', e => { searchQ = clampStr(e.target.value, 60); renderAll(); });
 $('sortSel').addEventListener('change', e => { currentSort = e.target.value; renderAll(); });
@@ -1279,17 +1264,18 @@ window.addEventListener('scroll', () => {
 
 $('yr').textContent = new Date().getFullYear();
 
-/* ═══════════ AUTH STATE — ADMIN PANEL AUTO-OPEN ═══════════ */
+/* ═══════════ AUTH STATE ═══════════ */
 onAuthStateChanged(auth, async user => {
   currentUser = user;
-  console.log('👤 Auth state:', user ? user.email : 'not logged in');
-  
+  const menuLabel = $('menuUserLabel');
+
   if(user){
     isAdmin = ADMIN_EMAILS.map(x=>x.toLowerCase()).includes(String(user.email||'').toLowerCase());
-    console.log('🔑 isAdmin:', isAdmin, '| ADMIN_EMAILS:', ADMIN_EMAILS);
-    
-    $('userBtn').classList.remove('guest');
-    $('userBtn').textContent = (user.displayName || user.email || 'U')[0].toUpperCase();
+
+    if(menuLabel){
+      const name = user.displayName || user.email || 'User';
+      menuLabel.textContent = '👤 ' + (name.split(' ')[0] || name);
+    }
 
     try {
       const pd = await getDoc(doc(db, 'users', user.uid));
@@ -1309,8 +1295,7 @@ onAuthStateChanged(auth, async user => {
     isAdmin = false;
     userProfile = null;
     MY_PURCHASES = [];
-    $('userBtn').classList.add('guest');
-    $('userBtn').textContent = '👤';
+    if(menuLabel) menuLabel.textContent = '👤 Login / My Account';
     closeModal('adminModal'); closeModal('profileModal');
     if(myPurchUnsub){ myPurchUnsub(); myPurchUnsub = null; }
     renderAll();
@@ -1321,4 +1306,4 @@ loadApps();
 loadSettings();
 </script>
 </body>
-</html>
+  </html>
