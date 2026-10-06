@@ -5,8 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0a0a0f">
 <meta name="referrer" content="no-referrer">
-<meta http-equiv="X-Content-Type-Options" content="nosniff">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://*.googleapis.com https://*.googleusercontent.com https://*.firebaseio.com wss://*.firebaseio.com https://drive.google.com https://drive.usercontent.google.com; frame-src https://*.firebaseapp.com; object-src 'none'; base-uri 'self'; form-action 'self'">
 <title>HARIOM MODDER — Premium APK Hub</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,8 +16,9 @@
   --border:rgba(255,255,255,.09);--border-hi:rgba(255,255,255,.18);
   --txt:#f0f2f7;--txt2:#9aa0b5;--txt3:#5d6480;
   --p1:#7c3aed;--p2:#a855f7;--c1:#06b6d4;--c2:#22d3ee;
-  --ok:#10b981;--warn:#f59e0b;--err:#ef4444;
+  --ok:#10b981;--warn:#f59e0b;--err:#ef4444;--gold:#fbbf24;
   --grad:linear-gradient(135deg,#7c3aed 0%,#a855f7 45%,#06b6d4 100%);
+  --gold-grad:linear-gradient(135deg,#f59e0b 0%,#fbbf24 50%,#f59e0b 100%);
   --glow:0 0 40px rgba(124,58,237,.35);
   --r:16px;--r2:24px;
 }
@@ -31,156 +30,194 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html{scroll-behavior:smooth}
-body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.6;transition:background .3s,color .3s}
-body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.18),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.14),transparent 60%),radial-gradient(ellipse 90% 60% at 50% 100%,rgba(168,85,247,.1),transparent 65%)}
-[data-theme="light"] body::before{background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.1),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.08),transparent 60%)}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.6}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.18),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.14),transparent 60%)}
+
+/* SPLASH */
+#splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#1a0a30 0%,#08080c 70%);display:grid;place-items:center;transition:opacity .6s,visibility .6s}
+#splash.hide{opacity:0;visibility:hidden}
+.splashInner{text-align:center}
+.splashLogo{width:100px;height:100px;border-radius:28px;background:var(--grad);display:grid;place-items:center;font-size:52px;font-weight:900;color:#fff;box-shadow:0 0 60px rgba(124,58,237,.6),inset 0 2px 0 rgba(255,255,255,.3);margin:0 auto 22px;animation:splashPop .8s cubic-bezier(.34,1.56,.64,1),splashGlow 2s infinite 1s}
+@keyframes splashPop{0%{transform:scale(0) rotate(-180deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+@keyframes splashGlow{0%,100%{box-shadow:0 0 60px rgba(124,58,237,.6),inset 0 2px 0 rgba(255,255,255,.3)}50%{box-shadow:0 0 100px rgba(168,85,247,.9),inset 0 2px 0 rgba(255,255,255,.3)}}
+.splashTitle{font-size:28px;font-weight:900;letter-spacing:-1px;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:6px}
+.splashSub{font-size:11px;color:#9aa0b5;letter-spacing:4px;text-transform:uppercase;font-weight:600;margin-bottom:32px}
+.splashBar{width:180px;height:3px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin:0 auto}
+.splashBar::after{content:'';display:block;height:100%;width:40%;background:var(--grad);border-radius:3px;animation:splashLoad 1.4s infinite}
+@keyframes splashLoad{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
+
 ::-webkit-scrollbar{width:10px;height:10px}
-::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#7c3aed,#06b6d4);border-radius:10px;border:2px solid var(--bg)}
 ::selection{background:rgba(168,85,247,.35)}
-.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border);border-radius:var(--r)}
-.gloss{position:relative;overflow:hidden}
-.gloss::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.02) 35%,transparent 60%);border-radius:inherit}
-.gloss::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%);transition:transform .8s;pointer-events:none}
-.gloss:hover::after{transform:translateX(100%)}
-nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--border);padding:12px 0}
+.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border);border-radius:var(--r)}
+nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filter:blur(28px);border-bottom:1px solid var(--border);padding:12px 0}
 [data-theme="light"] nav{background:rgba(255,255,255,.78)}
 .navIn{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px}
-.logo{display:flex;align-items:center;gap:11px;font-weight:900;font-size:19px;letter-spacing:-.5px;cursor:pointer;flex-shrink:0}
-.logoMark{width:40px;height:40px;border-radius:12px;background:var(--grad);display:grid;place-items:center;font-size:20px;font-weight:900;color:#fff;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.3);position:relative;overflow:hidden;flex-shrink:0}
-.logoMark::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35),transparent 50%)}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;font-size:19px;cursor:pointer;flex-shrink:0}
+.logoMark{width:40px;height:40px;border-radius:12px;background:var(--grad);display:grid;place-items:center;font-size:20px;font-weight:900;color:#fff;box-shadow:var(--glow);flex-shrink:0}
 .logoTxt{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
 .logoSub{font-size:10px;color:var(--txt3);font-weight:600;letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-4px}
 .searchWrap{flex:1;max-width:480px;position:relative}
-.searchWrap input{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:11px 44px 11px 16px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none;transition:.2s;backdrop-filter:blur(12px)}
-.searchWrap input:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18);background:var(--glass)}
+.searchWrap input{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:11px 44px 11px 16px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none}
+.searchWrap input:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18)}
 .searchWrap input::placeholder{color:var(--txt3)}
-.searchWrap .ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--txt3);pointer-events:none;font-size:16px}
+.searchWrap .ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--txt3);pointer-events:none}
 .navAct{display:flex;align-items:center;gap:8px;margin-left:auto}
-.iconBtn{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s;backdrop-filter:blur(12px)}
-.iconBtn:hover{border-color:var(--border-hi);background:var(--glass);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
-.iconBtn:active{transform:scale(.94)}
-.hero{max-width:1320px;margin:0 auto;padding:60px 20px 40px;text-align:center;position:relative}
-.heroBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;background:var(--glass2);border:1px solid var(--border-hi);backdrop-filter:blur(12px);font-size:12.5px;font-weight:600;color:var(--txt2);margin-bottom:22px}
+.iconBtn{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s}
+.iconBtn:hover{border-color:var(--border-hi);transform:translateY(-1px)}
+.userBtn{position:relative;width:42px;height:42px;border-radius:12px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-weight:900;font-size:15px;box-shadow:var(--glow);display:grid;place-items:center}
+.userBtn.guest{background:var(--glass2);border:1px solid var(--border-hi);color:var(--txt);box-shadow:none}
+
+.hero{max-width:1320px;margin:0 auto;padding:60px 20px 40px;text-align:center}
+.heroBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;background:var(--glass2);border:1px solid var(--border-hi);font-size:12.5px;font-weight:600;color:var(--txt2);margin-bottom:22px}
 .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.8s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}70%{box-shadow:0 0 0 12px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
 .hero h1{font-size:clamp(34px,6vw,62px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:16px}
-.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(124,58,237,.4))}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .hero p{color:var(--txt2);font-size:clamp(14px,2vw,17px);max-width:600px;margin:0 auto 32px}
 .heroCTA{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-.btn{padding:13px 26px;border-radius:14px;border:0;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.22s;position:relative;overflow:hidden;text-decoration:none}
+.btn{padding:13px 26px;border-radius:14px;border:0;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.22s;text-decoration:none;color:inherit}
 .btn.primary{background:var(--grad);color:#fff;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.28)}
-.btn.primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.5),inset 0 1px 0 rgba(255,255,255,.28)}
-.btn.primary:active{transform:translateY(0) scale(.97)}
-.btn.ghost{background:var(--glass2);color:var(--txt);border:1px solid var(--border-hi);backdrop-filter:blur(12px)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.5)}
+.btn.ghost{background:var(--glass2);color:var(--txt);border:1px solid var(--border-hi)}
 .btn.ghost:hover{background:var(--glass);transform:translateY(-2px)}
+.btn.gold{background:var(--gold-grad);color:#1a0a00;box-shadow:0 0 40px rgba(245,158,11,.5);font-weight:800}
+.btn.gold:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(245,158,11,.7)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
 .stats{max-width:1320px;margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
 .stat{padding:20px 18px;text-align:center;position:relative;overflow:hidden}
-.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:.7}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
 .stat .n{font-size:clamp(24px,4vw,34px);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
 .stat .l{font-size:12px;color:var(--txt2);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+
 .section{max-width:1320px;margin:0 auto 44px;padding:0 20px}
 .secHead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
-.secHead h2{font-size:clamp(20px,3vw,26px);font-weight:800;letter-spacing:-.8px;display:flex;align-items:center;gap:10px}
+.secHead h2{font-size:clamp(20px,3vw,26px);font-weight:800;display:flex;align-items:center;gap:10px}
 .secHead h2::before{content:'';width:4px;height:22px;border-radius:2px;background:var(--grad);box-shadow:var(--glow)}
 .chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
 .chips::-webkit-scrollbar{display:none}
-.chip{padding:9px 18px;border-radius:100px;background:var(--glass2);border:1px solid var(--border);color:var(--txt2);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;backdrop-filter:blur(12px);flex-shrink:0;font-family:inherit}
+.chip{padding:9px 18px;border-radius:100px;background:var(--glass2);border:1px solid var(--border);color:var(--txt2);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit}
 .chip:hover{border-color:var(--border-hi);color:var(--txt)}
 .chip.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--glow)}
+
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
 @media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
-.card{padding:16px;cursor:pointer;position:relative;transition:.28s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;border-radius:var(--r)}
+.card{padding:16px;cursor:pointer;transition:.28s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;border-radius:var(--r);position:relative;background:var(--glass);border:1px solid var(--border);backdrop-filter:blur(20px)}
 .card:hover{transform:translateY(-6px);border-color:var(--border-hi);box-shadow:0 20px 44px rgba(0,0,0,.4),var(--glow)}
-.card:active{transform:translateY(-2px) scale(.98)}
+.card.vip{border-color:rgba(245,158,11,.4);background:linear-gradient(135deg,rgba(245,158,11,.08),var(--glass))}
+.card.vip:hover{box-shadow:0 20px 44px rgba(0,0,0,.4),0 0 40px rgba(245,158,11,.3)}
 .card .top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
 .card .meta{flex:1;min-width:0;padding-top:2px}
-.card .name{font-weight:800;font-size:15px;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .name{font-weight:800;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .card .ver{font-size:11.5px;color:var(--txt3);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:2px}
-.card .cat{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;margin-top:6px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase;letter-spacing:.5px}
+.card .cat{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;margin-top:6px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase}
+.card.vip .cat{background:rgba(245,158,11,.18);color:var(--gold)}
 .card .desc{font-size:12.5px;color:var(--txt2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px;min-height:38px;word-break:break-word}
 .card .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
 .card .stats2{display:flex;gap:12px;font-size:11.5px;color:var(--txt3);font-weight:600}
-.card .stats2 span{display:flex;align-items:center;gap:4px}
 .starF{color:#fbbf24}
 .badgeFeat{position:absolute;top:12px;right:12px;background:var(--grad);color:#fff;font-size:9.5px;font-weight:800;padding:4px 9px;border-radius:8px;letter-spacing:.8px;box-shadow:var(--glow);z-index:2}
+.badgeVip{position:absolute;top:12px;left:12px;background:var(--gold-grad);color:#1a0a00;font-size:9.5px;font-weight:900;padding:4px 9px;border-radius:8px;letter-spacing:.8px;box-shadow:0 0 20px rgba(245,158,11,.5);z-index:2}
+.priceTag{font-size:13px;font-weight:900;color:var(--gold);font-family:'JetBrains Mono',monospace}
+.priceTag.free{color:var(--ok)}
+
+.ic{position:relative;display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:900;overflow:hidden;flex-shrink:0}
+.ic::before{content:attr(data-l);line-height:1}
+.ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block}
+.ic.card-ic{width:56px;height:56px;border-radius:14px;font-size:24px}
+.ic.detail-ic{width:82px;height:82px;border-radius:20px;font-size:34px}
+.ic.row-ic{width:42px;height:42px;border-radius:10px;font-size:16px}
+.ic.dl-ic{width:72px;height:72px;border-radius:18px;font-size:30px;margin:0 auto 12px}
+
 .empty{text-align:center;padding:60px 20px;color:var(--txt3)}
 .empty .e{font-size:56px;margin-bottom:12px;opacity:.5}
-.empty p{font-size:15px}
 footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:center;margin-top:60px;background:rgba(8,8,12,.4)}
-[data-theme="light"] footer{background:rgba(255,255,255,.5)}
 .footIn{max-width:1320px;margin:0 auto}
 .socials{display:flex;gap:10px;justify-content:center;margin:16px 0 20px;flex-wrap:wrap}
-.socials a{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);display:grid;place-items:center;color:var(--txt2);text-decoration:none;font-size:17px;transition:.2s}
-.socials a:hover{transform:translateY(-3px);color:var(--txt);border-color:var(--border-hi);box-shadow:var(--glow)}
+.socials a{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);display:grid;place-items:center;color:var(--txt2);text-decoration:none;font-size:17px}
+.socials a:hover{transform:translateY(-3px);color:var(--txt);box-shadow:var(--glow)}
 .footTxt{font-size:13px;color:var(--txt3);line-height:1.8}
-.modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none;place-items:center;padding:20px;overflow-y:auto}
+
+.modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);display:none;place-items:center;padding:20px;overflow-y:auto}
 .modal.on{display:grid}
-.modalBox{background:var(--bg2);border:1px solid var(--border-hi);border-radius:var(--r2);width:100%;max-width:560px;max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(124,58,237,.15);animation:modalIn .35s cubic-bezier(.34,1.4,.64,1)}
+.modalBox{background:var(--bg2);border:1px solid var(--border-hi);border-radius:var(--r2);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:modalIn .35s cubic-bezier(.34,1.4,.64,1)}
 @keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}}
-.modalBox::-webkit-scrollbar{width:6px}
-.modalBox::-webkit-scrollbar-thumb{background:var(--p1);border-radius:6px;border:0}
-.modalHead{position:sticky;top:0;z-index:2;background:linear-gradient(180deg,var(--bg2) 70%,transparent);padding:20px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
-.modalHead h3{font-size:18px;font-weight:800;letter-spacing:-.5px}
+.modalHead{position:sticky;top:0;z-index:2;background:var(--bg2);padding:20px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.modalHead h3{font-size:18px;font-weight:800}
 .modalBody{padding:22px}
-.closeX{width:36px;height:36px;border-radius:10px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;font-size:16px;display:grid;place-items:center;transition:.2s}
-.closeX:hover{background:var(--err);color:#fff;border-color:var(--err)}
+.closeX{width:36px;height:36px;border-radius:10px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;font-size:16px;display:grid;place-items:center}
+.closeX:hover{background:var(--err);color:#fff}
+
 .field{margin-bottom:16px}
 .field label{display:block;font-size:12px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
-.field input,.field textarea,.field select{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none;transition:.2s}
+.field input,.field textarea,.field select{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none}
 .field textarea{resize:vertical;min-height:90px}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18);background:var(--glass)}
-.field select option{background:var(--bg2);color:var(--txt)}
-#toastBox{position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;max-width:calc(100vw - 40px)}
-.toast{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border-hi);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;min-width:240px;max-width:340px;box-shadow:0 14px 40px rgba(0,0,0,.4);animation:slideIn .35s cubic-bezier(.34,1.4,.64,1);pointer-events:auto;word-break:break-word}
+.field input:focus,.field textarea:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18)}
+
+#toastBox{position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
+.toast{background:var(--glass);backdrop-filter:blur(24px);border:1px solid var(--border-hi);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;min-width:240px;max-width:340px;box-shadow:0 14px 40px rgba(0,0,0,.4);animation:slideIn .35s;pointer-events:auto}
 @keyframes slideIn{from{opacity:0;transform:translateX(120%)}}
 .toast.out{animation:slideOut .3s forwards}
 @keyframes slideOut{to{opacity:0;transform:translateX(120%)}}
 .toast .tIco{font-size:19px;flex-shrink:0}
-.toast.ok .tIco{color:var(--ok)}
-.toast.err .tIco{color:var(--err)}
-.toast.info .tIco{color:var(--c2)}
-.toast.warn .tIco{color:var(--warn)}
+
 .detailHead{display:flex;gap:16px;align-items:center;margin-bottom:20px}
-.detailHead .nm{font-size:22px;font-weight:900;letter-spacing:-.7px;line-height:1.2;word-break:break-word}
+.detailHead .nm{font-size:22px;font-weight:900;word-break:break-word}
 .detailHead .vr{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--txt2);margin-top:4px}
-.detailHead .cat2{display:inline-block;font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:8px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase;letter-spacing:.6px;margin-top:8px}
 .metaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
 .metaItem{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center}
-.metaItem .v{font-size:16px;font-weight:800;color:var(--txt)}
-.metaItem .k{font-size:10.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;font-weight:600}
+.metaItem .v{font-size:16px;font-weight:800}
+.metaItem .k{font-size:10.5px;color:var(--txt3);text-transform:uppercase;font-weight:600}
 .descBox{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;font-size:14px;color:var(--txt2);line-height:1.75;white-space:pre-wrap;word-break:break-word}
-.dlBtnBig{width:100%;padding:16px;border-radius:14px;border:0;background:var(--grad);color:#fff;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.3);transition:.22s;letter-spacing:-.3px}
-.dlBtnBig:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.55)}
-.dlBtnBig:active{transform:translateY(0) scale(.98)}
+.dlBtnBig{width:100%;padding:16px;border-radius:14px;border:0;background:var(--grad);color:#fff;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--glow)}
+.dlBtnBig.gold{background:var(--gold-grad);color:#1a0a00}
+.dlBtnBig:disabled{opacity:.6;cursor:not-allowed}
+
 .adminTabs{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .adminTabs::-webkit-scrollbar{display:none}
-.adminTab{padding:12px 16px;background:transparent;border:0;color:var(--txt2);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
-.adminTab:hover{color:var(--txt)}
+.adminTab{padding:12px 16px;background:transparent;border:0;color:var(--txt2);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
 .adminTab.on{color:var(--txt);border-bottom-color:var(--p1)}
 .adminPane{padding:20px 22px;display:none}
 .adminPane.on{display:block}
 .adminList{display:flex;flex-direction:column;gap:8px}
-.aRow{display:flex;align-items:center;gap:12px;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 13px;transition:.2s}
-.aRow:hover{border-color:var(--border-hi);background:var(--glass)}
+.aRow{display:flex;align-items:center;gap:12px;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 13px}
 .aRow .info{flex:1;min-width:0}
 .aRow .nm{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .aRow .sb{font-size:11.5px;color:var(--txt3);font-family:'JetBrains Mono',monospace}
-.miniBtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--glass2);color:var(--txt2);cursor:pointer;display:grid;place-items:center;font-size:14px;transition:.2s;flex-shrink:0}
-.miniBtn:hover{background:var(--glass);color:var(--txt);border-color:var(--border-hi)}
-.miniBtn.del:hover{background:var(--err);color:#fff;border-color:var(--err)}
-.statsRow{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:16px}
-.statMini{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
-.statMini .v{font-size:20px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-.statMini .k{font-size:10px;color:var(--txt3);text-transform:uppercase;font-weight:700;letter-spacing:.6px;margin-top:2px}
-.fab{position:fixed;bottom:22px;right:22px;z-index:60;width:54px;height:54px;border-radius:16px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-size:22px;box-shadow:var(--glow),0 10px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);display:grid;place-items:center;transition:.25s}
-.fab:hover{transform:translateY(-4px) scale(1.05)}
-.fab:active{transform:scale(.94)}
-.fab.hide{transform:translateY(90px);opacity:0;pointer-events:none}
-.notice{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:12px 14px;font-size:13px;color:#fbbf24;margin-bottom:16px;line-height:1.6;word-break:break-word}
+.miniBtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--glass2);color:var(--txt2);cursor:pointer;display:grid;place-items:center;flex-shrink:0}
+.miniBtn.ok:hover{background:var(--ok);color:#fff}
+.miniBtn.del:hover{background:var(--err);color:#fff}
+.miniBtn.gold:hover{background:var(--gold);color:#1a0a00}
+
+.notice{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:12px 14px;font-size:13px;color:#fbbf24;margin-bottom:16px;line-height:1.6}
 .notice.ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#4ade80}
 .notice.err{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171}
+.notice.info{background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:#22d3ee}
+
+/* PAYMENT / QR */
+.qrBox{background:#fff;padding:14px;border-radius:16px;display:inline-block;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.4)}
+.qrBox img{display:block;width:220px;height:220px}
+.upiId{background:var(--glass2);border:1px dashed var(--border-hi);border-radius:12px;padding:12px;margin-top:14px;text-align:center}
+.upiId .lbl{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
+.upiId .val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;margin-top:4px;user-select:all}
+.amtBig{font-size:42px;font-weight:900;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1}
+
+/* Purchase status badges */
+.pstatus{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;text-transform:uppercase}
+.pstatus.pending{background:rgba(245,158,11,.18);color:#fbbf24}
+.pstatus.approved{background:rgba(16,185,129,.18);color:#4ade80}
+.pstatus.rejected{background:rgba(239,68,68,.18);color:#f87171}
+
+.fab{position:fixed;bottom:22px;right:22px;z-index:60;width:54px;height:54px;border-radius:16px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-size:22px;box-shadow:var(--glow),0 10px 30px rgba(0,0,0,.4);display:grid;place-items:center;transition:.25s}
+.fab.hide{transform:translateY(90px);opacity:0;pointer-events:none}
+.hidden{display:none!important}
+
+.dlSuccess{background:linear-gradient(135deg,#10b981,#059669)!important}
+.dlBar{height:100%;width:0%;background:var(--grad);border-radius:6px;transition:width .25s;position:relative;overflow:hidden}
+.dlBar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shine 1.5s infinite}
+@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
 @media(max-width:768px){
   .navIn{gap:10px;padding:0 14px}
   .logoSub{display:none}
@@ -188,96 +225,76 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   .logoMark{width:36px;height:36px}
   .searchWrap{max-width:none}
   .hero{padding:40px 16px 30px}
-  .heroCTA .btn{padding:12px 20px;font-size:14px}
-  .section{padding:0 14px;margin-bottom:34px}
-  .modalBody{padding:18px}
-  .modalHead{padding:16px 18px 12px}
-  .adminPane{padding:16px 18px}
-  .adminTabs{padding:0 18px}
+  .section{padding:0 14px}
+  .qrBox img{width:180px;height:180px}
+  .amtBig{font-size:34px}
 }
-@media(max-width:420px){
-  .stats{grid-template-columns:repeat(2,1fr)}
-  .grid{grid-template-columns:1fr 1fr}
-  .card{padding:13px}
-  .card .name{font-size:13.5px}
-}
-.hidden{display:none!important}
-.dlSuccess{background:linear-gradient(135deg,#10b981,#059669)!important}
-.dlFail{background:linear-gradient(135deg,#f59e0b,#d97706)!important}
-.dlBar{height:100%;width:0%;background:var(--grad);border-radius:6px;transition:width .25s ease;box-shadow:var(--glow);position:relative;overflow:hidden}
-.dlBar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shine 1.5s infinite}
-@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-
-/* ===== Unified safe icon component (no inline onerror injection) ===== */
-.ic{position:relative;display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:900;overflow:hidden;flex-shrink:0;box-shadow:0 6px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
-.ic::before{content:attr(data-l);line-height:1}
-.ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block}
-.ic.card-ic{width:56px;height:56px;border-radius:14px;font-size:24px}
-.ic.detail-ic{width:82px;height:82px;border-radius:20px;font-size:34px;box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.3)}
-.ic.row-ic{width:42px;height:42px;border-radius:10px;font-size:16px}
-.ic.dl-ic{width:72px;height:72px;border-radius:18px;font-size:30px;margin:0 auto 12px;box-shadow:var(--glow)}
+@media(max-width:420px){.grid{grid-template-columns:1fr 1fr}.card{padding:13px}.card .name{font-size:13.5px}}
 </style>
 </head>
 <body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splashInner">
+    <div class="splashLogo">H</div>
+    <div class="splashTitle">HARIOM MODDER</div>
+    <div class="splashSub">PREMIUM APK HUB</div>
+    <div class="splashBar"></div>
+  </div>
+</div>
 
 <nav>
   <div class="navIn">
     <div class="logo" data-act="top">
       <div class="logoMark">H</div>
-      <div>
-        <span class="logoTxt">HARIOM MODDER</span>
-        <span class="logoSub">Premium APK Hub</span>
-      </div>
+      <div><span class="logoTxt">HARIOM MODDER</span><span class="logoSub">Premium APK Hub</span></div>
     </div>
     <div class="searchWrap">
-      <input type="text" id="searchInput" placeholder="Search apps..." autocomplete="off" maxlength="60" spellcheck="false">
+      <input type="text" id="searchInput" placeholder="Search apps..." autocomplete="off" maxlength="60">
       <span class="ico">🔍</span>
     </div>
     <div class="navAct">
-      <button class="iconBtn" id="themeBtn" title="Theme" aria-label="Toggle theme">🌙</button>
-      <button class="iconBtn" id="menuBtn" title="Menu" aria-label="Open menu">⋮</button>
+      <button class="iconBtn" id="themeBtn" title="Theme">🌙</button>
+      <button class="userBtn guest" id="userBtn" title="Account">👤</button>
     </div>
   </div>
 </nav>
 
 <section class="hero">
-  <div class="heroBadge">
-    <span class="pulse"></span>
-    <span id="heroLive">Live • Loading...</span>
-  </div>
-  <h1>Download <span class="g">Premium Mods</span><br>& APKs — Free</h1>
-  <p>Hand-picked, virus-scanned, and always up-to-date. Built with ❤️ — free &amp; open for everyone.</p>
+  <div class="heroBadge"><span class="pulse"></span><span id="heroLive">Loading...</span></div>
+  <h1>Download <span class="g">Premium Mods</span><br>& VIP APKs</h1>
+  <p>Free + VIP paid apps • UPI payment • Instant download after admin approval</p>
   <div class="heroCTA">
     <button class="btn primary" data-act="scroll-apps">⬇️ Browse Apps</button>
-    <button class="btn ghost" data-act="contact">💬 Request App</button>
+    <button class="btn gold" data-act="scroll-vip">👑 VIP Apps</button>
   </div>
 </section>
 
 <section class="stats">
-  <div class="stat glass gloss"><div class="n" id="stApps">0</div><div class="l">Total Apps</div></div>
-  <div class="stat glass gloss"><div class="n" id="stDl">0</div><div class="l">Downloads</div></div>
-  <div class="stat glass gloss"><div class="n" id="stCat">0</div><div class="l">Categories</div></div>
-  <div class="stat glass gloss"><div class="n" id="stRate">0.0</div><div class="l">Avg Rating</div></div>
+  <div class="stat glass"><div class="n" id="stApps">0</div><div class="l">Total Apps</div></div>
+  <div class="stat glass"><div class="n" id="stDl">0</div><div class="l">Downloads</div></div>
+  <div class="stat glass"><div class="n" id="stVip">0</div><div class="l">VIP Apps</div></div>
+  <div class="stat glass"><div class="n" id="stRate">0.0</div><div class="l">Avg Rating</div></div>
 </section>
 
 <section class="section">
   <div class="chips" id="chipsRow">
     <button class="chip on" data-cat="all">All Apps</button>
+    <button class="chip" data-cat="VIP">👑 VIP Only</button>
     <button class="chip" data-cat="Games">🎮 Games</button>
     <button class="chip" data-cat="Tools">🛠 Tools</button>
     <button class="chip" data-cat="Social">💬 Social</button>
     <button class="chip" data-cat="Photo">📷 Photo</button>
     <button class="chip" data-cat="Video">🎬 Video</button>
     <button class="chip" data-cat="Music">🎵 Music</button>
-    <button class="chip" data-cat="Productivity">📊 Productivity</button>
-    <button class="chip" data-cat="Security">🔒 Security</button>
     <button class="chip" data-cat="Mod">⚡ Mods</button>
   </div>
 </section>
 
-<section class="section hidden" id="featSection">
-  <div class="secHead"><h2>⭐ Featured</h2></div>
-  <div class="grid" id="featGrid"></div>
+<section class="section hidden" id="vipSection">
+  <div class="secHead"><h2>👑 VIP Premium Apps</h2></div>
+  <div class="grid" id="vipGrid"></div>
 </section>
 
 <section class="section" id="appsSection">
@@ -288,39 +305,30 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
       <option value="pop">Most Downloaded</option>
       <option value="rate">Top Rated</option>
       <option value="name">A → Z</option>
-      <option value="size">Smallest Size</option>
     </select>
   </div>
   <div class="grid" id="appsGrid"></div>
-  <div class="empty hidden" id="emptyBox">
-    <div class="e">📦</div>
-    <p>No apps found. Ask admin to upload.</p>
-  </div>
+  <div class="empty hidden" id="emptyBox"><div class="e">📦</div><p>No apps found.</p></div>
 </section>
 
 <footer>
   <div class="footIn">
     <div class="logo" style="justify-content:center;margin-bottom:14px">
-      <div class="logoMark">H</div>
-      <div><span class="logoTxt">HARIOM MODDER</span></div>
+      <div class="logoMark">H</div><div><span class="logoTxt">HARIOM MODDER</span></div>
     </div>
     <div class="socials" id="socials">
-      <a href="#" title="Telegram" data-s="tg" target="_blank" rel="noopener noreferrer">✈️</a>
-      <a href="#" title="WhatsApp" data-s="wa" target="_blank" rel="noopener noreferrer">💬</a>
-      <a href="#" title="YouTube" data-s="yt" target="_blank" rel="noopener noreferrer">▶️</a>
-      <a href="#" title="Instagram" data-s="ig" target="_blank" rel="noopener noreferrer">📷</a>
+      <a href="#" data-s="tg" target="_blank" rel="noopener">✈️</a>
+      <a href="#" data-s="wa" target="_blank" rel="noopener">💬</a>
+      <a href="#" data-s="yt" target="_blank" rel="noopener">▶️</a>
     </div>
-    <div class="footTxt">
-      <span id="yr"></span> HARIOM MODDER — free &amp; open source • No copyright claimed<br>
-      Released under <b>The Unlicense / CC0</b> — copy, modify, share freely<br>
-      Apps are shared for educational purposes only • Made with <span style="color:#ef4444">❤</span> in India
-    </div>
+    <div class="footTxt"><span id="yr"></span> HARIOM MODDER • Educational purposes only</div>
   </div>
 </footer>
 
-<button class="fab hide" id="topFab" data-act="top">↑</button>
+<button class="fab hidden" id="topFab" data-act="top">↑</button>
 <div id="toastBox"></div>
 
+<!-- DETAIL MODAL -->
 <div class="modal" id="detailModal" data-backdrop="detailModal">
   <div class="modalBox">
     <div class="modalHead"><h3>App Details</h3><button class="closeX" data-act="close" data-modal="detailModal">✕</button></div>
@@ -328,83 +336,112 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
+<!-- DOWNLOAD MODAL -->
 <div class="modal" id="dlModal">
   <div class="modalBox" style="max-width:420px">
-    <div class="modalHead">
-      <h3>⬇ Download</h3>
-      <button class="closeX" data-act="cancel-dl">✕</button>
-    </div>
+    <div class="modalHead"><h3>⬇ Download</h3><button class="closeX" data-act="cancel-dl">✕</button></div>
     <div class="modalBody">
       <div style="text-align:center;margin-bottom:18px">
         <div id="dlAppIconWrap"></div>
-        <div id="dlAppName" style="font-weight:800;font-size:17px;word-break:break-word">App Name</div>
-        <div id="dlAppVer" style="color:var(--txt3);font-size:12.5px;font-family:'JetBrains Mono',monospace;margin-top:3px">v1.0</div>
+        <div id="dlAppName" style="font-weight:800;font-size:17px">App</div>
+        <div id="dlAppVer" style="color:var(--txt3);font-size:12.5px;font-family:'JetBrains Mono',monospace">v1.0</div>
       </div>
-
       <div style="background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:16px">
-        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:10px;gap:8px">
-          <span id="dlStatus" style="color:var(--txt2);font-weight:600">Preparing...</span>
-          <span id="dlPct" style="font-weight:800;color:var(--p2);font-family:'JetBrains Mono',monospace;font-size:14px">0%</span>
+        <div style="display:flex;justify-content:space-between;margin-bottom:10px;gap:8px">
+          <span id="dlStatus" style="color:var(--txt2);font-weight:600;font-size:13px">Preparing...</span>
+          <span id="dlPct" style="font-weight:800;color:var(--p2);font-family:monospace">0%</span>
         </div>
-
-        <div style="height:10px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
-          <div id="dlBar" class="dlBar"></div>
-        </div>
-
-        <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--txt3);margin-top:9px;font-family:'JetBrains Mono',monospace;gap:8px">
-          <span id="dlBytes">0 B / 0 B</span>
-          <span id="dlSpeed">—</span>
+        <div style="height:10px;background:var(--bg);border-radius:6px;overflow:hidden"><div id="dlBar" class="dlBar"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--txt3);margin-top:9px;font-family:monospace">
+          <span id="dlBytes">0 B / 0 B</span><span id="dlSpeed">—</span>
         </div>
       </div>
-
-      <div id="dlNote" style="font-size:12.5px;color:var(--txt3);text-align:center;margin-top:14px;line-height:1.5">
-        ⏳ Preparing download...<br>File will be saved by your browser
-      </div>
-
+      <div id="dlNote" style="font-size:12.5px;color:var(--txt3);text-align:center;margin-top:14px">⏳ Preparing...</div>
       <button class="btn ghost" style="width:100%;justify-content:center;margin-top:16px" data-act="cancel-dl">Cancel</button>
     </div>
   </div>
 </div>
 
-<div class="modal" id="contactModal" data-backdrop="contactModal">
-  <div class="modalBox">
-    <div class="modalHead"><h3>💬 App Request</h3><button class="closeX" data-act="close" data-modal="contactModal">✕</button></div>
+<!-- USER LOGIN -->
+<div class="modal" id="userLoginModal" data-backdrop="userLoginModal">
+  <div class="modalBox" style="max-width:420px">
+    <div class="modalHead"><h3>🔐 User Login</h3><button class="closeX" data-act="close" data-modal="userLoginModal">✕</button></div>
     <div class="modalBody">
-      <div class="notice">Tell us which app you want — we'll try to upload it.</div>
-      <div class="field"><label>App Name *</label><input id="reqName" placeholder="e.g. Spotify Mod" maxlength="80" autocomplete="off"></div>
-      <div class="field"><label>Your Contact (optional)</label><input id="reqContact" placeholder="Telegram / Email" maxlength="80" autocomplete="off"></div>
-      <div class="field"><label>Message</label><textarea id="reqMsg" placeholder="What do you need..." maxlength="500"></textarea></div>
-      <button class="btn primary" style="width:100%;justify-content:center" data-act="send-req">📤 Send Request</button>
+      <div class="field"><label>Email</label><input type="email" id="uEmail" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="field"><label>Password</label><input type="password" id="uPass" placeholder="••••••••" autocomplete="current-password"></div>
+      <button class="btn primary" style="width:100%;justify-content:center" id="uLoginBtn" data-act="user-login">Login</button>
+      <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:13px">
+        <a href="#" style="color:var(--c2);text-decoration:none" data-act="open-forgot">Forgot Password?</a>
+        <a href="#" style="color:var(--p2);text-decoration:none;font-weight:700" data-act="open-register">Create Account →</a>
+      </div>
+      <div id="uLoginErr" style="margin-top:14px"></div>
     </div>
   </div>
 </div>
 
-<div class="modal" id="menuModal" data-backdrop="menuModal">
-  <div class="modalBox" style="max-width:380px">
-    <div class="modalHead"><h3>Menu</h3><button class="closeX" data-act="close" data-modal="menuModal">✕</button></div>
-    <div class="modalBody" style="display:flex;flex-direction:column;gap:8px">
-      <button class="btn ghost" style="justify-content:flex-start" data-act="contact">💬 Request App</button>
-      <button class="btn ghost" style="justify-content:flex-start" data-act="toggle-theme">🌗 Toggle Theme</button>
-      <button class="btn ghost" style="justify-content:flex-start" data-act="share-site">🔗 Share Website</button>
-      <button class="btn ghost" style="justify-content:flex-start;color:var(--p2)" data-act="open-admin">🔐 Admin Login</button>
+<!-- USER REGISTER -->
+<div class="modal" id="userRegisterModal" data-backdrop="userRegisterModal">
+  <div class="modalBox" style="max-width:420px">
+    <div class="modalHead"><h3>✨ Create Account</h3><button class="closeX" data-act="close" data-modal="userRegisterModal">✕</button></div>
+    <div class="modalBody">
+      <div class="field"><label>Full Name</label><input type="text" id="rName" placeholder="Your name" maxlength="50"></div>
+      <div class="field"><label>Email</label><input type="email" id="rEmail" placeholder="you@example.com" autocomplete="email"></div>
+      <div class="field"><label>Phone (optional)</label><input type="tel" id="rPhone" placeholder="+91 9XXXXXXXXX" maxlength="20"></div>
+      <div class="field"><label>Password</label><input type="password" id="rPass" placeholder="Min 6 characters" autocomplete="new-password"></div>
+      <button class="btn primary" style="width:100%;justify-content:center" id="rBtn" data-act="user-register">Create Account</button>
+      <div style="text-align:center;margin-top:14px;font-size:13px">
+        Already have an account? <a href="#" style="color:var(--p2);text-decoration:none;font-weight:700" data-act="open-login">Login</a>
+      </div>
+      <div id="rErr" style="margin-top:14px"></div>
     </div>
   </div>
 </div>
 
+<!-- FORGOT PASSWORD -->
+<div class="modal" id="forgotModal" data-backdrop="forgotModal">
+  <div class="modalBox" style="max-width:420px">
+    <div class="modalHead"><h3>🔑 Reset Password</h3><button class="closeX" data-act="close" data-modal="forgotModal">✕</button></div>
+    <div class="modalBody">
+      <div class="notice info">Password reset link aapke email par bheja jayega.</div>
+      <div class="field"><label>Email</label><input type="email" id="fEmail" placeholder="you@example.com"></div>
+      <button class="btn primary" style="width:100%;justify-content:center" data-act="do-forgot">Send Reset Link</button>
+      <div id="fErr" style="margin-top:14px"></div>
+    </div>
+  </div>
+</div>
+
+<!-- USER PROFILE -->
+<div class="modal" id="profileModal" data-backdrop="profileModal">
+  <div class="modalBox">
+    <div class="modalHead"><h3>👤 My Account</h3><button class="closeX" data-act="close" data-modal="profileModal">✕</button></div>
+    <div class="modalBody" id="profileBody"></div>
+  </div>
+</div>
+
+<!-- PAYMENT MODAL -->
+<div class="modal" id="paymentModal" data-backdrop="paymentModal">
+  <div class="modalBox" style="max-width:480px">
+    <div class="modalHead"><h3>💳 Complete Payment</h3><button class="closeX" data-act="close" data-modal="paymentModal">✕</button></div>
+    <div class="modalBody" id="paymentBody"></div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN -->
 <div class="modal" id="loginModal" data-backdrop="loginModal">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead"><h3>🔐 Admin Login</h3><button class="closeX" data-act="close" data-modal="loginModal">✕</button></div>
     <div class="modalBody">
-      <div class="field"><label>Email</label><input type="email" id="logEmail" placeholder="admin@example.com" maxlength="120" autocomplete="username"></div>
-      <div class="field"><label>Password</label><input type="password" id="logPass" placeholder="••••••••" maxlength="128" autocomplete="current-password"></div>
-      <button class="btn primary" style="width:100%;justify-content:center" id="logBtn" data-act="do-login">Login</button>
+      <div class="field"><label>Admin Email</label><input type="email" id="logEmail" placeholder="admin@example.com"></div>
+      <div class="field"><label>Password</label><input type="password" id="logPass" placeholder="••••••••"></div>
+      <button class="btn primary" style="width:100%;justify-content:center" id="logBtn" data-act="do-login">Login as Admin</button>
       <div id="logErr" style="margin-top:14px"></div>
     </div>
   </div>
 </div>
 
+<!-- ADMIN PANEL -->
 <div class="modal" id="adminModal" data-backdrop="adminModal">
-  <div class="modalBox" style="max-width:720px">
+  <div class="modalBox" style="max-width:760px">
     <div class="modalHead">
       <h3>⚙️ Admin Panel</h3>
       <div style="display:flex;gap:8px">
@@ -414,70 +451,59 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
     </div>
     <div class="adminTabs">
       <button class="adminTab on" data-tab="upload">⬆️ Upload</button>
+      <button class="adminTab" data-tab="payments">💳 Payments <span id="pendingBadge" style="background:var(--err);color:#fff;font-size:10px;padding:2px 7px;border-radius:10px;margin-left:6px;display:none">0</span></button>
       <button class="adminTab" data-tab="manage">📦 Manage</button>
       <button class="adminTab" data-tab="settings">⚙️ Site</button>
       <button class="adminTab" data-tab="data">💾 Data</button>
     </div>
 
     <div class="adminPane on" data-pane="upload">
-      <div class="notice ok">💡 <b>Google Drive Method:</b><br>1. Upload APK to Drive<br>2. Right-click → Share → "Anyone with the link" → Copy<br>3. Paste below</div>
-      <div class="field"><label>App Name *</label><input id="upName" placeholder="e.g. Spotify Premium Mod" maxlength="80" autocomplete="off"></div>
+      <div class="notice ok">💡 APK + Icon ko Google Drive pe upload karo, phir share link paste karo</div>
+      <div class="field"><label>App Name *</label><input id="upName" maxlength="80" autocomplete="off"></div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
-        <div class="field"><label>Version *</label><input id="upVer" placeholder="e.g. 8.9.1" maxlength="24" autocomplete="off"></div>
+        <div class="field"><label>Version *</label><input id="upVer" maxlength="24" autocomplete="off"></div>
         <div class="field"><label>Category *</label>
-          <select id="upCat">
-            <option>Games</option><option>Tools</option><option>Social</option>
-            <option>Photo</option><option>Video</option><option>Music</option>
-            <option>Productivity</option><option>Security</option><option>Mod</option>
-          </select>
+          <select id="upCat"><option>Games</option><option>Tools</option><option>Social</option><option>Photo</option><option>Video</option><option>Music</option><option>Mod</option></select>
         </div>
       </div>
-      <div class="field"><label>Description</label><textarea id="upDesc" placeholder="Features, mod info..." maxlength="1200"></textarea></div>
-      <div class="field"><label>APK File Size (MB) *</label><input type="number" id="upSize" placeholder="e.g. 45" step="0.1" min="0" max="5000"></div>
-      <div class="field">
-        <label>📦 APK — Drive Link *</label>
-        <input id="upApkLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view" maxlength="400" autocomplete="off">
-        <div id="apkLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
+      <div class="field"><label>Description</label><textarea id="upDesc" maxlength="1200"></textarea></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="field"><label>Size (MB) *</label><input type="number" id="upSize" step="0.1" min="0"></div>
+        <div class="field"><label>Price (₹) — 0 = Free</label><input type="number" id="upPrice" min="0" value="0"></div>
       </div>
-      <div class="field">
-        <label>🖼 App Icon — Drive Link (optional)</label>
-        <input id="upIconLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view" maxlength="400" autocomplete="off">
-        <div id="iconLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
-      </div>
-      <div class="field"><label>Featured</label>
-        <select id="upFeat"><option value="no">No</option><option value="yes">Yes ⭐</option></select>
-      </div>
-      <button class="btn primary" style="width:100%;justify-content:center;margin-top:14px" id="upBtn" data-act="upload-app">🚀 Save App</button>
+      <div class="field"><label>📦 APK Drive Link *</label><input id="upApkLink" maxlength="400"><div id="apkLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div></div>
+      <div class="field"><label>🖼 Icon Drive Link</label><input id="upIconLink" maxlength="400"><div id="iconLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div></div>
+      <div class="field"><label>Featured</label><select id="upFeat"><option value="no">No</option><option value="yes">Yes ⭐</option></select></div>
+      <button class="btn primary" style="width:100%;justify-content:center;margin-top:10px" id="upBtn" data-act="upload-app">🚀 Save App</button>
+    </div>
+
+    <div class="adminPane" data-pane="payments">
+      <div class="notice info">User ne payment kiya hai? Approve karo tabhi user download kar payega.</div>
+      <div class="adminList" id="paymentsList"></div>
     </div>
 
     <div class="adminPane" data-pane="manage">
-      <div class="statsRow">
-        <div class="statMini"><div class="v" id="mApps">0</div><div class="k">Apps</div></div>
-        <div class="statMini"><div class="v" id="mDl">0</div><div class="k">Downloads</div></div>
-        <div class="statMini"><div class="v" id="mFeat">0</div><div class="k">Featured</div></div>
-      </div>
       <div style="display:flex;gap:8px;margin-bottom:12px">
-        <input type="text" id="admSearch" placeholder="Search..." maxlength="60" style="flex:1;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--txt);font-family:inherit;font-size:14px;outline:none">
-        <button class="miniBtn" data-act="delete-all" title="Delete ALL" style="width:44px;height:44px;font-size:16px">🗑</button>
+        <input type="text" id="admSearch" placeholder="Search..." style="flex:1;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--txt);font-family:inherit">
+        <button class="miniBtn" data-act="delete-all" title="Delete ALL" style="width:44px;height:44px">🗑</button>
       </div>
       <div class="adminList" id="admList"></div>
     </div>
 
     <div class="adminPane" data-pane="settings">
-      <div class="field"><label>Site Title</label><input id="setTitle" placeholder="HARIOM MODDER" maxlength="40"></div>
-      <div class="field"><label>Tagline</label><input id="setTag" placeholder="Premium APK Hub" maxlength="80"></div>
-      <div class="field"><label>Telegram</label><input id="setTg" placeholder="https://t.me/..." maxlength="200"></div>
-      <div class="field"><label>WhatsApp</label><input id="setWa" placeholder="https://wa.me/..." maxlength="200"></div>
-      <div class="field"><label>YouTube</label><input id="setYt" placeholder="https://youtube.com/..." maxlength="200"></div>
+      <div class="field"><label>Site Title</label><input id="setTitle" maxlength="40"></div>
+      <div class="field"><label>Tagline</label><input id="setTag" maxlength="80"></div>
+      <div class="field"><label>💳 UPI ID (for payments)</label><input id="setUpi" placeholder="yourname@paytm" maxlength="60"></div>
+      <div class="field"><label>👤 UPI Payee Name</label><input id="setUpiName" placeholder="HARIOM MODDER" maxlength="40"></div>
+      <div class="field"><label>📱 WhatsApp (for payment proof)</label><input id="setWa" placeholder="https://wa.me/91XXXXXXXXXX" maxlength="200"></div>
+      <div class="field"><label>✈️ Telegram</label><input id="setTg" maxlength="200"></div>
+      <div class="field"><label>▶️ YouTube</label><input id="setYt" maxlength="200"></div>
       <button class="btn primary" style="width:100%;justify-content:center" data-act="save-settings">💾 Save Settings</button>
     </div>
 
     <div class="adminPane" data-pane="data">
-      <div class="notice">Backup ke liye export/import kar sakte ho.</div>
       <div style="display:flex;flex-direction:column;gap:10px">
         <button class="btn ghost" data-act="export">📥 Export JSON</button>
-        <button class="btn ghost" data-act="import-trigger">📤 Import JSON</button>
-        <input type="file" id="importFile" accept=".json,application/json" class="hidden">
         <button class="btn ghost" style="color:#f87171" data-act="delete-all">🗑 Delete All Apps</button>
       </div>
     </div>
@@ -485,18 +511,14 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 </div>
 
 <script type="module">
-/* =====================================================================
-   HARIOM MODDER — Hardened Edition (Fixed Google Drive Download)
-   ===================================================================== */
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged,
+         createUserWithEmailAndPassword, sendPasswordResetEmail, updateProfile }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, collection, doc, addDoc, getDoc, deleteDoc, updateDoc,
-         onSnapshot, query, serverTimestamp, increment, writeBatch, setDoc }
+import { getFirestore, collection, doc, addDoc, getDoc, getDocs, setDoc, deleteDoc, updateDoc,
+         onSnapshot, query, where, serverTimestamp, increment, writeBatch, orderBy }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-/* ───────── CONFIG ───────── */
 const firebaseConfig = {
   apiKey: "AIzaSyDqVPnKIwuJzJVOaGqTzD4IIFysVpJ6g4Y",
   authDomain: "website-hariom.firebaseapp.com",
@@ -504,845 +526,695 @@ const firebaseConfig = {
   projectId: "website-hariom",
   storageBucket: "website-hariom.firebasestorage.app",
   messagingSenderId: "602644625906",
-  appId: "1:602644625906:web:7db11a4e6eb16beeb7536b",
-  measurementId: "G-CEPT6GQZQS"
+  appId: "1:602644625906:web:7db11a4e6eb16beeb7536b"
 };
 
-const ADMIN_EMAILS = [];
+// ⚠️ APNA ADMIN EMAIL YAHAN DAALO
+const ADMIN_EMAILS = ["admin@hariom.com"]; // <-- Change this!
 
-/* ───────── INIT ───────── */
-let app = null, auth = null, db = null;
-try {
-  app  = initializeApp(firebaseConfig);
-  auth = getAuth(app);
-  db   = getFirestore(app);
-} catch (e) { console.error('Firebase init failed:', e); }
+let app, auth, db;
+try { app = initializeApp(firebaseConfig); auth = getAuth(app); db = getFirestore(app); }
+catch(e){ console.error(e); }
 
-/* ───────── STATE ───────── */
-let APPS = [];
-let siteCfg = {};
-let currentCat = 'all';
-let currentSort = 'new';
-let searchQ = '';
-let isAdmin = false;
-let dlController = null;
-let dlStartTime = 0;
-let renderQueued = false;
+let APPS = [], PURCHASES = [], MY_PURCHASES = [], siteCfg = {};
+let currentCat = 'all', currentSort = 'new', searchQ = '';
+let currentUser = null, isAdmin = false, userProfile = null;
+let dlController = null, renderQueued = false, purchasesUnsub = null, myPurchUnsub = null;
 
-/* ───────── HELPERS ───────── */
 const $ = id => document.getElementById(id);
-
-function esc(s){
-  return String(s ?? '').replace(/[&<>"']/g, c => (
-    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
-  ));
-}
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const escAttr = esc;
+const clampStr = (s, n) => { s = String(s ?? '').trim(); return s.length > n ? s.slice(0, n) : s; };
+const isHttps = u => { try { return new URL(u).protocol === 'https:'; } catch { return false; } };
+const isEmail = s => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(s||''));
 
-function isHttps(url){
-  try { const u = new URL(url); return u.protocol === 'https:'; }
-  catch { return false; }
-}
+function fmtSize(b){ b=Number(b)||0; if(b<=0) return '0 B'; const u=['B','KB','MB','GB']; const i=Math.min(Math.floor(Math.log(b)/Math.log(1024)),u.length-1); return (b/Math.pow(1024,i)).toFixed(i?1:0)+' '+u[i]; }
+function fmtNum(n){ n=Number(n)||0; if(n>=1e9)return (n/1e9).toFixed(1)+'B'; if(n>=1e6)return (n/1e6).toFixed(1)+'M'; if(n>=1e3)return (n/1e3).toFixed(1)+'K'; return String(n); }
+function timeAgo(ts){ if(!ts) return 'just now'; let d; try{ d = ts.toDate?ts.toDate():new Date(ts);}catch{ return 'recently'; } const s=(Date.now()-d.getTime())/1000; if(!isFinite(s)||s<0) return 'just now'; if(s<60) return 'just now'; if(s<3600) return Math.floor(s/60)+'m ago'; if(s<86400) return Math.floor(s/3600)+'h ago'; return Math.floor(s/86400)+'d ago'; }
+function fmtDate(ts){ if(!ts) return '-'; try { const d = ts.toDate?ts.toDate():new Date(ts); return d.toLocaleDateString('en-IN'); } catch { return '-'; } }
 
-function clampStr(s, n){
-  s = String(s ?? '').trim();
-  return s.length > n ? s.slice(0, n) : s;
-}
-
-function fmtSize(b){
-  b = Number(b) || 0;
-  if (b <= 0) return '0 B';
-  const u = ['B','KB','MB','GB'];
-  const i = Math.min(Math.floor(Math.log(b)/Math.log(1024)), u.length-1);
-  return (b/Math.pow(1024,i)).toFixed(i ? 1 : 0) + ' ' + u[i];
-}
-function fmtNum(n){
-  n = Number(n) || 0;
-  if (n >= 1e9) return (n/1e9).toFixed(1)+'B';
-  if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
-  if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
-  return String(n);
-}
-function timeAgo(ts){
-  if (!ts) return 'just now';
-  let d;
-  try { d = ts.toDate ? ts.toDate() : new Date(ts); } catch { return 'recently'; }
-  const s = (Date.now() - d.getTime()) / 1000;
-  if (!isFinite(s) || s < 0) return 'just now';
-  if (s < 60) return 'just now';
-  if (s < 3600) return Math.floor(s/60) + 'm ago';
-  if (s < 86400) return Math.floor(s/3600) + 'h ago';
-  if (s < 2592000) return Math.floor(s/86400) + 'd ago';
-  return d.toLocaleDateString();
-}
-
-/* ───────── TOAST ───────── */
 function toast(msg, type='info', ms=2800){
-  const box = $('toastBox');
-  if (!box) return;
-  const icons = { ok:'✓', err:'✕', info:'ℹ', warn:'⚠' };
-  const el = document.createElement('div');
-  el.className = 'toast ' + type;
-  const ico = document.createElement('span');
-  ico.className = 'tIco';
-  ico.textContent = icons[type] || 'ℹ';
-  const txt = document.createElement('span');
-  txt.textContent = String(msg);
-  el.append(ico, txt);
-  box.appendChild(el);
-  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 300); }, ms);
+  const box = $('toastBox'); if(!box) return;
+  const ic = {ok:'✓',err:'✕',info:'ℹ',warn:'⚠'}[type]||'ℹ';
+  const el = document.createElement('div'); el.className = 'toast ' + type;
+  el.innerHTML = `<span class="tIco" style="color:var(--${type==='ok'?'ok':type==='err'?'err':type==='warn'?'warn':'c2'})">${ic}</span><span>${esc(msg)}</span>`;
+  box.appendChild(el); setTimeout(()=>{el.classList.add('out'); setTimeout(()=>el.remove(),300);}, ms);
 }
 
-/* ───────── SAFE ICON BUILDER ───────── */
-function iconHTML(app, sizeClass){
-  const name = String(app?.name || '?');
+function iconHTML(a, sizeClass){
+  const name = String(a?.name || '?');
   const letter = (name.trim().charAt(0) || '?').toUpperCase();
-  const url = (app?.iconUrl && isHttps(app.iconUrl)) ? app.iconUrl : '';
-  const img = url
-    ? `<img src="${escAttr(url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
-    : '';
-  return `<div class="ic ${sizeClass}" data-l="${escAttr(letter)}" aria-hidden="true">${img}</div>`;
+  const url = (a?.iconUrl && isHttps(a.iconUrl)) ? a.iconUrl : '';
+  const img = url ? `<img src="${escAttr(url)}" alt="" loading="lazy" onerror="this.remove()">` : '';
+  return `<div class="ic ${sizeClass}" data-l="${escAttr(letter)}">${img}</div>`;
 }
 
-/* ───────── DRIVE HELPERS ───────── */
 function driveId(url){
-  if (!url) return '';
+  if(!url) return '';
   const s = String(url);
-  let m = s.match(/\/file\/d\/([A-Za-z0-9_-]{20,})/);
-  if (m) return m[1];
-  m = s.match(/[?&]id=([A-Za-z0-9_-]{20,})/);
-  if (m) return m[1];
-  m = s.match(/\/d\/([A-Za-z0-9_-]{20,})/);
-  if (m) return m[1];
+  let m = s.match(/\/file\/d\/([A-Za-z0-9_-]{20,})/); if(m) return m[1];
+  m = s.match(/[?&]id=([A-Za-z0-9_-]{20,})/); if(m) return m[1];
+  m = s.match(/\/d\/([A-Za-z0-9_-]{20,})/); if(m) return m[1];
   return '';
 }
-function driveDirect(url){
-  const id = driveId(url);
-  return id ? `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t` : '';
-}
-function drivePreview(url){
-  const id = driveId(url);
-  return id ? `https://lh3.googleusercontent.com/d/${id}=w400` : '';
-}
+const drivePreview = u => { const id = driveId(u); return id ? `https://lh3.googleusercontent.com/d/${id}=w400` : ''; };
 
-/* ───────── THEME ───────── */
-const savedTheme = localStorage.getItem('hm_theme') === 'light' ? 'light' : 'dark';
+/* THEME */
+const savedTheme = localStorage.getItem('hm_theme')==='light'?'light':'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
+$('themeBtn').textContent = savedTheme==='dark'?'🌙':'☀️';
 function toggleTheme(){
   const cur = document.documentElement.getAttribute('data-theme');
-  const next = cur === 'dark' ? 'light' : 'dark';
+  const next = cur==='dark'?'light':'dark';
   document.documentElement.setAttribute('data-theme', next);
-  try { localStorage.setItem('hm_theme', next); } catch {}
-  const btn = $('themeBtn');
-  if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
-  toast(next === 'dark' ? '🌙 Dark mode' : '☀️ Light mode', 'info', 1400);
+  try{ localStorage.setItem('hm_theme', next); }catch{}
+  $('themeBtn').textContent = next==='dark'?'🌙':'☀️';
 }
 
-/* ───────── MODALS ───────── */
-function openModal(id){
-  const el = $(id);
-  if (!el) return;
-  el.classList.add('on');
-  document.body.style.overflow = 'hidden';
-}
-function closeModal(id){
-  const el = $(id);
-  if (!el) return;
-  el.classList.remove('on');
-  if (!document.querySelector('.modal.on')) document.body.style.overflow = '';
-}
+/* MODALS */
+function openModal(id){ const el=$(id); if(el){ el.classList.add('on'); document.body.style.overflow='hidden'; } }
+function closeModal(id){ const el=$(id); if(el){ el.classList.remove('on'); if(!document.querySelector('.modal.on')) document.body.style.overflow=''; } }
 
-/* ───────── AUTH ───────── */
-function isAllowedAdmin(user){
-  if (!user) return false;
-  if (!ADMIN_EMAILS.length) return true;
-  const em = String(user.email || '').toLowerCase();
-  return ADMIN_EMAILS.map(x => x.toLowerCase()).includes(em);
-}
+/* SPLASH */
+window.addEventListener('load', () => setTimeout(() => $('splash').classList.add('hide'), 1400));
 
-async function doLogin(){
-  if (!auth) { toast('Firebase not ready', 'err'); return; }
-  const email = clampStr($('logEmail').value, 120);
-  const pass  = String($('logPass').value || '');
-  const err   = $('logErr');
-  const btn   = $('logBtn');
-
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || pass.length < 6){
-    err.innerHTML = '<div class="notice err">Enter a valid email and password (min 6 chars).</div>';
-    return;
-  }
-  btn.disabled = true;
-  btn.textContent = 'Logging in...';
-  err.innerHTML = '';
+/* ───────── USER AUTH ───────── */
+async function doUserLogin(){
+  const email = clampStr($('uEmail').value, 120);
+  const pass = String($('uPass').value || '');
+  const err = $('uLoginErr'), btn = $('uLoginBtn');
+  if(!isEmail(email)){ err.innerHTML = '<div class="notice err">Invalid email</div>'; return; }
+  if(pass.length < 6){ err.innerHTML = '<div class="notice err">Password min 6 chars</div>'; return; }
+  btn.disabled = true; btn.textContent = 'Logging in...'; err.innerHTML = '';
   try {
     await signInWithEmailAndPassword(auth, email, pass);
-    $('logPass').value = '';
-  } catch (e) {
-    const safeMsg = esc(String(e?.code || e?.message || 'Login failed'));
-    err.innerHTML = `<div class="notice err">${safeMsg}</div>`;
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Login';
+    $('uPass').value = '';
+    closeModal('userLoginModal');
+  } catch(e){
+    err.innerHTML = `<div class="notice err">${esc(e.code || e.message)}</div>`;
+  } finally { btn.disabled = false; btn.textContent = 'Login'; }
+}
+
+async function doUserRegister(){
+  const name = clampStr($('rName').value, 50);
+  const email = clampStr($('rEmail').value, 120);
+  const phone = clampStr($('rPhone').value, 20);
+  const pass = String($('rPass').value || '');
+  const err = $('rErr'), btn = $('rBtn');
+  if(name.length < 2){ err.innerHTML = '<div class="notice err">Enter your name</div>'; return; }
+  if(!isEmail(email)){ err.innerHTML = '<div class="notice err">Invalid email</div>'; return; }
+  if(pass.length < 6){ err.innerHTML = '<div class="notice err">Password min 6 chars</div>'; return; }
+  btn.disabled = true; btn.textContent = 'Creating...'; err.innerHTML = '';
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    await updateProfile(cred.user, { displayName: name });
+    await setDoc(doc(db, 'users', cred.user.uid), {
+      name, email, phone, createdAt: serverTimestamp(), uid: cred.user.uid
+    });
+    ['rName','rEmail','rPhone','rPass'].forEach(id => $(id).value = '');
+    closeModal('userRegisterModal');
+    toast('✅ Account created!', 'ok');
+  } catch(e){
+    err.innerHTML = `<div class="notice err">${esc(e.code || e.message)}</div>`;
+  } finally { btn.disabled = false; btn.textContent = 'Create Account'; }
+}
+
+async function doForgot(){
+  const email = clampStr($('fEmail').value, 120);
+  const err = $('fErr');
+  if(!isEmail(email)){ err.innerHTML = '<div class="notice err">Enter valid email</div>'; return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    err.innerHTML = '<div class="notice ok">✅ Reset link email pe bhej diya!</div>';
+    $('fEmail').value = '';
+  } catch(e){
+    err.innerHTML = `<div class="notice err">${esc(e.code || e.message)}</div>`;
   }
 }
 
 async function doLogout(){
   try { await signOut(auth); } catch {}
-  closeModal('adminModal');
+  closeModal('adminModal'); closeModal('profileModal');
   toast('Logged out', 'info');
 }
 
-/* ───────── FIRESTORE LISTENER ───────── */
+/* ADMIN LOGIN */
+async function doAdminLogin(){
+  const email = clampStr($('logEmail').value, 120);
+  const pass = String($('logPass').value || '');
+  const err = $('logErr'), btn = $('logBtn');
+  if(!isEmail(email) || pass.length < 6){ err.innerHTML = '<div class="notice err">Invalid</div>'; return; }
+  btn.disabled = true; btn.textContent = 'Logging in...'; err.innerHTML = '';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    $('logPass').value = '';
+  } catch(e){
+    err.innerHTML = `<div class="notice err">${esc(e.code || e.message)}</div>`;
+  } finally { btn.disabled = false; btn.textContent = 'Login as Admin'; }
+}
+
+/* ───────── FIRESTORE LISTENERS ───────── */
 function loadApps(){
-  if (!db) { showEmpty(); return; }
-  const q = query(collection(db, 'apps'));
-  onSnapshot(q, snap => {
+  if(!db) return;
+  onSnapshot(query(collection(db, 'apps')), snap => {
     APPS = [];
     snap.forEach(d => APPS.push({ id: d.id, ...d.data() }));
-    renderAll();
-    updateStats();
-    if (isAdmin) renderAdminList();
-  }, err => {
-    console.error('Snapshot error:', err);
-    showEmpty();
+    renderAll(); updateStats();
+    if(isAdmin) renderAdminList();
   });
 }
 
-function showEmpty(){
-  const g = $('appsGrid'); if (g) g.innerHTML = '';
-  $('emptyBox')?.classList.remove('hidden');
+function loadPurchases(){
+  if(!db) return;
+  // Admin sees all
+  if(purchasesUnsub) purchasesUnsub();
+  purchasesUnsub = onSnapshot(query(collection(db, 'purchases')), snap => {
+    PURCHASES = [];
+    snap.forEach(d => PURCHASES.push({ id: d.id, ...d.data() }));
+    if(isAdmin) renderPaymentsList();
+  });
+}
+
+function loadMyPurchases(uid){
+  if(!db) return;
+  if(myPurchUnsub) myPurchUnsub();
+  myPurchUnsub = onSnapshot(query(collection(db, 'purchases'), where('userId','==',uid)), snap => {
+    MY_PURCHASES = [];
+    snap.forEach(d => MY_PURCHASES.push({ id: d.id, ...d.data() }));
+    renderAll(); // re-render to update VIP badges
+    if($('profileModal').classList.contains('on')) renderProfile();
+  });
+}
+
+function loadSettings(){
+  if(!db) return;
+  getDoc(doc(db, 'settings', 'site')).then(d => {
+    if(d.exists()){
+      siteCfg = d.data() || {};
+      ['setTitle','setTag','setUpi','setUpiName','setWa','setTg','setYt'].forEach((id,i) => {
+        const key = ['title','tagline','upiId','upiName','whatsapp','telegram','youtube'][i];
+        if($(id) && siteCfg[key]) $(id).value = siteCfg[key];
+      });
+      applySettings();
+    }
+  });
+}
+function applySettings(){
+  if(siteCfg.telegram) document.querySelector('[data-s="tg"]').href = siteCfg.telegram;
+  if(siteCfg.whatsapp) document.querySelector('[data-s="wa"]').href = siteCfg.whatsapp;
+  if(siteCfg.youtube) document.querySelector('[data-s="yt"]').href = siteCfg.youtube;
 }
 
 /* ───────── RENDER ───────── */
+function hasPurchased(appId){
+  return MY_PURCHASES.some(p => p.appId === appId && p.status === 'approved');
+}
+function pendingPurchase(appId){
+  return MY_PURCHASES.find(p => p.appId === appId && p.status === 'pending');
+}
+function isPaid(a){ return (a.price || 0) > 0; }
+
 function filtered(){
   let list = APPS.filter(a => {
-    if (currentCat !== 'all' && a.category !== currentCat) return false;
-    if (searchQ){
+    if(currentCat === 'VIP'){ if(!isPaid(a)) return false; }
+    else if(currentCat !== 'all' && a.category !== currentCat) return false;
+    if(searchQ){
       const s = searchQ.toLowerCase();
-      const hay = String(a.name||'') + ' ' + String(a.desc||'') + ' ' + String(a.category||'');
-      if (!hay.toLowerCase().includes(s)) return false;
+      const hay = (a.name+' '+(a.desc||'')+' '+(a.category||'')).toLowerCase();
+      if(!hay.includes(s)) return false;
     }
     return true;
   });
   const s = currentSort;
-  list.sort((a, b) => {
-    if (s === 'new')  return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
-    if (s === 'pop')  return (b.downloads || 0) - (a.downloads || 0);
-    if (s === 'rate') return (b.rating || 0) - (a.rating || 0);
-    if (s === 'name') return String(a.name||'').localeCompare(String(b.name||''));
-    if (s === 'size') return (a.size || 0) - (b.size || 0);
+  list.sort((a,b) => {
+    if(s==='new') return (b.createdAt?.seconds||0)-(a.createdAt?.seconds||0);
+    if(s==='pop') return (b.downloads||0)-(a.downloads||0);
+    if(s==='rate') return (b.rating||0)-(a.rating||0);
+    if(s==='name') return (a.name||'').localeCompare(b.name||'');
     return 0;
   });
   return list;
 }
 
 function cardHTML(a){
-  const id    = escAttr(a.id);
-  const name  = esc(a.name || 'Untitled');
-  const ver   = esc(a.version || '1.0');
-  const cat   = esc(a.category || 'App');
-  const desc  = esc(a.desc || 'No description');
-  const stars = a.rating ? `<span class="starF">★</span> ${Number(a.rating).toFixed(1)}` : `<span>☆ New</span>`;
+  const id = escAttr(a.id);
+  const paid = isPaid(a);
+  const purchased = hasPurchased(a.id);
+  const pending = pendingPurchase(a.id);
+  const priceTag = paid
+    ? (purchased ? `<span class="priceTag free">✓ OWNED</span>` :
+       pending ? `<span class="priceTag" style="color:#fbbf24">⏳ PENDING</span>` :
+       `<span class="priceTag">₹${a.price}</span>`)
+    : `<span class="priceTag free">FREE</span>`;
   return `
-    <div class="card glass gloss" data-app-id="${id}" role="button" tabindex="0">
-      ${a.featured ? '<span class="badgeFeat">⭐ FEATURED</span>' : ''}
+    <div class="card ${paid ? 'vip' : ''}" data-app-id="${id}">
+      ${a.featured ? '<span class="badgeFeat">⭐</span>' : ''}
+      ${paid ? '<span class="badgeVip">👑 VIP</span>' : ''}
       <div class="top">
         ${iconHTML(a, 'card-ic')}
         <div class="meta">
-          <div class="name">${name}</div>
-          <div class="ver">v${ver}</div>
-          <span class="cat">${cat}</span>
+          <div class="name">${esc(a.name)}</div>
+          <div class="ver">v${esc(a.version||'1.0')}</div>
+          <span class="cat">${esc(a.category||'App')}</span>
         </div>
       </div>
-      <div class="desc">${desc}</div>
+      <div class="desc">${esc(a.desc || 'No description')}</div>
       <div class="foot">
-        <div class="stats2">
-          <span>⬇ ${fmtNum(a.downloads || 0)}</span>
-          <span>${stars}</span>
-        </div>
-        <span style="font-size:11px;color:var(--txt3);font-family:monospace">${fmtSize(a.size)}</span>
+        <div class="stats2"><span>⬇ ${fmtNum(a.downloads||0)}</span></div>
+        ${priceTag}
       </div>
     </div>`;
 }
 
 function renderAll(){
-  if (renderQueued) return;
+  if(renderQueued) return;
   renderQueued = true;
   requestAnimationFrame(() => {
     renderQueued = false;
     const list = filtered();
-    const grid = $('appsGrid');
-    const feat = $('featGrid');
-    const featSec = $('featSection');
+    const grid = $('appsGrid'), vipGrid = $('vipGrid'), vipSec = $('vipSection');
+    if(!list.length){ grid.innerHTML = ''; $('emptyBox').classList.remove('hidden'); }
+    else { $('emptyBox').classList.add('hidden'); grid.innerHTML = list.map(cardHTML).join(''); }
 
-    if (!list.length){
-      if (grid) grid.innerHTML = '';
-      $('emptyBox')?.classList.remove('hidden');
-    } else {
-      $('emptyBox')?.classList.add('hidden');
-      if (grid) grid.innerHTML = list.map(cardHTML).join('');
-    }
-
-    const featured = list.filter(a => a.featured);
-    if (featured.length && currentCat === 'all' && !searchQ){
-      featSec?.classList.remove('hidden');
-      if (feat) feat.innerHTML = featured.slice(0, 4).map(cardHTML).join('');
-    } else {
-      featSec?.classList.add('hidden');
-    }
+    const vips = list.filter(a => isPaid(a));
+    if(vips.length && currentCat === 'all' && !searchQ){
+      vipSec.classList.remove('hidden');
+      vipGrid.innerHTML = vips.slice(0, 6).map(cardHTML).join('');
+    } else vipSec.classList.add('hidden');
   });
 }
 
 function updateStats(){
-  const totalDl = APPS.reduce((s, a) => s + (a.downloads || 0), 0);
-  const cats = new Set(APPS.map(a => a.category).filter(Boolean));
+  const totalDl = APPS.reduce((s,a)=>s+(a.downloads||0),0);
+  const vipCount = APPS.filter(a => isPaid(a)).length;
   const rated = APPS.filter(a => a.rating);
-  const avg = rated.length ? rated.reduce((s, a) => s + a.rating, 0) / rated.length : 0;
-
+  const avg = rated.length ? rated.reduce((s,a)=>s+a.rating,0)/rated.length : 0;
   $('stApps').textContent = fmtNum(APPS.length);
-  $('stDl').textContent   = fmtNum(totalDl);
-  $('stCat').textContent  = cats.size || 0;
+  $('stDl').textContent = fmtNum(totalDl);
+  $('stVip').textContent = fmtNum(vipCount);
   $('stRate').textContent = avg ? avg.toFixed(1) : '0.0';
-  $('heroLive').textContent = `${APPS.length} apps • ${fmtNum(totalDl)} downloads`;
+  $('heroLive').textContent = `${APPS.length} apps • ${vipCount} VIP`;
 }
 
-/* ───────── DETAIL MODAL ───────── */
+/* ───────── DETAIL ───────── */
 function openDetail(id){
-  const a = APPS.find(x => x.id === id);
-  if (!a) return;
-  const stars = a.rating ? `${Number(a.rating).toFixed(1)} ★` : 'New';
+  const a = APPS.find(x => x.id === id); if(!a) return;
+  const paid = isPaid(a);
+  const purchased = hasPurchased(a.id);
+  const pending = pendingPurchase(a.id);
   const safeId = escAttr(a.id);
 
+  let actionBtn;
+  if(!paid){
+    actionBtn = `<button class="dlBtnBig" data-act="download" data-id="${safeId}">⬇ Download APK — FREE</button>`;
+  } else if(purchased){
+    actionBtn = `<button class="dlBtnBig" data-act="download" data-id="${safeId}">⬇ Download APK — OWNED</button>`;
+  } else if(pending){
+    actionBtn = `<button class="dlBtnBig" disabled style="background:var(--glass2);color:var(--warn);box-shadow:none">⏳ Payment Verification Pending</button>
+                 <div class="notice" style="margin-top:12px">Aapka payment admin ke paas verify ke liye bheja hai. Approve hone par download unlock hoga.</div>`;
+  } else {
+    actionBtn = `<button class="dlBtnBig gold" data-act="buy" data-id="${safeId}">💳 Buy for ₹${a.price} via UPI</button>`;
+  }
+
+  const stars = a.rating ? `${Number(a.rating).toFixed(1)} ★` : 'New';
   $('detailBody').innerHTML = `
     <div class="detailHead">
       ${iconHTML(a, 'detail-ic')}
       <div style="flex:1;min-width:0">
-        <div class="nm">${esc(a.name || 'Untitled')}</div>
-        <div class="vr">v${esc(a.version || '1.0')} • ${fmtSize(a.size)}</div>
-        <span class="cat2">${esc(a.category || 'App')}</span>
+        <div class="nm">${esc(a.name)} ${paid ? '<span style="color:var(--gold);font-size:14px">👑 VIP</span>' : ''}</div>
+        <div class="vr">v${esc(a.version||'1.0')} • ${fmtSize(a.size)}</div>
+        <span class="cat" style="margin-top:8px;display:inline-block">${esc(a.category||'App')}</span>
       </div>
     </div>
     <div class="metaGrid">
-      <div class="metaItem"><div class="v">${fmtNum(a.downloads || 0)}</div><div class="k">Downloads</div></div>
+      <div class="metaItem"><div class="v">${fmtNum(a.downloads||0)}</div><div class="k">Downloads</div></div>
       <div class="metaItem"><div class="v">${esc(stars)}</div><div class="k">Rating</div></div>
-      <div class="metaItem"><div class="v">${esc(timeAgo(a.createdAt))}</div><div class="k">Added</div></div>
+      <div class="metaItem"><div class="v" style="${paid?'color:var(--gold)':''}">${paid?'₹'+a.price:'FREE'}</div><div class="k">Price</div></div>
     </div>
-    <div class="descBox">${esc(a.desc || 'No description available.')}</div>
-    <button class="dlBtnBig" data-act="download" data-id="${safeId}">⬇ Download APK</button>
-    <div style="display:flex;gap:8px;margin-top:12px">
-      <button class="btn ghost" style="flex:1;justify-content:center" data-act="share" data-id="${safeId}">🔗 Share</button>
-      <button class="btn ghost" style="flex:1;justify-content:center" data-act="copy" data-id="${safeId}">📋 Copy Link</button>
-    </div>`;
+    <div class="descBox">${esc(a.desc || 'No description.')}</div>
+    ${actionBtn}
+  `;
   openModal('detailModal');
 }
 
-/* ═══════════ DOWNLOAD — GOOGLE DRIVE FIXED ═══════════ */
+/* ───────── PURCHASE / PAYMENT ───────── */
+function openPurchase(id){
+  const a = APPS.find(x => x.id === id); if(!a || !isPaid(a)) return;
+  if(!currentUser){ closeModal('detailModal'); openModal('userLoginModal'); toast('Login required', 'warn'); return; }
+
+  const upi = siteCfg.upiId || '';
+  const upiName = siteCfg.upiName || 'HARIOM MODDER';
+  const amount = a.price;
+  if(!upi){ toast('UPI ID set nahi hai. Admin se contact karo.', 'err'); return; }
+
+  const note = `Payment for ${a.name}`.slice(0, 40);
+  const upiUri = `upi://pay?pa=${encodeURIComponent(upi)}&pn=${encodeURIComponent(upiName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(note)}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=440x440&data=${encodeURIComponent(upiUri)}&margin=8`;
+
+  $('paymentBody').innerHTML = `
+    <div class="notice info">UPI se ₹${amount} pay karo, phir transaction ID daal ke submit karo.</div>
+
+    <div style="text-align:center;margin-bottom:8px">
+      <div class="amtBig">₹${amount}</div>
+      <div style="font-size:12px;color:var(--txt3);margin-top:4px">${esc(a.name)}</div>
+    </div>
+
+    <div style="text-align:center;margin:16px 0">
+      <div class="qrBox"><img src="${escAttr(qrUrl)}" alt="UPI QR"></div>
+    </div>
+
+    <div class="upiId">
+      <div class="lbl">UPI ID</div>
+      <div class="val">${esc(upi)}</div>
+    </div>
+
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <a href="${escAttr(upiUri)}" class="btn gold" style="flex:1;justify-content:center;text-decoration:none">📱 Open UPI App</a>
+      <button class="btn ghost" style="flex:1;justify-content:center" data-act="copy-upi" data-upi="${escAttr(upi)}">📋 Copy UPI ID</button>
+    </div>
+
+    <hr style="margin:22px 0;border:0;border-top:1px solid var(--border)">
+
+    <div class="field"><label>Transaction ID / UTR Number *</label>
+      <input id="payTxnId" placeholder="e.g. 4283XXXXXX" maxlength="60" autocomplete="off"></div>
+    <div class="field"><label>Note (optional)</label>
+      <input id="payNote" placeholder="Anything you want to tell admin" maxlength="200"></div>
+
+    <button class="btn primary" style="width:100%;justify-content:center" id="paySubmitBtn" data-act="submit-payment" data-id="${escAttr(id)}">✅ I've Paid — Submit for Verification</button>
+  `;
+  closeModal('detailModal');
+  openModal('paymentModal');
+}
+
+async function submitPayment(appId){
+  const a = APPS.find(x => x.id === appId); if(!a) return;
+  const txnId = clampStr($('payTxnId').value, 60);
+  const note = clampStr($('payNote').value, 200);
+  if(txnId.length < 4){ toast('Enter valid transaction ID', 'warn'); return; }
+
+  const btn = $('paySubmitBtn'); btn.disabled = true; btn.textContent = 'Submitting...';
+  try {
+    await addDoc(collection(db, 'purchases'), {
+      userId: currentUser.uid,
+      userEmail: currentUser.email,
+      userName: currentUser.displayName || userProfile?.name || '',
+      appId, appName: a.name, appVersion: a.version,
+      amount: a.price,
+      transactionId: txnId,
+      note,
+      status: 'pending',
+      createdAt: serverTimestamp()
+    });
+    toast('✅ Payment submitted! Admin approve karega.', 'ok', 4000);
+    closeModal('paymentModal');
+  } catch(e){
+    console.error(e);
+    toast('Failed: ' + (e.message || 'Try again'), 'err');
+  } finally { if(btn){ btn.disabled = false; btn.textContent = "✅ I've Paid — Submit for Verification"; } }
+}
+
+/* ───────── DOWNLOAD ───────── */
 function resetDlModal(a){
-  const wrap = $('dlAppIconWrap');
-  if (wrap) wrap.innerHTML = iconHTML(a, 'dl-ic');
-
+  $('dlAppIconWrap').innerHTML = iconHTML(a, 'dl-ic');
   $('dlAppName').textContent = a.name || 'App';
-  $('dlAppVer').textContent  = `v${a.version || '1.0'} • ${fmtSize(a.size || 0)}`;
-
-  const bar = $('dlBar');
-  bar.style.width = '0%';
-  bar.className = 'dlBar';
-  $('dlPct').textContent = '0%';
-  $('dlPct').style.color = 'var(--p2)';
-  $('dlStatus').textContent = 'Preparing...';
-  $('dlStatus').style.color = 'var(--txt2)';
-  $('dlBytes').textContent = '0 B / ' + (a.size ? fmtSize(a.size) : '?');
-  $('dlSpeed').textContent = '—';
-  $('dlNote').innerHTML = '⏳ Preparing download...<br>File will be saved by your browser';
-
-  // Remove any previously added manual button
-  const oldBtn = document.getElementById('dlManualBtn');
-  if (oldBtn) oldBtn.remove();
-
-  dlController = null;
+  $('dlAppVer').textContent = `v${a.version||'1.0'} • ${fmtSize(a.size||0)}`;
+  $('dlBar').style.width = '0%'; $('dlBar').className = 'dlBar';
+  $('dlPct').textContent = '0%'; $('dlStatus').textContent = 'Preparing...'; $('dlStatus').style.color = 'var(--txt2)';
+  $('dlBytes').textContent = '0 B / ' + fmtSize(a.size||0); $('dlSpeed').textContent = '—';
+  $('dlNote').innerHTML = '⏳ Preparing...'; dlController = null;
+  const old = $('dlManualBtn'); if(old) old.remove();
 }
 
 async function downloadApp(id){
-  const a = APPS.find(x => x.id === id);
-  if (!a || (!a.apkUrl && !a.apkLink)) { toast('APK link missing', 'err'); return; }
+  const a = APPS.find(x => x.id === id); if(!a) { toast('App not found', 'err'); return; }
+  if(isPaid(a) && !hasPurchased(a.id)){ toast('Purchase required', 'err'); return; }
 
   closeModal('detailModal');
   resetDlModal(a);
   openModal('dlModal');
 
-  // Fire-and-forget download counter
-  try { await updateDoc(doc(db, 'apps', id), { downloads: increment(1) }); } catch {}
+  try { await updateDoc(doc(db,'apps',id), { downloads: increment(1) }); } catch {}
 
-  const bar    = $('dlBar');
-  const pct    = $('dlPct');
-  const status = $('dlStatus');
-  const note   = $('dlNote');
+  $('dlBar').style.width = '100%';
+  $('dlBar').classList.add('dlSuccess');
+  $('dlPct').textContent = '✅'; $('dlPct').style.color = 'var(--ok)';
+  $('dlStatus').textContent = 'Redirecting to Drive...'; $('dlStatus').style.color = 'var(--ok)';
 
-  // UI: instantly show "redirecting" state
-  bar.style.width = '100%';
-  bar.classList.add('dlSuccess');
-  pct.textContent = '✅';
-  pct.style.color = 'var(--ok)';
-  status.textContent = 'Redirecting to Drive...';
-  status.style.color = 'var(--ok)';
-  $('dlBytes').textContent = 'Opening link...';
-  $('dlSpeed').textContent = 'redirect';
-
-  // Build the safest possible Drive URL (prefer the original share link)
   let driveUrl = a.apkLink && isHttps(a.apkLink) ? a.apkLink : '';
-  if (!driveUrl) {
-    const did = driveId(a.apkUrl || '');
-    driveUrl = did ? `https://drive.google.com/file/d/${did}/view` : '';
-  }
-  if (!driveUrl) {
-    toast('Invalid Drive link', 'err');
-    closeModal('dlModal');
-    return;
-  }
+  if(!driveUrl){ const did = driveId(a.apkUrl||''); driveUrl = did ? `https://drive.google.com/file/d/${did}/view` : ''; }
+  if(!driveUrl){ toast('Invalid link', 'err'); closeModal('dlModal'); return; }
 
-  // Show instructions + manual fallback button
-  note.innerHTML = `
-    <div style="margin-bottom:12px;color:var(--txt2)">
-      📱 Google Drive page khulega.<br>
-      Wahan <b style="color:#fbbf24">"Download anyway"</b> button dabana.
-    </div>
-    <a id="dlManualBtn" href="${escAttr(driveUrl)}" target="_blank" rel="noopener noreferrer"
-       class="btn primary"
-       style="width:100%;justify-content:center;text-decoration:none;margin-top:8px;padding:12px;font-size:14px">
-      ⬇️ Open Google Drive Link
-    </a>
-    <div style="font-size:11px;opacity:.7;margin-top:8px;color:var(--txt3)">
-      Agar page automatically nahi khula toh upar wala button dabao.
-    </div>
+  $('dlNote').innerHTML = `
+    <div style="color:var(--txt2);margin-bottom:10px">📱 Drive page khulega. <b style="color:#fbbf24">"Download anyway"</b> dabao.</div>
+    <a id="dlManualBtn" href="${escAttr(driveUrl)}" target="_blank" rel="noopener noreferrer" class="btn primary" style="width:100%;justify-content:center;text-decoration:none;padding:12px">⬇️ Open Drive Link</a>
   `;
-
-  // Try auto-opening after a short delay (gives user time to see instructions)
-  setTimeout(() => {
-    try {
-      const w = window.open(driveUrl, '_blank', 'noopener,noreferrer');
-      if (w) w.opener = null;
-    } catch (e) {
-      console.log('Popup blocked — user can use manual button');
-    }
-  }, 900);
+  setTimeout(() => { try { const w = window.open(driveUrl, '_blank', 'noopener,noreferrer'); if(w) w.opener=null; } catch{} }, 700);
 }
 
-function cancelDownload(){
-  try { dlController?.abort(); } catch {}
-  dlController = null;
-  closeModal('dlModal');
+function cancelDownload(){ try { dlController?.abort(); } catch{} closeModal('dlModal'); }
+
+/* ───────── PROFILE ───────── */
+function renderProfile(){
+  if(!currentUser) return;
+  const mine = MY_PURCHASES.slice().sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
+  $('profileBody').innerHTML = `
+    <div style="text-align:center;margin-bottom:20px">
+      <div class="userBtn" style="width:72px;height:72px;font-size:28px;margin:0 auto 12px">${esc((currentUser.displayName||currentUser.email||'U')[0].toUpperCase())}</div>
+      <div style="font-weight:800;font-size:18px">${esc(currentUser.displayName || 'User')}</div>
+      <div style="color:var(--txt3);font-size:13px">${esc(currentUser.email)}</div>
+    </div>
+
+    <div class="statsRow" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
+      <div class="metaItem"><div class="v">${mine.length}</div><div class="k">Purchases</div></div>
+      <div class="metaItem"><div class="v">${mine.filter(p=>p.status==='approved').length}</div><div class="k">Approved</div></div>
+      <div class="metaItem"><div class="v">${mine.filter(p=>p.status==='pending').length}</div><div class="k">Pending</div></div>
+    </div>
+
+    <h4 style="margin-bottom:10px;font-size:14px;font-weight:800">📦 Purchase History</h4>
+    <div class="adminList">
+      ${mine.length ? mine.map(p => `
+        <div class="aRow">
+          <div class="info">
+            <div class="nm">${esc(p.appName)}</div>
+            <div class="sb">₹${p.amount} • ${fmtDate(p.createdAt)} • Txn: ${esc(p.transactionId||'-')}</div>
+          </div>
+          <span class="pstatus ${p.status}">${p.status}</span>
+        </div>
+      `).join('') : '<div style="text-align:center;color:var(--txt3);padding:20px">No purchases yet</div>'}
+    </div>
+
+    <button class="btn ghost" style="width:100%;justify-content:center;margin-top:20px;color:#f87171" data-act="logout">🚪 Logout</button>
+  `;
 }
 
-/* ───────── SHARE / COPY ───────── */
-function appLink(id){ return location.origin + location.pathname + '#app=' + encodeURIComponent(id); }
+/* ───────── ADMIN: PAYMENTS ───────── */
+function renderPaymentsList(){
+  const list = $('paymentsList'); if(!list) return;
+  const pend = PURCHASES.filter(p => p.status === 'pending');
+  const others = PURCHASES.filter(p => p.status !== 'pending')
+    .sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0)).slice(0,20);
 
-async function shareApp(id){
-  const a = APPS.find(x => x.id === id);
-  if (!a) return;
-  const url = appLink(id);
-  if (navigator.share){
-    try { await navigator.share({ title: a.name, text: `Download ${a.name} v${a.version}`, url }); }
-    catch {}
-  } else {
-    copyText(url);
-  }
+  const badge = $('pendingBadge');
+  if(pend.length){ badge.style.display = 'inline-block'; badge.textContent = pend.length; }
+  else badge.style.display = 'none';
+
+  if(!PURCHASES.length){ list.innerHTML = '<div style="text-align:center;color:var(--txt3);padding:20px">No payments yet</div>'; return; }
+
+  const row = p => `
+    <div class="aRow">
+      <div class="info">
+        <div class="nm">${esc(p.appName)} <span style="color:var(--txt3);font-weight:500">— ₹${p.amount}</span></div>
+        <div class="sb">${esc(p.userEmail)} • ${fmtDate(p.createdAt)}</div>
+        <div class="sb" style="color:var(--c2)">Txn: ${esc(p.transactionId||'-')}</div>
+        ${p.note ? `<div class="sb" style="color:var(--txt2)">Note: ${esc(p.note)}</div>` : ''}
+      </div>
+      ${p.status === 'pending' ? `
+        <button class="miniBtn ok" data-act="approve-purchase" data-id="${escAttr(p.id)}" title="Approve">✓</button>
+        <button class="miniBtn del" data-act="reject-purchase" data-id="${escAttr(p.id)}" title="Reject">✕</button>
+      ` : `<span class="pstatus ${p.status}">${p.status}</span>`}
+    </div>`;
+
+  list.innerHTML = `
+    ${pend.length ? `<div style="font-size:12px;font-weight:800;color:var(--warn);margin-bottom:8px">⏳ PENDING (${pend.length})</div>${pend.map(row).join('')}` : '<div class="notice ok" style="margin-bottom:14px">✅ No pending payments</div>'}
+    ${others.length ? `<div style="font-size:12px;font-weight:800;color:var(--txt3);margin:16px 0 8px">📜 RECENT</div>${others.map(row).join('')}` : ''}
+  `;
 }
 
-async function copyText(t){
+async function approvePurchase(id){
+  if(!confirm('Approve this payment? User will get download access.')) return;
   try {
-    await navigator.clipboard.writeText(t);
-    toast('📋 Copied', 'ok');
-  } catch {
-    const ta = document.createElement('textarea');
-    ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
-    document.body.appendChild(ta); ta.select();
-    try { document.execCommand('copy'); toast('📋 Copied', 'ok'); }
-    catch { toast('Copy failed', 'err'); }
-    ta.remove();
-  }
+    await updateDoc(doc(db,'purchases',id), { status: 'approved', approvedAt: serverTimestamp(), approvedBy: currentUser.email });
+    toast('✅ Approved', 'ok');
+  } catch(e){ toast('Failed: '+e.message, 'err'); }
 }
-
-function copyLink(id){ copyText(appLink(id)); }
-
-async function shareSite(){
-  if (navigator.share){
-    try { await navigator.share({ title: 'HARIOM MODDER', text: 'Free premium APKs', url: location.href }); }
-    catch {}
-  } else copyText(location.href);
-}
-
-/* ───────── CONTACT / REQUESTS ───────── */
-function openContact(){ openModal('contactModal'); }
-
-const REQ_COOLDOWN_MS = 30_000;
-async function sendReq(){
-  const name = clampStr($('reqName').value, 80);
-  const contact = clampStr($('reqContact').value, 80);
-  const message = clampStr($('reqMsg').value, 500);
-
-  if (name.length < 2){ toast('Enter an app name', 'warn'); return; }
-
-  let last = 0;
-  try { last = Number(localStorage.getItem('hm_last_req') || 0); } catch {}
-  const now = Date.now();
-  if (now - last < REQ_COOLDOWN_MS){
-    const s = Math.ceil((REQ_COOLDOWN_MS - (now - last)) / 1000);
-    toast(`Please wait ${s}s before the next request`, 'warn');
-    return;
-  }
-
+async function rejectPurchase(id){
+  if(!confirm('Reject this payment?')) return;
   try {
-    await addDoc(collection(db, 'requests'), {
-      name, contact, message,
-      ua: navigator.userAgent.slice(0, 200),
-      createdAt: serverTimestamp()
-    });
-    try { localStorage.setItem('hm_last_req', String(now)); } catch {}
-    toast('✅ Request sent!', 'ok');
-    closeModal('contactModal');
-    $('reqName').value = $('reqContact').value = $('reqMsg').value = '';
-  } catch (e) {
-    toast('Failed to send request', 'err');
-  }
+    await updateDoc(doc(db,'purchases',id), { status: 'rejected', rejectedAt: serverTimestamp() });
+    toast('Rejected', 'info');
+  } catch(e){ toast('Failed', 'err'); }
 }
 
-/* ───────── LINK VALIDATION UI ───────── */
-document.addEventListener('input', e => {
-  if (e.target.id === 'upApkLink'){
-    const v = e.target.value.trim();
-    const el = $('apkLinkStatus');
-    if (!v){ el.textContent = ''; return; }
-    const ok = !!driveId(v);
-    el.innerHTML = ok
-      ? '<span style="color:#10b981">✅ Valid Drive link</span>'
-      : '<span style="color:#ef4444">❌ Invalid Drive link</span>';
-  }
-  if (e.target.id === 'upIconLink'){
-    const v = e.target.value.trim();
-    const el = $('iconLinkStatus');
-    if (!v){ el.textContent = ''; return; }
-    const ok = !!driveId(v);
-    el.innerHTML = ok
-      ? '<span style="color:#10b981">✅ Valid Drive link</span>'
-      : '<span style="color:#ef4444">❌ Invalid Drive link</span>';
-  }
-});
+/* ───────── ADMIN: MANAGE ───────── */
+function renderAdminList(){
+  const list = $('admList'); if(!list) return;
+  const q = ($('admSearch')?.value || '').toLowerCase();
+  const arr = APPS.filter(a => !q || (a.name||'').toLowerCase().includes(q));
+  if(!arr.length){ list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3)">No apps</div>'; return; }
+  list.innerHTML = arr.map(a => `
+    <div class="aRow">
+      ${iconHTML(a, 'row-ic')}
+      <div class="info">
+        <div class="nm">${esc(a.name)} ${isPaid(a)?'<span style="color:var(--gold)">👑</span>':''}</div>
+        <div class="sb">v${esc(a.version)} • ₹${a.price||0} • ${fmtNum(a.downloads||0)} dl</div>
+      </div>
+      <button class="miniBtn" data-act="toggle-feat" data-id="${escAttr(a.id)}" title="Feature">${a.featured?'⭐':'☆'}</button>
+      <button class="miniBtn del" data-act="delete-app" data-id="${escAttr(a.id)}" title="Delete">🗑</button>
+    </div>
+  `).join('');
+}
 
-/* ───────── UPLOAD ───────── */
 async function uploadApp(){
-  if (!db || !auth?.currentUser){ toast('Admin login required', 'err'); return; }
-
-  const name    = clampStr($('upName').value, 80);
+  if(!db || !isAdmin){ toast('Admin login required', 'err'); return; }
+  const name = clampStr($('upName').value, 80);
   const version = clampStr($('upVer').value, 24);
-  const cat     = $('upCat').value;
-  const desc    = clampStr($('upDesc').value, 1200);
-  const feat    = $('upFeat').value === 'yes';
-  const sizeMB  = parseFloat($('upSize').value) || 0;
+  const cat = $('upCat').value;
+  const desc = clampStr($('upDesc').value, 1200);
+  const feat = $('upFeat').value === 'yes';
+  const sizeMB = parseFloat($('upSize').value) || 0;
+  const price = Math.max(0, parseInt($('upPrice').value) || 0);
   const apkLink = clampStr($('upApkLink').value, 400);
   const iconLink = clampStr($('upIconLink').value, 400);
 
-  if (name.length < 2)   { toast('Name is required', 'warn'); return; }
-  if (version.length < 1){ toast('Version is required', 'warn'); return; }
-  if (!driveId(apkLink)) { toast('Invalid APK Drive link', 'err'); return; }
-  if (!(sizeMB > 0) || sizeMB > 5000){ toast('Enter a valid file size (0–5000 MB)', 'warn'); return; }
+  if(name.length < 2){ toast('Name required', 'warn'); return; }
+  if(version.length < 1){ toast('Version required', 'warn'); return; }
+  if(!driveId(apkLink)){ toast('Invalid APK link', 'err'); return; }
+  if(!(sizeMB > 0)){ toast('Size required', 'warn'); return; }
 
-  const apkUrl  = driveDirect(apkLink);
+  const apkUrl = `https://drive.usercontent.google.com/download?id=${driveId(apkLink)}&export=download&confirm=t`;
   const iconUrl = iconLink && driveId(iconLink) ? drivePreview(iconLink) : '';
 
-  const btn = $('upBtn');
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
-
+  const btn = $('upBtn'); btn.disabled = true; btn.textContent = 'Saving...';
   try {
-    const savePromise = addDoc(collection(db, 'apps'), {
-      name, version,
-      category: cat,
-      desc,
-      featured: feat,
+    await addDoc(collection(db, 'apps'), {
+      name, version, category: cat, desc, featured: feat, price,
       iconUrl, apkUrl, apkLink,
       size: Math.round(sizeMB * 1024 * 1024),
-      downloads: 0,
-      rating: 0,
-      ratingCount: 0,
-      createdAt: serverTimestamp()
+      downloads: 0, rating: 0, ratingCount: 0, createdAt: serverTimestamp()
     });
-    const timeoutPromise = new Promise((_, rej) =>
-      setTimeout(() => rej(new Error('Timeout — check Firestore rules and connection')), 12000)
-    );
-    await Promise.race([savePromise, timeoutPromise]);
-
-    toast('🚀 App saved!', 'ok', 3000);
-    ['upName','upVer','upDesc','upSize','upApkLink','upIconLink']
-      .forEach(id => { $(id).value = ''; });
-    $('apkLinkStatus').textContent = '';
-    $('iconLinkStatus').textContent = '';
-  } catch (e) {
-    console.error(e);
-    toast('❌ ' + (e?.message || 'Upload failed'), 'err', 6000);
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '🚀 Save App';
-  }
-}
-
-/* ───────── ADMIN LIST ───────── */
-function loadAdminData(){
-  renderAdminList();
-  loadSettings();
-}
-
-function renderAdminList(){
-  const list = $('admList');
-  if (!list) return;
-  const q = String($('admSearch')?.value || '').toLowerCase().slice(0, 60);
-  const arr = APPS.filter(a => !q || String(a.name || '').toLowerCase().includes(q));
-
-  if (!arr.length){
-    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3)">No apps</div>';
-  } else {
-    list.innerHTML = arr.map(a => {
-      const id = escAttr(a.id);
-      return `
-        <div class="aRow">
-          ${iconHTML(a, 'row-ic')}
-          <div class="info">
-            <div class="nm">${esc(a.name || 'Untitled')}</div>
-            <div class="sb">v${esc(a.version || '1.0')} • ${fmtNum(a.downloads || 0)} dl • ${fmtSize(a.size)}</div>
-          </div>
-          <button class="miniBtn" data-act="toggle-feat" data-id="${id}" title="Feature">${a.featured ? '⭐' : '☆'}</button>
-          <button class="miniBtn del" data-act="delete-app" data-id="${id}" title="Delete">🗑</button>
-        </div>`;
-    }).join('');
-  }
-
-  $('mApps').textContent = APPS.length;
-  $('mDl').textContent   = fmtNum(APPS.reduce((s, a) => s + (a.downloads || 0), 0));
-  $('mFeat').textContent = APPS.filter(a => a.featured).length;
+    toast('🚀 App saved!', 'ok');
+    ['upName','upVer','upDesc','upSize','upApkLink','upIconLink'].forEach(id => $(id).value = '');
+    $('upPrice').value = '0';
+    $('apkLinkStatus').textContent = ''; $('iconLinkStatus').textContent = '';
+  } catch(e){ toast('❌ ' + e.message, 'err'); }
+  finally { btn.disabled = false; btn.textContent = '🚀 Save App'; }
 }
 
 async function deleteApp(id){
-  const a = APPS.find(x => x.id === id);
-  if (!a) return;
-  if (!confirm(`Delete "${a.name}"?`)) return;
-  try { await deleteDoc(doc(db, 'apps', id)); toast('🗑 Deleted', 'ok'); }
-  catch { toast('Delete failed', 'err'); }
+  const a = APPS.find(x=>x.id===id); if(!a) return;
+  if(!confirm(`Delete "${a.name}"?`)) return;
+  try { await deleteDoc(doc(db,'apps',id)); toast('🗑 Deleted', 'ok'); } catch { toast('Failed', 'err'); }
 }
-
 async function toggleFeat(id){
-  const a = APPS.find(x => x.id === id);
-  if (!a) return;
-  try {
-    await updateDoc(doc(db, 'apps', id), { featured: !a.featured });
-    toast(a.featured ? 'Featured OFF' : '⭐ Featured ON', 'ok');
-  } catch { toast('Failed', 'err'); }
+  const a = APPS.find(x=>x.id===id); if(!a) return;
+  try { await updateDoc(doc(db,'apps',id), { featured: !a.featured }); } catch { toast('Failed','err'); }
 }
-
 async function deleteAllApps(){
-  if (!APPS.length) { toast('Nothing to delete', 'warn'); return; }
-  if (!confirm(`Delete ALL ${APPS.length} apps?`)) return;
-  if (!confirm('Are you absolutely sure?')) return;
-  try {
-    for (let i = 0; i < APPS.length; i += 450){
-      const batch = writeBatch(db);
-      APPS.slice(i, i + 450).forEach(a => batch.delete(doc(db, 'apps', a.id)));
-      await batch.commit();
-    }
-    toast('💥 All apps deleted', 'ok');
-  } catch { toast('Delete failed', 'err'); }
-}
-
-/* ───────── SETTINGS ───────── */
-async function loadSettings(){
-  if (!db) return;
-  try {
-    const d = await getDoc(doc(db, 'settings', 'site'));
-    if (d.exists()){
-      siteCfg = d.data() || {};
-      $('setTitle').value = siteCfg.title || '';
-      $('setTag').value   = siteCfg.tagline || '';
-      $('setTg').value    = siteCfg.telegram || '';
-      $('setWa').value    = siteCfg.whatsapp || '';
-      $('setYt').value    = siteCfg.youtube || '';
-      applySettings();
-    }
-  } catch {}
-}
-
-function applySettings(){
-  const set = (sel, url) => {
-    const el = document.querySelector(sel);
-    if (!el) return;
-    if (url && isHttps(url)) { el.href = url; el.style.display = ''; }
-    else { el.removeAttribute('href'); }
-  };
-  set('[data-s="tg"]', siteCfg.telegram);
-  set('[data-s="wa"]', siteCfg.whatsapp);
-  set('[data-s="yt"]', siteCfg.youtube);
+  if(!APPS.length) return toast('Nothing', 'warn');
+  if(!confirm(`Delete ALL ${APPS.length} apps?`)) return;
+  if(!confirm('Sure?')) return;
+  try { for(let i=0;i<APPS.length;i+=450){ const b=writeBatch(db); APPS.slice(i,i+450).forEach(a=>b.delete(doc(db,'apps',a.id))); await b.commit(); } toast('💥 All deleted','ok'); }
+  catch { toast('Failed','err'); }
 }
 
 async function saveSettings(){
-  if (!db || !auth?.currentUser){ toast('Admin login required', 'err'); return; }
-  const clean = (v, n) => { v = clampStr(v, n); return isHttps(v) ? v : ''; };
+  if(!isAdmin) return toast('Admin only', 'err');
+  const clean = (v,n) => { v = clampStr(v, n); return isHttps(v) ? v : ''; };
   try {
-    await setDoc(doc(db, 'settings', 'site'), {
-      title:    clampStr($('setTitle').value, 40),
-      tagline:  clampStr($('setTag').value, 80),
-      telegram: clean($('setTg').value, 200),
+    await setDoc(doc(db,'settings','site'), {
+      title: clampStr($('setTitle').value, 40),
+      tagline: clampStr($('setTag').value, 80),
+      upiId: clampStr($('setUpi').value, 60),
+      upiName: clampStr($('setUpiName').value, 40),
       whatsapp: clean($('setWa').value, 200),
-      youtube:  clean($('setYt').value, 200),
+      telegram: clean($('setTg').value, 200),
+      youtube: clean($('setYt').value, 200),
       updatedAt: serverTimestamp()
-    });
-    siteCfg = {
-      ...siteCfg,
-      title: $('setTitle').value, tagline: $('setTag').value,
-      telegram: $('setTg').value, whatsapp: $('setWa').value, youtube: $('setYt').value
-    };
-    applySettings();
-    toast('💾 Saved', 'ok');
-  } catch { toast('Save failed', 'err'); }
+    }, { merge: true });
+    siteCfg = { ...siteCfg,
+      title:$('setTitle').value, tagline:$('setTag').value,
+      upiId:$('setUpi').value, upiName:$('setUpiName').value,
+      whatsapp:$('setWa').value, telegram:$('setTg').value, youtube:$('setYt').value };
+    applySettings(); toast('💾 Saved', 'ok');
+  } catch { toast('Failed', 'err'); }
 }
 
-/* ───────── EXPORT / IMPORT ───────── */
 function exportData(){
-  const clean = APPS.map(a => ({
-    name: a.name, version: a.version, category: a.category,
-    desc: a.desc, featured: !!a.featured,
-    iconUrl: a.iconUrl, apkUrl: a.apkUrl, apkLink: a.apkLink,
-    size: a.size, downloads: a.downloads || 0,
-    rating: a.rating || 0, ratingCount: a.ratingCount || 0
-  }));
+  const clean = APPS.map(a => ({name:a.name, version:a.version, category:a.category, desc:a.desc, price:a.price||0, featured:!!a.featured, iconUrl:a.iconUrl, apkUrl:a.apkUrl, apkLink:a.apkLink, size:a.size}));
   const blob = new Blob([JSON.stringify(clean, null, 2)], { type: 'application/json' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `hariom_backup_${Date.now()}.json`;
-  a.click();
-  URL.revokeObjectURL(url);
+  const url = URL.createObjectURL(blob); const a = document.createElement('a');
+  a.href = url; a.download = `hariom_backup_${Date.now()}.json`; a.click(); URL.revokeObjectURL(url);
   toast('📥 Exported', 'ok');
 }
 
-$('importFile').addEventListener('change', async e => {
-  const f = e.target.files?.[0];
-  e.target.value = '';
-  if (!f) return;
-  if (f.size > 5 * 1024 * 1024){ toast('File too large (max 5MB)', 'err'); return; }
-  try {
-    const txt = await f.text();
-    const raw = JSON.parse(txt);
-    if (!Array.isArray(raw)) throw new Error('Invalid format');
-
-    const safeKeys = ['name','version','category','desc','featured','iconUrl','apkUrl','apkLink','size','downloads','rating','ratingCount'];
-    const arr = raw.slice(0, 500).map(o => {
-      const out = {};
-      if (o && typeof o === 'object'){
-        for (const k of safeKeys) if (k in o) out[k] = o[k];
-      }
-      return out;
-    }).filter(o => o.name && o.version && o.apkUrl && isHttps(o.apkUrl));
-
-    if (!arr.length){ toast('No valid apps found', 'warn'); return; }
-    if (!confirm(`Import ${arr.length} apps?`)) return;
-
-    for (let i = 0; i < arr.length; i += 450){
-      const batch = writeBatch(db);
-      arr.slice(i, i + 450).forEach(a => {
-        const ref = doc(collection(db, 'apps'));
-        batch.set(ref, {
-          name: clampStr(a.name, 80),
-          version: clampStr(a.version, 24),
-          category: clampStr(a.category || 'Mod', 24),
-          desc: clampStr(a.desc || '', 1200),
-          featured: !!a.featured,
-          iconUrl: a.iconUrl && isHttps(a.iconUrl) ? a.iconUrl : '',
-          apkUrl: a.apkUrl,
-          apkLink: a.apkLink || '',
-          size: Math.min(Math.max(Number(a.size) || 0, 0), 5 * 1024 * 1024 * 1024),
-          downloads: Math.max(Number(a.downloads) || 0, 0),
-          rating: 0, ratingCount: 0,
-          createdAt: serverTimestamp()
-        });
-      });
-      await batch.commit();
-    }
-    toast('📤 Imported successfully', 'ok');
-  } catch (err) {
-    toast('Import failed: ' + (err?.message || 'bad file'), 'err');
-  }
-});
-
-/* ───────── GLOBAL EVENT DELEGATION ───────── */
+/* ───────── EVENT DELEGATION ───────── */
 document.addEventListener('click', e => {
   const backdrop = e.target.closest('.modal[data-backdrop]');
-  if (backdrop && e.target === backdrop){
-    closeModal(backdrop.dataset.backdrop);
-    return;
-  }
+  if(backdrop && e.target === backdrop){ closeModal(backdrop.dataset.backdrop); return; }
 
-  const actBtn = e.target.closest('[data-act]');
-  if (actBtn){
-    const act = actBtn.dataset.act;
-    const id  = actBtn.dataset.id;
-    switch (act){
-      case 'top':            window.scrollTo({ top: 0, behavior: 'smooth' }); break;
-      case 'scroll-apps':    $('appsSection').scrollIntoView({ behavior: 'smooth' }); break;
-      case 'contact':        closeModal('menuModal'); openContact(); break;
-      case 'toggle-theme':   closeModal('menuModal'); toggleTheme(); break;
-      case 'share-site':     closeModal('menuModal'); shareSite(); break;
-      case 'open-admin':     closeModal('menuModal'); isAdmin ? (openModal('adminModal'), loadAdminData()) : openModal('loginModal'); break;
-      case 'close':          closeModal(actBtn.dataset.modal); break;
-      case 'do-login':       doLogin(); break;
-      case 'logout':         doLogout(); break;
-      case 'send-req':       sendReq(); break;
-      case 'download':       downloadApp(id); break;
-      case 'share':          shareApp(id); break;
-      case 'copy':           copyLink(id); break;
-      case 'cancel-dl':      cancelDownload(); break;
-      case 'upload-app':     uploadApp(); break;
-      case 'delete-app':     deleteApp(id); break;
-      case 'toggle-feat':    toggleFeat(id); break;
-      case 'delete-all':     deleteAllApps(); break;
-      case 'save-settings':  saveSettings(); break;
-      case 'export':         exportData(); break;
-      case 'import-trigger': $('importFile').click(); break;
+  const btn = e.target.closest('[data-act]');
+  if(btn){
+    const act = btn.dataset.act, id = btn.dataset.id;
+    switch(act){
+      case 'top': window.scrollTo({top:0,behavior:'smooth'}); break;
+      case 'scroll-apps': $('appsSection').scrollIntoView({behavior:'smooth'}); break;
+      case 'scroll-vip': $('vipSection').scrollIntoView({behavior:'smooth'}); break;
+      case 'close': closeModal(btn.dataset.modal); break;
+      case 'cancel-dl': cancelDownload(); break;
+      case 'user-login': doUserLogin(); break;
+      case 'user-register': doUserRegister(); break;
+      case 'do-login': doAdminLogin(); break;
+      case 'logout': doLogout(); break;
+      case 'do-forgot': doForgot(); break;
+      case 'open-login': closeModal('userRegisterModal'); closeModal('forgotModal'); openModal('userLoginModal'); break;
+      case 'open-register': closeModal('userLoginModal'); openModal('userRegisterModal'); break;
+      case 'open-forgot': closeModal('userLoginModal'); openModal('forgotModal'); break;
+      case 'download': downloadApp(id); break;
+      case 'buy': openPurchase(id); break;
+      case 'submit-payment': submitPayment(id); break;
+      case 'copy-upi': navigator.clipboard.writeText(btn.dataset.upi).then(()=>toast('📋 Copied','ok')); break;
+      case 'approve-purchase': approvePurchase(id); break;
+      case 'reject-purchase': rejectPurchase(id); break;
+      case 'delete-app': deleteApp(id); break;
+      case 'toggle-feat': toggleFeat(id); break;
+      case 'delete-all': deleteAllApps(); break;
+      case 'upload-app': uploadApp(); break;
+      case 'save-settings': saveSettings(); break;
+      case 'export': exportData(); break;
     }
     return;
   }
 
   const card = e.target.closest('[data-app-id]');
-  if (card){ openDetail(card.dataset.appId); }
+  if(card){ openDetail(card.dataset.appId); return; }
 });
 
-document.addEventListener('keydown', e => {
-  if (e.key !== 'Enter' && e.key !== ' ') return;
-  const card = e.target.closest?.('[data-app-id]');
-  if (card){
-    e.preventDefault();
-    openDetail(card.dataset.appId);
-  }
-  if (e.key === 'Escape'){
-    document.querySelectorAll('.modal.on').forEach(m => closeModal(m.id));
-  }
-});
-
-/* ───────── MISC UI WIRING ───────── */
 $('themeBtn').addEventListener('click', toggleTheme);
-$('menuBtn').addEventListener('click', () => openModal('menuModal'));
 
-$('searchInput').addEventListener('input', e => {
-  searchQ = clampStr(e.target.value, 60);
-  renderAll();
+$('userBtn').addEventListener('click', () => {
+  if(currentUser){ renderProfile(); openModal('profileModal'); }
+  else openModal('userLoginModal');
 });
-$('sortSel').addEventListener('change', e => {
-  currentSort = e.target.value;
-  renderAll();
-});
+
+$('searchInput').addEventListener('input', e => { searchQ = clampStr(e.target.value, 60); renderAll(); });
+$('sortSel').addEventListener('change', e => { currentSort = e.target.value; renderAll(); });
 
 document.querySelectorAll('.chip[data-cat]').forEach(c => {
   c.addEventListener('click', () => {
     document.querySelectorAll('.chip[data-cat]').forEach(x => x.classList.remove('on'));
     c.classList.add('on');
     currentCat = c.dataset.cat;
-    $('appsTitle').textContent = currentCat === 'all' ? 'All Apps' : currentCat;
+    $('appsTitle').textContent = currentCat === 'all' ? 'All Apps' : currentCat === 'VIP' ? '👑 VIP Apps' : currentCat;
     renderAll();
   });
 });
@@ -1358,12 +1230,20 @@ document.querySelectorAll('.adminTab').forEach(t => {
 
 $('admSearch')?.addEventListener('input', renderAdminList);
 
+document.addEventListener('input', e => {
+  if(e.target.id === 'upApkLink' || e.target.id === 'upIconLink'){
+    const statusEl = $(e.target.id === 'upApkLink' ? 'apkLinkStatus' : 'iconLinkStatus');
+    const v = e.target.value.trim();
+    if(!v){ statusEl.textContent = ''; return; }
+    statusEl.innerHTML = driveId(v) ? '<span style="color:#10b981">✅ Valid Drive link</span>' : '<span style="color:#ef4444">❌ Invalid</span>';
+  }
+});
+
 let scrollTick = false;
 window.addEventListener('scroll', () => {
-  if (scrollTick) return;
-  scrollTick = true;
+  if(scrollTick) return; scrollTick = true;
   requestAnimationFrame(() => {
-    $('topFab').classList.toggle('hide', window.scrollY < 400);
+    $('topFab').classList.toggle('hidden', window.scrollY < 400);
     scrollTick = false;
   });
 }, { passive: true });
@@ -1371,34 +1251,42 @@ window.addEventListener('scroll', () => {
 $('yr').textContent = new Date().getFullYear();
 
 /* ───────── AUTH STATE ───────── */
-if (auth){
-  onAuthStateChanged(auth, user => {
-    const allowed = isAllowedAdmin(user);
-    isAdmin = allowed;
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if(user){
+    isAdmin = ADMIN_EMAILS.map(x=>x.toLowerCase()).includes(String(user.email||'').toLowerCase());
+    $('userBtn').classList.remove('guest');
+    $('userBtn').textContent = (user.displayName || user.email || 'U')[0].toUpperCase();
 
-    if (user && !allowed){
-      toast('This account is not authorized as admin', 'err', 4000);
-      signOut(auth).catch(() => {});
-      return;
-    }
+    // Load/create profile
+    try {
+      const pd = await getDoc(doc(db, 'users', user.uid));
+      userProfile = pd.exists() ? pd.data() : null;
+    } catch {}
 
-    if (allowed){
-      closeModal('loginModal');
+    loadMyPurchases(user.uid);
+
+    if(isAdmin){
+      closeModal('userLoginModal');
+      loadPurchases();
       openModal('adminModal');
-      loadAdminData();
-    } else {
-      closeModal('adminModal');
+      loadSettings();
     }
-  });
-}
+  } else {
+    isAdmin = false;
+    userProfile = null;
+    MY_PURCHASES = [];
+    $('userBtn').classList.add('guest');
+    $('userBtn').textContent = '👤';
+    closeModal('adminModal'); closeModal('profileModal');
+    if(myPurchUnsub){ myPurchUnsub(); myPurchUnsub = null; }
+    renderAll();
+  }
+});
 
 /* ───────── BOOT ───────── */
 loadApps();
-
-if (location.hash.startsWith('#app=')){
-  const id = decodeURIComponent(location.hash.slice(5));
-  setTimeout(() => { if (APPS.find(a => a.id === id)) openDetail(id); }, 1200);
-}
+loadSettings();
 </script>
 </body>
   </html>
