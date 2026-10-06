@@ -32,8 +32,6 @@
 html{scroll-behavior:smooth}
 body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.6}
 body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.18),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.14),transparent 60%)}
-
-/* SPLASH */
 #splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at center,#1a0a30 0%,#08080c 70%);display:grid;place-items:center;transition:opacity .6s,visibility .6s}
 #splash.hide{opacity:0;visibility:hidden}
 .splashInner{text-align:center}
@@ -45,7 +43,6 @@ body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;ba
 .splashBar{width:180px;height:3px;background:rgba(255,255,255,.1);border-radius:3px;overflow:hidden;margin:0 auto}
 .splashBar::after{content:'';display:block;height:100%;width:40%;background:var(--grad);border-radius:3px;animation:splashLoad 1.4s infinite}
 @keyframes splashLoad{0%{transform:translateX(-100%)}100%{transform:translateX(350%)}}
-
 ::-webkit-scrollbar{width:10px;height:10px}
 ::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#7c3aed,#06b6d4);border-radius:10px;border:2px solid var(--bg)}
 ::selection{background:rgba(168,85,247,.35)}
@@ -67,7 +64,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .iconBtn:hover{border-color:var(--border-hi);transform:translateY(-1px)}
 .userBtn{position:relative;width:42px;height:42px;border-radius:12px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-weight:900;font-size:15px;box-shadow:var(--glow);display:grid;place-items:center}
 .userBtn.guest{background:var(--glass2);border:1px solid var(--border-hi);color:var(--txt);box-shadow:none}
-
 .hero{max-width:1320px;margin:0 auto;padding:60px 20px 40px;text-align:center}
 .heroBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;background:var(--glass2);border:1px solid var(--border-hi);font-size:12.5px;font-weight:600;color:var(--txt2);margin-bottom:22px}
 .pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.8s infinite}
@@ -84,13 +80,11 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .btn.gold{background:var(--gold-grad);color:#1a0a00;box-shadow:0 0 40px rgba(245,158,11,.5);font-weight:800}
 .btn.gold:hover{transform:translateY(-2px);box-shadow:0 0 60px rgba(245,158,11,.7)}
 .btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
-
 .stats{max-width:1320px;margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
 .stat{padding:20px 18px;text-align:center;position:relative;overflow:hidden}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad)}
 .stat .n{font-size:clamp(24px,4vw,34px);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
 .stat .l{font-size:12px;color:var(--txt2);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-
 .section{max-width:1320px;margin:0 auto 44px;padding:0 20px}
 .secHead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
 .secHead h2{font-size:clamp(20px,3vw,26px);font-weight:800;display:flex;align-items:center;gap:10px}
@@ -100,7 +94,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .chip{padding:9px 18px;border-radius:100px;background:var(--glass2);border:1px solid var(--border);color:var(--txt2);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0;font-family:inherit}
 .chip:hover{border-color:var(--border-hi);color:var(--txt)}
 .chip.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--glow)}
-
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
 @media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
 .card{padding:16px;cursor:pointer;transition:.28s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;border-radius:var(--r);position:relative;background:var(--glass);border:1px solid var(--border);backdrop-filter:blur(20px)}
@@ -121,7 +114,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .badgeVip{position:absolute;top:12px;left:12px;background:var(--gold-grad);color:#1a0a00;font-size:9.5px;font-weight:900;padding:4px 9px;border-radius:8px;letter-spacing:.8px;box-shadow:0 0 20px rgba(245,158,11,.5);z-index:2}
 .priceTag{font-size:13px;font-weight:900;color:var(--gold);font-family:'JetBrains Mono',monospace}
 .priceTag.free{color:var(--ok)}
-
 .ic{position:relative;display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:900;overflow:hidden;flex-shrink:0}
 .ic::before{content:attr(data-l);line-height:1}
 .ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block}
@@ -129,7 +121,6 @@ nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filte
 .ic.detail-ic{width:82px;height:82px;border-radius:20px;font-size:34px}
 .ic.row-ic{width:42px;height:42px;border-radius:10px;font-size:16px}
 .ic.dl-ic{width:72px;height:72px;border-radius:18px;font-size:30px;margin:0 auto 12px}
-
 .empty{text-align:center;padding:60px 20px;color:var(--txt3)}
 .empty .e{font-size:56px;margin-bottom:12px;opacity:.5}
 footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:center;margin-top:60px;background:rgba(8,8,12,.4)}
@@ -138,7 +129,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .socials a{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);display:grid;place-items:center;color:var(--txt2);text-decoration:none;font-size:17px}
 .socials a:hover{transform:translateY(-3px);color:var(--txt);box-shadow:var(--glow)}
 .footTxt{font-size:13px;color:var(--txt3);line-height:1.8}
-
 .modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(12px);display:none;place-items:center;padding:20px;overflow-y:auto}
 .modal.on{display:grid}
 .modalBox{background:var(--bg2);border:1px solid var(--border-hi);border-radius:var(--r2);width:100%;max-width:560px;max-height:90vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:modalIn .35s cubic-bezier(.34,1.4,.64,1)}
@@ -148,20 +138,17 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .modalBody{padding:22px}
 .closeX{width:36px;height:36px;border-radius:10px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;font-size:16px;display:grid;place-items:center}
 .closeX:hover{background:var(--err);color:#fff}
-
 .field{margin-bottom:16px}
 .field label{display:block;font-size:12px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
 .field input,.field textarea,.field select{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none}
 .field textarea{resize:vertical;min-height:90px}
 .field input:focus,.field textarea:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18)}
-
 #toastBox{position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none}
 .toast{background:var(--glass);backdrop-filter:blur(24px);border:1px solid var(--border-hi);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;min-width:240px;max-width:340px;box-shadow:0 14px 40px rgba(0,0,0,.4);animation:slideIn .35s;pointer-events:auto}
 @keyframes slideIn{from{opacity:0;transform:translateX(120%)}}
 .toast.out{animation:slideOut .3s forwards}
 @keyframes slideOut{to{opacity:0;transform:translateX(120%)}}
 .toast .tIco{font-size:19px;flex-shrink:0}
-
 .detailHead{display:flex;gap:16px;align-items:center;margin-bottom:20px}
 .detailHead .nm{font-size:22px;font-weight:900;word-break:break-word}
 .detailHead .vr{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--txt2);margin-top:4px}
@@ -173,7 +160,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .dlBtnBig{width:100%;padding:16px;border-radius:14px;border:0;background:var(--grad);color:#fff;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--glow)}
 .dlBtnBig.gold{background:var(--gold-grad);color:#1a0a00}
 .dlBtnBig:disabled{opacity:.6;cursor:not-allowed}
-
 .adminTabs{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
 .adminTabs::-webkit-scrollbar{display:none}
 .adminTab{padding:12px 16px;background:transparent;border:0;color:var(--txt2);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
@@ -189,35 +175,27 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 .miniBtn.ok:hover{background:var(--ok);color:#fff}
 .miniBtn.del:hover{background:var(--err);color:#fff}
 .miniBtn.gold:hover{background:var(--gold);color:#1a0a00}
-
 .notice{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:12px 14px;font-size:13px;color:#fbbf24;margin-bottom:16px;line-height:1.6}
 .notice.ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#4ade80}
 .notice.err{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171}
 .notice.info{background:rgba(6,182,212,.12);border-color:rgba(6,182,212,.3);color:#22d3ee}
-
-/* PAYMENT / QR */
 .qrBox{background:#fff;padding:14px;border-radius:16px;display:inline-block;margin:0 auto;box-shadow:0 10px 40px rgba(0,0,0,.4)}
 .qrBox img{display:block;width:220px;height:220px}
 .upiId{background:var(--glass2);border:1px dashed var(--border-hi);border-radius:12px;padding:12px;margin-top:14px;text-align:center}
 .upiId .lbl{font-size:11px;color:var(--txt3);text-transform:uppercase;letter-spacing:1px;font-weight:700}
 .upiId .val{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:700;margin-top:4px;user-select:all}
 .amtBig{font-size:42px;font-weight:900;background:var(--gold-grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-align:center;line-height:1}
-
-/* Purchase status badges */
 .pstatus{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:8px;text-transform:uppercase}
 .pstatus.pending{background:rgba(245,158,11,.18);color:#fbbf24}
 .pstatus.approved{background:rgba(16,185,129,.18);color:#4ade80}
 .pstatus.rejected{background:rgba(239,68,68,.18);color:#f87171}
-
 .fab{position:fixed;bottom:22px;right:22px;z-index:60;width:54px;height:54px;border-radius:16px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-size:22px;box-shadow:var(--glow),0 10px 30px rgba(0,0,0,.4);display:grid;place-items:center;transition:.25s}
 .fab.hide{transform:translateY(90px);opacity:0;pointer-events:none}
 .hidden{display:none!important}
-
 .dlSuccess{background:linear-gradient(135deg,#10b981,#059669)!important}
 .dlBar{height:100%;width:0%;background:var(--grad);border-radius:6px;transition:width .25s;position:relative;overflow:hidden}
 .dlBar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shine 1.5s infinite}
 @keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
-
 @media(max-width:768px){
   .navIn{gap:10px;padding:0 14px}
   .logoSub{display:none}
@@ -234,7 +212,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 </head>
 <body>
 
-<!-- SPLASH -->
 <div id="splash">
   <div class="splashInner">
     <div class="splashLogo">H</div>
@@ -330,7 +307,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
 <button class="fab hidden" id="topFab" data-act="top">↑</button>
 <div id="toastBox"></div>
 
-<!-- DETAIL MODAL -->
 <div class="modal" id="detailModal" data-backdrop="detailModal">
   <div class="modalBox">
     <div class="modalHead"><h3>App Details</h3><button class="closeX" data-act="close" data-modal="detailModal">✕</button></div>
@@ -338,7 +314,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- DOWNLOAD MODAL -->
 <div class="modal" id="dlModal">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead"><h3>⬇ Download</h3><button class="closeX" data-act="cancel-dl">✕</button></div>
@@ -364,7 +339,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- MENU MODAL -->
 <div class="modal" id="menuModal" data-backdrop="menuModal">
   <div class="modalBox" style="max-width:380px">
     <div class="modalHead"><h3>Menu</h3><button class="closeX" data-act="close" data-modal="menuModal">✕</button></div>
@@ -377,7 +351,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- CONTACT / REQUEST MODAL -->
 <div class="modal" id="contactModal" data-backdrop="contactModal">
   <div class="modalBox">
     <div class="modalHead"><h3>💬 App Request</h3><button class="closeX" data-act="close" data-modal="contactModal">✕</button></div>
@@ -391,7 +364,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- USER LOGIN -->
 <div class="modal" id="userLoginModal" data-backdrop="userLoginModal">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead"><h3>🔐 User Login</h3><button class="closeX" data-act="close" data-modal="userLoginModal">✕</button></div>
@@ -408,7 +380,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- USER REGISTER -->
 <div class="modal" id="userRegisterModal" data-backdrop="userRegisterModal">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead"><h3>✨ Create Account</h3><button class="closeX" data-act="close" data-modal="userRegisterModal">✕</button></div>
@@ -426,7 +397,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- FORGOT PASSWORD -->
 <div class="modal" id="forgotModal" data-backdrop="forgotModal">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead"><h3>🔑 Reset Password</h3><button class="closeX" data-act="close" data-modal="forgotModal">✕</button></div>
@@ -439,7 +409,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- USER PROFILE -->
 <div class="modal" id="profileModal" data-backdrop="profileModal">
   <div class="modalBox">
     <div class="modalHead"><h3>👤 My Account</h3><button class="closeX" data-act="close" data-modal="profileModal">✕</button></div>
@@ -447,7 +416,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- PAYMENT MODAL -->
 <div class="modal" id="paymentModal" data-backdrop="paymentModal">
   <div class="modalBox" style="max-width:480px">
     <div class="modalHead"><h3>💳 Complete Payment</h3><button class="closeX" data-act="close" data-modal="paymentModal">✕</button></div>
@@ -455,7 +423,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- ADMIN LOGIN -->
 <div class="modal" id="loginModal" data-backdrop="loginModal">
   <div class="modalBox" style="max-width:420px">
     <div class="modalHead"><h3>🔐 Admin Login</h3><button class="closeX" data-act="close" data-modal="loginModal">✕</button></div>
@@ -468,7 +435,6 @@ footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:cent
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
 <div class="modal" id="adminModal" data-backdrop="adminModal">
   <div class="modalBox" style="max-width:760px">
     <div class="modalHead">
@@ -558,8 +524,8 @@ const firebaseConfig = {
   appId: "1:602644625906:web:7db11a4e6eb16beeb7536b"
 };
 
-// ⚠️ APNA ADMIN EMAIL YAHAN DAALO
-const ADMIN_EMAILS = ["admin@hariom.com"]; // <-- Change this!
+/* ⚠️⚠️⚠️ IMPORTANT — YAHAN APNI EMAIL DAALO ⚠️⚠️⚠️ */
+const ADMIN_EMAILS = ["shilpishiva674@gmail.com"];
 
 let app, auth, db;
 try { app = initializeApp(firebaseConfig); auth = getAuth(app); db = getFirestore(app); }
@@ -607,7 +573,6 @@ function driveId(url){
 }
 const drivePreview = u => { const id = driveId(u); return id ? `https://lh3.googleusercontent.com/d/${id}=w400` : ''; };
 
-/* THEME */
 const savedTheme = localStorage.getItem('hm_theme')==='light'?'light':'dark';
 document.documentElement.setAttribute('data-theme', savedTheme);
 $('themeBtn').textContent = savedTheme==='dark'?'🌙':'☀️';
@@ -620,11 +585,9 @@ function toggleTheme(){
   toast(next==='dark'?'🌙 Dark mode':'☀️ Light mode', 'info', 1400);
 }
 
-/* MODALS */
 function openModal(id){ const el=$(id); if(el){ el.classList.add('on'); document.body.style.overflow='hidden'; } }
 function closeModal(id){ const el=$(id); if(el){ el.classList.remove('on'); if(!document.querySelector('.modal.on')) document.body.style.overflow=''; } }
 
-/* SPLASH */
 window.addEventListener('load', () => setTimeout(() => $('splash').classList.add('hide'), 1400));
 
 /* ───────── USER AUTH ───────── */
@@ -639,6 +602,7 @@ async function doUserLogin(){
     await signInWithEmailAndPassword(auth, email, pass);
     $('uPass').value = '';
     closeModal('userLoginModal');
+    toast('✅ Login successful!', 'ok');
   } catch(e){
     err.innerHTML = `<div class="notice err">${esc(e.code || e.message)}</div>`;
   } finally { btn.disabled = false; btn.textContent = 'Login'; }
@@ -687,19 +651,43 @@ async function doLogout(){
   toast('Logged out', 'info');
 }
 
-/* ADMIN LOGIN */
+/* ═══════════ ADMIN LOGIN — FIXED ═══════════ */
 async function doAdminLogin(){
   const email = clampStr($('logEmail').value, 120);
   const pass = String($('logPass').value || '');
   const err = $('logErr'), btn = $('logBtn');
-  if(!isEmail(email) || pass.length < 6){ err.innerHTML = '<div class="notice err">Invalid</div>'; return; }
+
+  console.log('🔍 Admin login attempt:', { email, passLength: pass.length });
+
+  if(!isEmail(email)){ 
+    err.innerHTML = '<div class="notice err">❌ Invalid email format. Please check spelling.</div>'; 
+    return; 
+  }
+  if(pass.length < 6){ 
+    err.innerHTML = '<div class="notice err">❌ Password too short (minimum 6 characters).</div>'; 
+    return; 
+  }
+  
   btn.disabled = true; btn.textContent = 'Logging in...'; err.innerHTML = '';
   try {
     await signInWithEmailAndPassword(auth, email, pass);
     $('logPass').value = '';
+    toast('✅ Admin login successful!', 'ok');
+    // onAuthStateChanged will auto-open admin panel
   } catch(e){
-    err.innerHTML = `<div class="notice err">${esc(e.code || e.message)}</div>`;
-  } finally { btn.disabled = false; btn.textContent = 'Login as Admin'; }
+    const code = String(e.code || e.message || 'unknown');
+    let friendly = code;
+    if(code.includes('user-not-found')) friendly = '❌ Email Firebase me registered nahi hai. Authentication → Users me banao.';
+    else if(code.includes('wrong-password')) friendly = '❌ Password galat hai.';
+    else if(code.includes('invalid-email')) friendly = '❌ Email format galat hai.';
+    else if(code.includes('invalid-credential')) friendly = '❌ Email ya password galat hai.';
+    else if(code.includes('too-many-requests')) friendly = '❌ Bahut attempts ho gaye. 5 min wait karo.';
+    else if(code.includes('network-request-failed')) friendly = '❌ Internet connection check karo.';
+    err.innerHTML = `<div class="notice err">${esc(friendly)}</div>`;
+  } finally { 
+    btn.disabled = false; 
+    btn.textContent = 'Login as Admin'; 
+  }
 }
 
 /* ───────── CONTACT / REQUEST ───────── */
@@ -720,7 +708,6 @@ async function sendReq(){
   } catch(e){ toast('Failed: ' + (e.message||'Try again'), 'err'); }
 }
 
-/* ───────── SHARE ───────── */
 async function shareSite(){
   if(navigator.share){
     try { await navigator.share({ title:'HARIOM MODDER', text:'Free + VIP premium APKs', url: location.href }); }
@@ -782,7 +769,6 @@ function applySettings(){
   if(siteCfg.youtube) document.querySelector('[data-s="yt"]').href = siteCfg.youtube;
 }
 
-/* ───────── RENDER ───────── */
 function hasPurchased(appId){ return MY_PURCHASES.some(p => p.appId === appId && p.status === 'approved'); }
 function pendingPurchase(appId){ return MY_PURCHASES.find(p => p.appId === appId && p.status === 'pending'); }
 function isPaid(a){ return (a.price || 0) > 0; }
@@ -869,7 +855,6 @@ function updateStats(){
   $('heroLive').textContent = `${APPS.length} apps • ${vipCount} VIP`;
 }
 
-/* ───────── DETAIL ───────── */
 function openDetail(id){
   const a = APPS.find(x => x.id === id); if(!a) return;
   const paid = isPaid(a);
@@ -910,7 +895,6 @@ function openDetail(id){
   openModal('detailModal');
 }
 
-/* ───────── PURCHASE / PAYMENT ───────── */
 function openPurchase(id){
   const a = APPS.find(x => x.id === id); if(!a || !isPaid(a)) return;
   if(!currentUser){ closeModal('detailModal'); openModal('userLoginModal'); toast('Login required', 'warn'); return; }
@@ -926,33 +910,26 @@ function openPurchase(id){
 
   $('paymentBody').innerHTML = `
     <div class="notice info">UPI se ₹${amount} pay karo, phir transaction ID daal ke submit karo.</div>
-
     <div style="text-align:center;margin-bottom:8px">
       <div class="amtBig">₹${amount}</div>
       <div style="font-size:12px;color:var(--txt3);margin-top:4px">${esc(a.name)}</div>
     </div>
-
     <div style="text-align:center;margin:16px 0">
       <div class="qrBox"><img src="${escAttr(qrUrl)}" alt="UPI QR"></div>
     </div>
-
     <div class="upiId">
       <div class="lbl">UPI ID</div>
       <div class="val">${esc(upi)}</div>
     </div>
-
     <div style="display:flex;gap:8px;margin-top:14px">
       <a href="${escAttr(upiUri)}" class="btn gold" style="flex:1;justify-content:center;text-decoration:none">📱 Open UPI App</a>
       <button class="btn ghost" style="flex:1;justify-content:center" data-act="copy-upi" data-upi="${escAttr(upi)}">📋 Copy UPI ID</button>
     </div>
-
     <hr style="margin:22px 0;border:0;border-top:1px solid var(--border)">
-
     <div class="field"><label>Transaction ID / UTR Number *</label>
       <input id="payTxnId" placeholder="e.g. 4283XXXXXX" maxlength="60" autocomplete="off"></div>
     <div class="field"><label>Note (optional)</label>
       <input id="payNote" placeholder="Anything you want to tell admin" maxlength="200"></div>
-
     <button class="btn primary" style="width:100%;justify-content:center" id="paySubmitBtn" data-act="submit-payment" data-id="${escAttr(id)}">✅ I've Paid — Submit for Verification</button>
   `;
   closeModal('detailModal');
@@ -972,11 +949,8 @@ async function submitPayment(appId){
       userEmail: currentUser.email,
       userName: currentUser.displayName || userProfile?.name || '',
       appId, appName: a.name, appVersion: a.version,
-      amount: a.price,
-      transactionId: txnId,
-      note,
-      status: 'pending',
-      createdAt: serverTimestamp()
+      amount: a.price, transactionId: txnId, note,
+      status: 'pending', createdAt: serverTimestamp()
     });
     toast('✅ Payment submitted! Admin approve karega.', 'ok', 4000);
     closeModal('paymentModal');
@@ -986,7 +960,6 @@ async function submitPayment(appId){
   } finally { if(btn){ btn.disabled = false; btn.textContent = "✅ I've Paid — Submit for Verification"; } }
 }
 
-/* ───────── DOWNLOAD ───────── */
 function resetDlModal(a){
   $('dlAppIconWrap').innerHTML = iconHTML(a, 'dl-ic');
   $('dlAppName').textContent = a.name || 'App';
@@ -1026,7 +999,6 @@ async function downloadApp(id){
 
 function cancelDownload(){ try { dlController?.abort(); } catch{} closeModal('dlModal'); }
 
-/* ───────── PROFILE ───────── */
 function renderProfile(){
   if(!currentUser) return;
   const mine = MY_PURCHASES.slice().sort((a,b)=>(b.createdAt?.seconds||0)-(a.createdAt?.seconds||0));
@@ -1036,13 +1008,11 @@ function renderProfile(){
       <div style="font-weight:800;font-size:18px">${esc(currentUser.displayName || 'User')}</div>
       <div style="color:var(--txt3);font-size:13px">${esc(currentUser.email)}</div>
     </div>
-
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px">
       <div class="metaItem"><div class="v">${mine.length}</div><div class="k">Purchases</div></div>
       <div class="metaItem"><div class="v">${mine.filter(p=>p.status==='approved').length}</div><div class="k">Approved</div></div>
       <div class="metaItem"><div class="v">${mine.filter(p=>p.status==='pending').length}</div><div class="k">Pending</div></div>
     </div>
-
     <h4 style="margin-bottom:10px;font-size:14px;font-weight:800">📦 Purchase History</h4>
     <div class="adminList">
       ${mine.length ? mine.map(p => `
@@ -1055,12 +1025,10 @@ function renderProfile(){
         </div>
       `).join('') : '<div style="text-align:center;color:var(--txt3);padding:20px">No purchases yet</div>'}
     </div>
-
     <button class="btn ghost" style="width:100%;justify-content:center;margin-top:20px;color:#f87171" data-act="logout">🚪 Logout</button>
   `;
 }
 
-/* ───────── ADMIN: PAYMENTS ───────── */
 function renderPaymentsList(){
   const list = $('paymentsList'); if(!list) return;
   const pend = PURCHASES.filter(p => p.status === 'pending');
@@ -1108,7 +1076,6 @@ async function rejectPurchase(id){
   } catch(e){ toast('Failed', 'err'); }
 }
 
-/* ───────── ADMIN: MANAGE ───────── */
 function renderAdminList(){
   const list = $('admList'); if(!list) return;
   const q = ($('admSearch')?.value || '').toLowerCase();
@@ -1210,7 +1177,6 @@ function exportData(){
   toast('📥 Exported', 'ok');
 }
 
-/* ───────── EVENT DELEGATION ───────── */
 document.addEventListener('click', e => {
   const backdrop = e.target.closest('.modal[data-backdrop]');
   if(backdrop && e.target === backdrop){ closeModal(backdrop.dataset.backdrop); return; }
@@ -1244,7 +1210,6 @@ document.addEventListener('click', e => {
       case 'upload-app': uploadApp(); break;
       case 'save-settings': saveSettings(); break;
       case 'export': exportData(); break;
-      /* Purane features wapas */
       case 'contact': closeModal('menuModal'); openModal('contactModal'); break;
       case 'toggle-theme': closeModal('menuModal'); toggleTheme(); break;
       case 'share-site': closeModal('menuModal'); shareSite(); break;
@@ -1314,11 +1279,15 @@ window.addEventListener('scroll', () => {
 
 $('yr').textContent = new Date().getFullYear();
 
-/* ───────── AUTH STATE ───────── */
+/* ═══════════ AUTH STATE — ADMIN PANEL AUTO-OPEN ═══════════ */
 onAuthStateChanged(auth, async user => {
   currentUser = user;
+  console.log('👤 Auth state:', user ? user.email : 'not logged in');
+  
   if(user){
     isAdmin = ADMIN_EMAILS.map(x=>x.toLowerCase()).includes(String(user.email||'').toLowerCase());
+    console.log('🔑 isAdmin:', isAdmin, '| ADMIN_EMAILS:', ADMIN_EMAILS);
+    
     $('userBtn').classList.remove('guest');
     $('userBtn').textContent = (user.displayName || user.email || 'U')[0].toUpperCase();
 
@@ -1348,9 +1317,8 @@ onAuthStateChanged(auth, async user => {
   }
 });
 
-/* ───────── BOOT ───────── */
 loadApps();
 loadSettings();
 </script>
 </body>
-  </html>
+</html>
