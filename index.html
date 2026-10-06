@@ -36,29 +36,115 @@
 html{scroll-behavior:smooth}
 body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.6;position:relative}
 
-/* 🌌 ANIMATED MESH BACKGROUND */
+/* ═══════════════════════════════════════════════════════════
+   🌌 HARD PROFESSIONAL BACKGROUND — LAYER 1: DEEP SPACE BASE
+   ═══════════════════════════════════════════════════════════ */
+body{
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(139,92,246,.15), transparent 50%),
+    radial-gradient(ellipse 100% 60% at 100% 100%, rgba(6,182,212,.12), transparent 50%),
+    radial-gradient(ellipse 100% 60% at 0% 100%, rgba(236,72,153,.1), transparent 50%),
+    linear-gradient(180deg, #05050a 0%, #07070f 50%, #05050a 100%);
+  background-attachment: fixed;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🌌 LAYER 2: ANIMATED MESH GRADIENT BLOBS
+   ═══════════════════════════════════════════════════════════ */
 body::before{
   content:'';position:fixed;inset:-50%;z-index:-2;pointer-events:none;
   background:
-    radial-gradient(circle at 20% 20%,rgba(139,92,246,.25),transparent 40%),
-    radial-gradient(circle at 80% 10%,rgba(6,182,212,.22),transparent 40%),
-    radial-gradient(circle at 60% 80%,rgba(236,72,153,.2),transparent 40%),
-    radial-gradient(circle at 10% 90%,rgba(251,191,36,.12),transparent 40%);
-  animation:meshMove 20s ease-in-out infinite;
+    radial-gradient(circle at 15% 20%, rgba(139,92,246,.32), transparent 35%),
+    radial-gradient(circle at 85% 15%, rgba(6,182,212,.28), transparent 35%),
+    radial-gradient(circle at 70% 75%, rgba(236,72,153,.22), transparent 40%),
+    radial-gradient(circle at 20% 85%, rgba(251,191,36,.14), transparent 40%),
+    radial-gradient(circle at 50% 50%, rgba(167,139,250,.12), transparent 50%);
+  animation:meshMove 25s ease-in-out infinite;
+  filter: blur(40px);
 }
 @keyframes meshMove{
   0%,100%{transform:translate(0,0) rotate(0deg) scale(1)}
-  33%{transform:translate(3%,-3%) rotate(5deg) scale(1.05)}
-  66%{transform:translate(-3%,3%) rotate(-5deg) scale(1.08)}
+  20%{transform:translate(4%,-4%) rotate(6deg) scale(1.08)}
+  40%{transform:translate(-3%,5%) rotate(-4deg) scale(1.04)}
+  60%{transform:translate(5%,3%) rotate(8deg) scale(1.1)}
+  80%{transform:translate(-4%,-3%) rotate(-6deg) scale(1.06)}
 }
+
+/* ═══════════════════════════════════════════════════════════
+   🌌 LAYER 3: FINE GRID + STAR FIELD + SCAN LINES
+   ═══════════════════════════════════════════════════════════ */
 body::after{
   content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-image:
-    linear-gradient(rgba(255,255,255,.02) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(255,255,255,.02) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 30%,transparent 100%);
-  -webkit-mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,#000 30%,transparent 100%);
+    /* Dotted star field */
+    radial-gradient(circle at 12% 22%, rgba(255,255,255,.4) 0.5px, transparent 1px),
+    radial-gradient(circle at 45% 8%, rgba(255,255,255,.3) 0.4px, transparent 1px),
+    radial-gradient(circle at 78% 35%, rgba(167,139,250,.6) 0.6px, transparent 1.2px),
+    radial-gradient(circle at 23% 67%, rgba(34,211,238,.5) 0.5px, transparent 1px),
+    radial-gradient(circle at 89% 82%, rgba(255,255,255,.35) 0.4px, transparent 1px),
+    radial-gradient(circle at 55% 91%, rgba(236,72,153,.5) 0.5px, transparent 1px),
+    radial-gradient(circle at 33% 45%, rgba(255,255,255,.25) 0.4px, transparent 1px),
+    radial-gradient(circle at 68% 62%, rgba(251,191,36,.4) 0.5px, transparent 1px),
+    radial-gradient(circle at 92% 12%, rgba(255,255,255,.3) 0.4px, transparent 1px),
+    radial-gradient(circle at 5% 55%, rgba(34,211,238,.45) 0.5px, transparent 1px),
+    /* Fine grid */
+    linear-gradient(rgba(139,92,246,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,.04) 1px, transparent 1px),
+    /* Coarse grid */
+    linear-gradient(rgba(255,255,255,.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.015) 1px, transparent 1px);
+  background-size: 
+    400px 400px, 380px 380px, 420px 420px, 360px 360px,
+    440px 440px, 390px 390px, 410px 410px, 370px 370px,
+    430px 430px, 350px 350px,
+    40px 40px, 40px 40px,
+    160px 160px, 160px 160px;
+  mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 40%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 80% at 50% 40%, #000 40%, transparent 100%);
+  animation: starTwinkle 6s ease-in-out infinite alternate;
+}
+@keyframes starTwinkle{
+  0%{opacity:.6}
+  100%{opacity:1}
+}
+
+/* ═══════════════════════════════════════════════════════════
+   🌌 LAYER 4: TOP GLOW LINE + BOTTOM VIGNETTE
+   ═══════════════════════════════════════════════════════════ */
+html::before{
+  content:'';position:fixed;top:0;left:0;right:0;height:1px;z-index:1;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(139,92,246,.6),rgba(6,182,212,.6),rgba(236,72,153,.6),transparent);
+  opacity:.5;
+}
+html::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 100% 30% at 50% 100%, rgba(0,0,0,.5), transparent 70%),
+    radial-gradient(ellipse 100% 30% at 50% 0%, rgba(0,0,0,.4), transparent 70%);
+}
+
+/* Light theme overrides */
+[data-theme="light"] body{
+  background:
+    radial-gradient(ellipse 120% 80% at 50% -20%, rgba(139,92,246,.12), transparent 50%),
+    radial-gradient(ellipse 100% 60% at 100% 100%, rgba(6,182,212,.08), transparent 50%),
+    linear-gradient(180deg, #f0f2f8 0%, #eef0f7 100%);
+}
+[data-theme="light"] body::before{
+  background:
+    radial-gradient(circle at 15% 20%, rgba(139,92,246,.18), transparent 35%),
+    radial-gradient(circle at 85% 15%, rgba(6,182,212,.15), transparent 35%),
+    radial-gradient(circle at 70% 75%, rgba(236,72,153,.1), transparent 40%),
+    radial-gradient(circle at 20% 85%, rgba(251,191,36,.08), transparent 40%);
+}
+[data-theme="light"] body::after{
+  background-image:
+    linear-gradient(rgba(139,92,246,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139,92,246,.03) 1px, transparent 1px);
+  background-size: 40px 40px, 40px 40px;
+}
+[data-theme="light"] html::after{
+  background:radial-gradient(ellipse 100% 30% at 50% 100%, rgba(139,92,246,.06), transparent 70%);
 }
 
 /* SPLASH */
@@ -1721,4 +1807,4 @@ loadApps();
 loadSettings();
 </script>
 </body>
-                           </html>
+                                                                                                       </html>
