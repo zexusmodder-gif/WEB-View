@@ -1,66 +1,532 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HARIOM MODDER - Official Mod Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0a0f">
+<meta name="referrer" content="no-referrer">
+<meta http-equiv="X-Content-Type-Options" content="nosniff">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: blob: https:; connect-src 'self' https://*.googleapis.com https://*.googleusercontent.com https://*.firebaseio.com wss://*.firebaseio.com https://drive.google.com https://drive.usercontent.google.com; frame-src https://*.firebaseapp.com; object-src 'none'; base-uri 'self'; form-action 'self'">
+<title>HARIOM MODDER — Premium APK Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{--neon:#00ff88;--bg:#080808;--card:#151515;--border:#222}
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif}
-body{background:var(--bg);color:#fff}
-header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);padding:12px 15px;display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid var(--neon)}
-.logo{font-family:'Orbitron';font-weight:900;color:var(--neon);font-size:18px;letter-spacing:1.5px;cursor:pointer}
-#search{width:45%;max-width:250px;padding:8px 14px;border-radius:20px;border:1px solid var(--border);background:#111;color:#fff;outline:none}
-.admin-bar{display:none;background:#111;border:1px dashed var(--neon);margin:15px;border-radius:12px;padding:15px}
-.admin-bar.active{display:block}
-.admin-bar input{width:100%;padding:11px;margin:6px 0;border-radius:8px;border:none;background:#1f1f1f;color:#fff;outline:none}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.btn{padding:11px;border-radius:8px;border:none;font-weight:800;cursor:pointer;width:100%;margin-top:8px}
-.btn-add{background:var(--neon);color:#000}
-.container{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:12px;padding:12px;min-height:80vh}
-.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center;position:relative}
-.card img{width:72px;height:72px;border-radius:16px;object-fit:cover}
-.card h3{font-size:13px;margin:10px 0 4px;height:32px;overflow:hidden}
-.meta{font-size:11px;color:#888}
-.dl{display:block;background:var(--neon);color:#000;padding:8px;margin-top:10px;border-radius:8px;font-weight:800;font-size:13px;cursor:pointer}
-.three{position:absolute;top:6px;right:10px;cursor:pointer;font-size:20px;padding:5px}
-.menu{position:absolute;top:30px;right:10px;background:#222;border-radius:8px;display:none;z-index:20;min-width:130px;border:1px solid #333;overflow:hidden}
-.menu.show{display:block}
-.menu button{width:100%;background:none;border:none;color:#fff;padding:10px;text-align:left;font-size:12px}
-#dl-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:999;justify-content:center;align-items:center;padding:20px}
-#dl-box{background:#151515;border:1px solid var(--neon);border-radius:18px;width:100%;max-width:360px;padding:20px;text-align:center}
-#dl-bar{height:10px;background:#222;border-radius:20px;margin:15px 0;overflow:hidden}
-#dl-fill{height:100%;width:0%;background:var(--neon);transition:width 0.2s}
-#badge{display:none;background:red;color:#fff;font-size:10px;padding:2px 6px;border-radius:10px;margin-left:6px}
+:root{
+  --bg:#08080c;--bg2:#0d0d15;
+  --glass:rgba(20,20,32,.72);--glass2:rgba(28,28,44,.6);
+  --border:rgba(255,255,255,.09);--border-hi:rgba(255,255,255,.18);
+  --txt:#f0f2f7;--txt2:#9aa0b5;--txt3:#5d6480;
+  --p1:#7c3aed;--p2:#a855f7;--c1:#06b6d4;--c2:#22d3ee;
+  --ok:#10b981;--warn:#f59e0b;--err:#ef4444;
+  --grad:linear-gradient(135deg,#7c3aed 0%,#a855f7 45%,#06b6d4 100%);
+  --glow:0 0 40px rgba(124,58,237,.35);
+  --r:16px;--r2:24px;
+}
+[data-theme="light"]{
+  --bg:#f4f5fa;--bg2:#ffffff;
+  --glass:rgba(255,255,255,.85);--glass2:rgba(255,255,255,.7);
+  --border:rgba(0,0,0,.08);--border-hi:rgba(0,0,0,.15);
+  --txt:#0d0d15;--txt2:#5d6480;--txt3:#9aa0b5;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden;line-height:1.6;transition:background .3s,color .3s}
+body::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.18),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.14),transparent 60%),radial-gradient(ellipse 90% 60% at 50% 100%,rgba(168,85,247,.1),transparent 65%)}
+[data-theme="light"] body::before{background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(124,58,237,.1),transparent 60%),radial-gradient(ellipse 70% 55% at 85% 15%,rgba(6,182,212,.08),transparent 60%)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,#7c3aed,#06b6d4);border-radius:10px;border:2px solid var(--bg)}
+::selection{background:rgba(168,85,247,.35)}
+.glass{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);-webkit-backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border);border-radius:var(--r)}
+.gloss{position:relative;overflow:hidden}
+.gloss::before{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(135deg,rgba(255,255,255,.13) 0%,rgba(255,255,255,.02) 35%,transparent 60%);border-radius:inherit}
+.gloss::after{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.08) 50%,transparent 60%);transform:translateX(-100%);transition:transform .8s;pointer-events:none}
+.gloss:hover::after{transform:translateX(100%)}
+nav{position:sticky;top:0;z-index:100;background:rgba(8,8,12,.72);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--border);padding:12px 0}
+[data-theme="light"] nav{background:rgba(255,255,255,.78)}
+.navIn{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:16px}
+.logo{display:flex;align-items:center;gap:11px;font-weight:900;font-size:19px;letter-spacing:-.5px;cursor:pointer;flex-shrink:0}
+.logoMark{width:40px;height:40px;border-radius:12px;background:var(--grad);display:grid;place-items:center;font-size:20px;font-weight:900;color:#fff;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.3);position:relative;overflow:hidden;flex-shrink:0}
+.logoMark::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.35),transparent 50%)}
+.logoTxt{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;font-weight:900}
+.logoSub{font-size:10px;color:var(--txt3);font-weight:600;letter-spacing:2px;text-transform:uppercase;display:block;margin-top:-4px}
+.searchWrap{flex:1;max-width:480px;position:relative}
+.searchWrap input{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:11px 44px 11px 16px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none;transition:.2s;backdrop-filter:blur(12px)}
+.searchWrap input:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18);background:var(--glass)}
+.searchWrap input::placeholder{color:var(--txt3)}
+.searchWrap .ico{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--txt3);pointer-events:none;font-size:16px}
+.navAct{display:flex;align-items:center;gap:8px;margin-left:auto}
+.iconBtn{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s;backdrop-filter:blur(12px)}
+.iconBtn:hover{border-color:var(--border-hi);background:var(--glass);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.iconBtn:active{transform:scale(.94)}
+.hero{max-width:1320px;margin:0 auto;padding:60px 20px 40px;text-align:center;position:relative}
+.heroBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 16px;border-radius:100px;background:var(--glass2);border:1px solid var(--border-hi);backdrop-filter:blur(12px);font-size:12.5px;font-weight:600;color:var(--txt2);margin-bottom:22px}
+.pulse{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 rgba(16,185,129,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}70%{box-shadow:0 0 0 12px rgba(16,185,129,0)}100%{box-shadow:0 0 0 0 rgba(16,185,129,0)}}
+.hero h1{font-size:clamp(34px,6vw,62px);font-weight:900;letter-spacing:-2px;line-height:1.05;margin-bottom:16px}
+.hero h1 .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 30px rgba(124,58,237,.4))}
+.hero p{color:var(--txt2);font-size:clamp(14px,2vw,17px);max-width:600px;margin:0 auto 32px}
+.heroCTA{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{padding:13px 26px;border-radius:14px;border:0;font-family:inherit;font-size:15px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:8px;transition:.22s;position:relative;overflow:hidden;text-decoration:none}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.28)}
+.btn.primary:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.5),inset 0 1px 0 rgba(255,255,255,.28)}
+.btn.primary:active{transform:translateY(0) scale(.97)}
+.btn.ghost{background:var(--glass2);color:var(--txt);border:1px solid var(--border-hi);backdrop-filter:blur(12px)}
+.btn.ghost:hover{background:var(--glass);transform:translateY(-2px)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+.stats{max-width:1320px;margin:0 auto 40px;padding:0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.stat{padding:20px 18px;text-align:center;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--grad);opacity:.7}
+.stat .n{font-size:clamp(24px,4vw,34px);font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;line-height:1.1}
+.stat .l{font-size:12px;color:var(--txt2);font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+.section{max-width:1320px;margin:0 auto 44px;padding:0 20px}
+.secHead{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.secHead h2{font-size:clamp(20px,3vw,26px);font-weight:800;letter-spacing:-.8px;display:flex;align-items:center;gap:10px}
+.secHead h2::before{content:'';width:4px;height:22px;border-radius:2px;background:var(--grad);box-shadow:var(--glow)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:4px 0 10px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{padding:9px 18px;border-radius:100px;background:var(--glass2);border:1px solid var(--border);color:var(--txt2);font-size:13.5px;font-weight:600;cursor:pointer;white-space:nowrap;transition:.2s;backdrop-filter:blur(12px);flex-shrink:0;font-family:inherit}
+.chip:hover{border-color:var(--border-hi);color:var(--txt)}
+.chip.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:var(--glow)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:16px}
+@media(max-width:520px){.grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+.card{padding:16px;cursor:pointer;position:relative;transition:.28s cubic-bezier(.34,1.4,.64,1);display:flex;flex-direction:column;border-radius:var(--r)}
+.card:hover{transform:translateY(-6px);border-color:var(--border-hi);box-shadow:0 20px 44px rgba(0,0,0,.4),var(--glow)}
+.card:active{transform:translateY(-2px) scale(.98)}
+.card .top{display:flex;gap:12px;align-items:flex-start;margin-bottom:12px}
+.card .meta{flex:1;min-width:0;padding-top:2px}
+.card .name{font-weight:800;font-size:15px;letter-spacing:-.3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .ver{font-size:11.5px;color:var(--txt3);font-weight:600;font-family:'JetBrains Mono',monospace;margin-top:2px}
+.card .cat{display:inline-block;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;margin-top:6px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase;letter-spacing:.5px}
+.card .desc{font-size:12.5px;color:var(--txt2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-bottom:12px;min-height:38px;word-break:break-word}
+.card .foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:auto;padding-top:12px;border-top:1px solid var(--border)}
+.card .stats2{display:flex;gap:12px;font-size:11.5px;color:var(--txt3);font-weight:600}
+.card .stats2 span{display:flex;align-items:center;gap:4px}
+.starF{color:#fbbf24}
+.badgeFeat{position:absolute;top:12px;right:12px;background:var(--grad);color:#fff;font-size:9.5px;font-weight:800;padding:4px 9px;border-radius:8px;letter-spacing:.8px;box-shadow:var(--glow);z-index:2}
+.empty{text-align:center;padding:60px 20px;color:var(--txt3)}
+.empty .e{font-size:56px;margin-bottom:12px;opacity:.5}
+.empty p{font-size:15px}
+footer{border-top:1px solid var(--border);padding:36px 20px 24px;text-align:center;margin-top:60px;background:rgba(8,8,12,.4)}
+[data-theme="light"] footer{background:rgba(255,255,255,.5)}
+.footIn{max-width:1320px;margin:0 auto}
+.socials{display:flex;gap:10px;justify-content:center;margin:16px 0 20px;flex-wrap:wrap}
+.socials a{width:42px;height:42px;border-radius:12px;background:var(--glass2);border:1px solid var(--border);display:grid;place-items:center;color:var(--txt2);text-decoration:none;font-size:17px;transition:.2s}
+.socials a:hover{transform:translateY(-3px);color:var(--txt);border-color:var(--border-hi);box-shadow:var(--glow)}
+.footTxt{font-size:13px;color:var(--txt3);line-height:1.8}
+.modal{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:none;place-items:center;padding:20px;overflow-y:auto}
+.modal.on{display:grid}
+.modalBox{background:var(--bg2);border:1px solid var(--border-hi);border-radius:var(--r2);width:100%;max-width:560px;max-height:88vh;overflow-y:auto;position:relative;box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 60px rgba(124,58,237,.15);animation:modalIn .35s cubic-bezier(.34,1.4,.64,1)}
+@keyframes modalIn{from{opacity:0;transform:scale(.92) translateY(20px)}}
+.modalBox::-webkit-scrollbar{width:6px}
+.modalBox::-webkit-scrollbar-thumb{background:var(--p1);border-radius:6px;border:0}
+.modalHead{position:sticky;top:0;z-index:2;background:linear-gradient(180deg,var(--bg2) 70%,transparent);padding:20px 22px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border)}
+.modalHead h3{font-size:18px;font-weight:800;letter-spacing:-.5px}
+.modalBody{padding:22px}
+.closeX{width:36px;height:36px;border-radius:10px;background:var(--glass2);border:1px solid var(--border);color:var(--txt);cursor:pointer;font-size:16px;display:grid;place-items:center;transition:.2s}
+.closeX:hover{background:var(--err);color:#fff;border-color:var(--err)}
+.field{margin-bottom:16px}
+.field label{display:block;font-size:12px;font-weight:700;color:var(--txt2);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px}
+.field input,.field textarea,.field select{width:100%;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 14px;color:var(--txt);font-family:inherit;font-size:14.5px;outline:none;transition:.2s}
+.field textarea{resize:vertical;min-height:90px}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--p1);box-shadow:0 0 0 3px rgba(124,58,237,.18);background:var(--glass)}
+.field select option{background:var(--bg2);color:var(--txt)}
+#toastBox{position:fixed;top:80px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:10px;pointer-events:none;max-width:calc(100vw - 40px)}
+.toast{background:var(--glass);backdrop-filter:blur(24px) saturate(180%);border:1px solid var(--border-hi);border-radius:14px;padding:14px 18px;display:flex;align-items:center;gap:12px;font-size:14px;font-weight:600;min-width:240px;max-width:340px;box-shadow:0 14px 40px rgba(0,0,0,.4);animation:slideIn .35s cubic-bezier(.34,1.4,.64,1);pointer-events:auto;word-break:break-word}
+@keyframes slideIn{from{opacity:0;transform:translateX(120%)}}
+.toast.out{animation:slideOut .3s forwards}
+@keyframes slideOut{to{opacity:0;transform:translateX(120%)}}
+.toast .tIco{font-size:19px;flex-shrink:0}
+.toast.ok .tIco{color:var(--ok)}
+.toast.err .tIco{color:var(--err)}
+.toast.info .tIco{color:var(--c2)}
+.toast.warn .tIco{color:var(--warn)}
+.detailHead{display:flex;gap:16px;align-items:center;margin-bottom:20px}
+.detailHead .nm{font-size:22px;font-weight:900;letter-spacing:-.7px;line-height:1.2;word-break:break-word}
+.detailHead .vr{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--txt2);margin-top:4px}
+.detailHead .cat2{display:inline-block;font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:8px;background:rgba(124,58,237,.18);color:var(--p2);text-transform:uppercase;letter-spacing:.6px;margin-top:8px}
+.metaGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:18px}
+.metaItem{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px 10px;text-align:center}
+.metaItem .v{font-size:16px;font-weight:800;color:var(--txt)}
+.metaItem .k{font-size:10.5px;color:var(--txt3);text-transform:uppercase;letter-spacing:.7px;margin-top:2px;font-weight:600}
+.descBox{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:18px;font-size:14px;color:var(--txt2);line-height:1.75;white-space:pre-wrap;word-break:break-word}
+.dlBtnBig{width:100%;padding:16px;border-radius:14px;border:0;background:var(--grad);color:#fff;font-family:inherit;font-size:16px;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:var(--glow),inset 0 1px 0 rgba(255,255,255,.3);transition:.22s;letter-spacing:-.3px}
+.dlBtnBig:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(124,58,237,.55)}
+.dlBtnBig:active{transform:translateY(0) scale(.98)}
+.adminTabs{display:flex;gap:6px;padding:0 22px;border-bottom:1px solid var(--border);overflow-x:auto;scrollbar-width:none}
+.adminTabs::-webkit-scrollbar{display:none}
+.adminTab{padding:12px 16px;background:transparent;border:0;color:var(--txt2);font-family:inherit;font-size:13.5px;font-weight:700;cursor:pointer;border-bottom:2px solid transparent;transition:.2s;white-space:nowrap}
+.adminTab:hover{color:var(--txt)}
+.adminTab.on{color:var(--txt);border-bottom-color:var(--p1)}
+.adminPane{padding:20px 22px;display:none}
+.adminPane.on{display:block}
+.adminList{display:flex;flex-direction:column;gap:8px}
+.aRow{display:flex;align-items:center;gap:12px;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 13px;transition:.2s}
+.aRow:hover{border-color:var(--border-hi);background:var(--glass)}
+.aRow .info{flex:1;min-width:0}
+.aRow .nm{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.aRow .sb{font-size:11.5px;color:var(--txt3);font-family:'JetBrains Mono',monospace}
+.miniBtn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--glass2);color:var(--txt2);cursor:pointer;display:grid;place-items:center;font-size:14px;transition:.2s;flex-shrink:0}
+.miniBtn:hover{background:var(--glass);color:var(--txt);border-color:var(--border-hi)}
+.miniBtn.del:hover{background:var(--err);color:#fff;border-color:var(--err)}
+.statsRow{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:16px}
+.statMini{background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:12px;text-align:center}
+.statMini .v{font-size:20px;font-weight:900;background:var(--grad);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.statMini .k{font-size:10px;color:var(--txt3);text-transform:uppercase;font-weight:700;letter-spacing:.6px;margin-top:2px}
+.fab{position:fixed;bottom:22px;right:22px;z-index:60;width:54px;height:54px;border-radius:16px;background:var(--grad);color:#fff;border:0;cursor:pointer;font-size:22px;box-shadow:var(--glow),0 10px 30px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.3);display:grid;place-items:center;transition:.25s}
+.fab:hover{transform:translateY(-4px) scale(1.05)}
+.fab:active{transform:scale(.94)}
+.fab.hide{transform:translateY(90px);opacity:0;pointer-events:none}
+.notice{background:rgba(245,158,11,.12);border:1px solid rgba(245,158,11,.3);border-radius:12px;padding:12px 14px;font-size:13px;color:#fbbf24;margin-bottom:16px;line-height:1.6;word-break:break-word}
+.notice.ok{background:rgba(16,185,129,.12);border-color:rgba(16,185,129,.3);color:#4ade80}
+.notice.err{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.3);color:#f87171}
+@media(max-width:768px){
+  .navIn{gap:10px;padding:0 14px}
+  .logoSub{display:none}
+  .logo{font-size:16px}
+  .logoMark{width:36px;height:36px}
+  .searchWrap{max-width:none}
+  .hero{padding:40px 16px 30px}
+  .heroCTA .btn{padding:12px 20px;font-size:14px}
+  .section{padding:0 14px;margin-bottom:34px}
+  .modalBody{padding:18px}
+  .modalHead{padding:16px 18px 12px}
+  .adminPane{padding:16px 18px}
+  .adminTabs{padding:0 18px}
+}
+@media(max-width:420px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .grid{grid-template-columns:1fr 1fr}
+  .card{padding:13px}
+  .card .name{font-size:13.5px}
+}
+.hidden{display:none!important}
+.dlSuccess{background:linear-gradient(135deg,#10b981,#059669)!important}
+.dlFail{background:linear-gradient(135deg,#f59e0b,#d97706)!important}
+.dlBar{height:100%;width:0%;background:var(--grad);border-radius:6px;transition:width .25s ease;box-shadow:var(--glow);position:relative;overflow:hidden}
+.dlBar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:shine 1.5s infinite}
+@keyframes shine{0%{transform:translateX(-100%)}100%{transform:translateX(100%)}}
+
+/* ===== Unified safe icon component (no inline onerror injection) ===== */
+.ic{position:relative;display:grid;place-items:center;background:var(--grad);color:#fff;font-weight:900;overflow:hidden;flex-shrink:0;box-shadow:0 6px 20px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.25)}
+.ic::before{content:attr(data-l);line-height:1}
+.ic img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block}
+.ic.card-ic{width:56px;height:56px;border-radius:14px;font-size:24px}
+.ic.detail-ic{width:82px;height:82px;border-radius:20px;font-size:34px;box-shadow:0 10px 30px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.3)}
+.ic.row-ic{width:42px;height:42px;border-radius:10px;font-size:16px}
+.ic.dl-ic{width:72px;height:72px;border-radius:18px;font-size:30px;margin:0 auto 12px;box-shadow:var(--glow)}
 </style>
 </head>
 <body>
-<header>
-  <div class="logo" id="logoTap">HARIOM MODDER <span id="badge">ADMIN</span></div>
-  <input id="search" placeholder="Search mod...">
-</header>
-<div class="admin-bar" id="adminBar">
-  <h3 style="color:var(--neon);font-family:Orbitron">⋮ ADMIN PANEL</h3>
-  <input id="a_name" placeholder="App Name">
-  <div class="row"><input id="a_ver" placeholder="Version"><input id="a_size" placeholder="Size"></div>
-  <input id="a_icon" placeholder="ICON Direct Link">
-  <input id="a_drive" placeholder="GOOGLE DRIVE LINK">
-  <button class="btn btn-add" id="addBtn">+ UPLOAD TO FIREBASE</button>
-  <button class="btn" style="background:#222;color:#fff;border:1px solid #333" onclick="logoutAdmin()">Exit</button>
-  <div id="adminList" style="margin-top:12px;font-size:12px"></div>
+
+<nav>
+  <div class="navIn">
+    <div class="logo" data-act="top">
+      <div class="logoMark">H</div>
+      <div>
+        <span class="logoTxt">HARIOM MODDER</span>
+        <span class="logoSub">Premium APK Hub</span>
+      </div>
+    </div>
+    <div class="searchWrap">
+      <input type="text" id="searchInput" placeholder="Search apps..." autocomplete="off" maxlength="60" spellcheck="false">
+      <span class="ico">🔍</span>
+    </div>
+    <div class="navAct">
+      <button class="iconBtn" id="themeBtn" title="Theme" aria-label="Toggle theme">🌙</button>
+      <button class="iconBtn" id="menuBtn" title="Menu" aria-label="Open menu">⋮</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="heroBadge">
+    <span class="pulse"></span>
+    <span id="heroLive">Live • Loading...</span>
+  </div>
+  <h1>Download <span class="g">Premium Mods</span><br>& APKs — Free</h1>
+  <p>Hand-picked, virus-scanned, and always up-to-date. Built with ❤️ — free &amp; open for everyone.</p>
+  <div class="heroCTA">
+    <button class="btn primary" data-act="scroll-apps">⬇️ Browse Apps</button>
+    <button class="btn ghost" data-act="contact">💬 Request App</button>
+  </div>
+</section>
+
+<section class="stats">
+  <div class="stat glass gloss"><div class="n" id="stApps">0</div><div class="l">Total Apps</div></div>
+  <div class="stat glass gloss"><div class="n" id="stDl">0</div><div class="l">Downloads</div></div>
+  <div class="stat glass gloss"><div class="n" id="stCat">0</div><div class="l">Categories</div></div>
+  <div class="stat glass gloss"><div class="n" id="stRate">0.0</div><div class="l">Avg Rating</div></div>
+</section>
+
+<section class="section">
+  <div class="chips" id="chipsRow">
+    <button class="chip on" data-cat="all">All Apps</button>
+    <button class="chip" data-cat="Games">🎮 Games</button>
+    <button class="chip" data-cat="Tools">🛠 Tools</button>
+    <button class="chip" data-cat="Social">💬 Social</button>
+    <button class="chip" data-cat="Photo">📷 Photo</button>
+    <button class="chip" data-cat="Video">🎬 Video</button>
+    <button class="chip" data-cat="Music">🎵 Music</button>
+    <button class="chip" data-cat="Productivity">📊 Productivity</button>
+    <button class="chip" data-cat="Security">🔒 Security</button>
+    <button class="chip" data-cat="Mod">⚡ Mods</button>
+  </div>
+</section>
+
+<section class="section hidden" id="featSection">
+  <div class="secHead"><h2>⭐ Featured</h2></div>
+  <div class="grid" id="featGrid"></div>
+</section>
+
+<section class="section" id="appsSection">
+  <div class="secHead">
+    <h2 id="appsTitle">All Apps</h2>
+    <select class="chip" id="sortSel" style="padding:9px 14px;cursor:pointer;font-family:inherit">
+      <option value="new">Newest First</option>
+      <option value="pop">Most Downloaded</option>
+      <option value="rate">Top Rated</option>
+      <option value="name">A → Z</option>
+      <option value="size">Smallest Size</option>
+    </select>
+  </div>
+  <div class="grid" id="appsGrid"></div>
+  <div class="empty hidden" id="emptyBox">
+    <div class="e">📦</div>
+    <p>No apps found. Ask admin to upload.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footIn">
+    <div class="logo" style="justify-content:center;margin-bottom:14px">
+      <div class="logoMark">H</div>
+      <div><span class="logoTxt">HARIOM MODDER</span></div>
+    </div>
+    <div class="socials" id="socials">
+      <a href="#" title="Telegram" data-s="tg" target="_blank" rel="noopener noreferrer">✈️</a>
+      <a href="#" title="WhatsApp" data-s="wa" target="_blank" rel="noopener noreferrer">💬</a>
+      <a href="#" title="YouTube" data-s="yt" target="_blank" rel="noopener noreferrer">▶️</a>
+      <a href="#" title="Instagram" data-s="ig" target="_blank" rel="noopener noreferrer">📷</a>
+    </div>
+    <div class="footTxt">
+      <span id="yr"></span> HARIOM MODDER — free &amp; open source • No copyright claimed<br>
+      Released under <b>The Unlicense / CC0</b> — copy, modify, share freely<br>
+      Apps are shared for educational purposes only • Made with <span style="color:#ef4444">❤</span> in India
+    </div>
+  </div>
+</footer>
+
+<button class="fab hide" id="topFab" data-act="top">↑</button>
+<div id="toastBox"></div>
+
+<div class="modal" id="detailModal" data-backdrop="detailModal">
+  <div class="modalBox">
+    <div class="modalHead"><h3>App Details</h3><button class="closeX" data-act="close" data-modal="detailModal">✕</button></div>
+    <div class="modalBody" id="detailBody"></div>
+  </div>
 </div>
-<div class="container" id="list"></div>
-<div id="dl-overlay"><div id="dl-box">
-  <img id="dl-icon" src=""><h3 id="dl-name" style="margin:10px 0 4px"></h3><p id="dl-meta" style="font-size:12px;color:#888"></p>
-  <div id="dl-bar"><div id="dl-fill"></div></div>
-  <div style="display:flex;justify-content:space-between;font-size:12px"><span id="dl-speed">0 MB/s</span><span id="dl-percent">0%</span></div>
-  <p id="dl-status" style="font-size:11px;color:#00ff88;margin-top:10px">Connecting...</p>
-  <button class="btn" style="background:#222;color:#fff" onclick="closeDl()">Cancel</button>
-</div></div>
+
+<div class="modal" id="dlModal">
+  <div class="modalBox" style="max-width:420px">
+    <div class="modalHead">
+      <h3>⬇ Download</h3>
+      <button class="closeX" data-act="cancel-dl">✕</button>
+    </div>
+    <div class="modalBody">
+      <div style="text-align:center;margin-bottom:18px">
+        <div id="dlAppIconWrap"></div>
+        <div id="dlAppName" style="font-weight:800;font-size:17px;word-break:break-word">App Name</div>
+        <div id="dlAppVer" style="color:var(--txt3);font-size:12.5px;font-family:'JetBrains Mono',monospace;margin-top:3px">v1.0</div>
+      </div>
+
+      <div style="background:var(--glass2);border:1px solid var(--border);border-radius:14px;padding:16px">
+        <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;margin-bottom:10px;gap:8px">
+          <span id="dlStatus" style="color:var(--txt2);font-weight:600">Preparing...</span>
+          <span id="dlPct" style="font-weight:800;color:var(--p2);font-family:'JetBrains Mono',monospace;font-size:14px">0%</span>
+        </div>
+
+        <div style="height:10px;background:var(--bg);border-radius:6px;overflow:hidden;position:relative">
+          <div id="dlBar" class="dlBar"></div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;font-size:11.5px;color:var(--txt3);margin-top:9px;font-family:'JetBrains Mono',monospace;gap:8px">
+          <span id="dlBytes">0 B / 0 B</span>
+          <span id="dlSpeed">—</span>
+        </div>
+      </div>
+
+      <div id="dlNote" style="font-size:12.5px;color:var(--txt3);text-align:center;margin-top:14px;line-height:1.5">
+        ⏳ Preparing download...<br>File will be saved by your browser
+      </div>
+
+      <button class="btn ghost" style="width:100%;justify-content:center;margin-top:16px" data-act="cancel-dl">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="contactModal" data-backdrop="contactModal">
+  <div class="modalBox">
+    <div class="modalHead"><h3>💬 App Request</h3><button class="closeX" data-act="close" data-modal="contactModal">✕</button></div>
+    <div class="modalBody">
+      <div class="notice">Tell us which app you want — we'll try to upload it.</div>
+      <div class="field"><label>App Name *</label><input id="reqName" placeholder="e.g. Spotify Mod" maxlength="80" autocomplete="off"></div>
+      <div class="field"><label>Your Contact (optional)</label><input id="reqContact" placeholder="Telegram / Email" maxlength="80" autocomplete="off"></div>
+      <div class="field"><label>Message</label><textarea id="reqMsg" placeholder="What do you need..." maxlength="500"></textarea></div>
+      <button class="btn primary" style="width:100%;justify-content:center" data-act="send-req">📤 Send Request</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="menuModal" data-backdrop="menuModal">
+  <div class="modalBox" style="max-width:380px">
+    <div class="modalHead"><h3>Menu</h3><button class="closeX" data-act="close" data-modal="menuModal">✕</button></div>
+    <div class="modalBody" style="display:flex;flex-direction:column;gap:8px">
+      <button class="btn ghost" style="justify-content:flex-start" data-act="contact">💬 Request App</button>
+      <button class="btn ghost" style="justify-content:flex-start" data-act="toggle-theme">🌗 Toggle Theme</button>
+      <button class="btn ghost" style="justify-content:flex-start" data-act="share-site">🔗 Share Website</button>
+      <button class="btn ghost" style="justify-content:flex-start;color:var(--p2)" data-act="open-admin">🔐 Admin Login</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="loginModal" data-backdrop="loginModal">
+  <div class="modalBox" style="max-width:420px">
+    <div class="modalHead"><h3>🔐 Admin Login</h3><button class="closeX" data-act="close" data-modal="loginModal">✕</button></div>
+    <div class="modalBody">
+      <div class="field"><label>Email</label><input type="email" id="logEmail" placeholder="admin@example.com" maxlength="120" autocomplete="username"></div>
+      <div class="field"><label>Password</label><input type="password" id="logPass" placeholder="••••••••" maxlength="128" autocomplete="current-password"></div>
+      <button class="btn primary" style="width:100%;justify-content:center" id="logBtn" data-act="do-login">Login</button>
+      <div id="logErr" style="margin-top:14px"></div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="adminModal" data-backdrop="adminModal">
+  <div class="modalBox" style="max-width:720px">
+    <div class="modalHead">
+      <h3>⚙️ Admin Panel</h3>
+      <div style="display:flex;gap:8px">
+        <button class="closeX" data-act="logout" title="Logout">⎋</button>
+        <button class="closeX" data-act="close" data-modal="adminModal">✕</button>
+      </div>
+    </div>
+    <div class="adminTabs">
+      <button class="adminTab on" data-tab="upload">⬆️ Upload</button>
+      <button class="adminTab" data-tab="manage">📦 Manage</button>
+      <button class="adminTab" data-tab="settings">⚙️ Site</button>
+      <button class="adminTab" data-tab="data">💾 Data</button>
+    </div>
+
+    <div class="adminPane on" data-pane="upload">
+      <div class="notice ok">💡 <b>Google Drive Method:</b><br>1. Upload APK to Drive<br>2. Right-click → Share → "Anyone with the link" → Copy<br>3. Paste below</div>
+      <div class="field"><label>App Name *</label><input id="upName" placeholder="e.g. Spotify Premium Mod" maxlength="80" autocomplete="off"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div class="field"><label>Version *</label><input id="upVer" placeholder="e.g. 8.9.1" maxlength="24" autocomplete="off"></div>
+        <div class="field"><label>Category *</label>
+          <select id="upCat">
+            <option>Games</option><option>Tools</option><option>Social</option>
+            <option>Photo</option><option>Video</option><option>Music</option>
+            <option>Productivity</option><option>Security</option><option>Mod</option>
+          </select>
+        </div>
+      </div>
+      <div class="field"><label>Description</label><textarea id="upDesc" placeholder="Features, mod info..." maxlength="1200"></textarea></div>
+      <div class="field"><label>APK File Size (MB) *</label><input type="number" id="upSize" placeholder="e.g. 45" step="0.1" min="0" max="5000"></div>
+      <div class="field">
+        <label>📦 APK — Drive Link *</label>
+        <input id="upApkLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view" maxlength="400" autocomplete="off">
+        <div id="apkLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
+      </div>
+      <div class="field">
+        <label>🖼 App Icon — Drive Link (optional)</label>
+        <input id="upIconLink" placeholder="https://drive.google.com/file/d/XXXXXXX/view" maxlength="400" autocomplete="off">
+        <div id="iconLinkStatus" style="font-size:12px;color:var(--txt3);margin-top:6px"></div>
+      </div>
+      <div class="field"><label>Featured</label>
+        <select id="upFeat"><option value="no">No</option><option value="yes">Yes ⭐</option></select>
+      </div>
+      <button class="btn primary" style="width:100%;justify-content:center;margin-top:14px" id="upBtn" data-act="upload-app">🚀 Save App</button>
+    </div>
+
+    <div class="adminPane" data-pane="manage">
+      <div class="statsRow">
+        <div class="statMini"><div class="v" id="mApps">0</div><div class="k">Apps</div></div>
+        <div class="statMini"><div class="v" id="mDl">0</div><div class="k">Downloads</div></div>
+        <div class="statMini"><div class="v" id="mFeat">0</div><div class="k">Featured</div></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:12px">
+        <input type="text" id="admSearch" placeholder="Search..." maxlength="60" style="flex:1;background:var(--glass2);border:1px solid var(--border);border-radius:12px;padding:11px 14px;color:var(--txt);font-family:inherit;font-size:14px;outline:none">
+        <button class="miniBtn" data-act="delete-all" title="Delete ALL" style="width:44px;height:44px;font-size:16px">🗑</button>
+      </div>
+      <div class="adminList" id="admList"></div>
+    </div>
+
+    <div class="adminPane" data-pane="settings">
+      <div class="field"><label>Site Title</label><input id="setTitle" placeholder="HARIOM MODDER" maxlength="40"></div>
+      <div class="field"><label>Tagline</label><input id="setTag" placeholder="Premium APK Hub" maxlength="80"></div>
+      <div class="field"><label>Telegram</label><input id="setTg" placeholder="https://t.me/..." maxlength="200"></div>
+      <div class="field"><label>WhatsApp</label><input id="setWa" placeholder="https://wa.me/..." maxlength="200"></div>
+      <div class="field"><label>YouTube</label><input id="setYt" placeholder="https://youtube.com/..." maxlength="200"></div>
+      <button class="btn primary" style="width:100%;justify-content:center" data-act="save-settings">💾 Save Settings</button>
+    </div>
+
+    <div class="adminPane" data-pane="data">
+      <div class="notice">Backup ke liye export/import kar sakte ho.</div>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <button class="btn ghost" data-act="export">📥 Export JSON</button>
+        <button class="btn ghost" data-act="import-trigger">📤 Import JSON</button>
+        <input type="file" id="importFile" accept=".json,application/json" class="hidden">
+        <button class="btn ghost" style="color:#f87171" data-act="delete-all">🗑 Delete All Apps</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-analytics.js";
+/* =====================================================================
+   HARIOM MODDER — Hardened Edition
+   ---------------------------------------------------------------------
+   SECURITY NOTES (important — read before going live):
+   1. Client-side checks are NOT security. Lock down Firestore rules:
+      https://console.firebase.google.com → Firestore → Rules
+      Example (paste & adapt):
+      ---------------------------------------------------------------
+      rules_version = '2';
+      service cloud.firestore {
+        match /databases/{database}/documents {
+          match /apps/{id} {
+            allow read: if true;
+            allow write: if request.auth != null;
+          }
+          match /requests/{id} {
+            allow create: if true;
+            allow read, update, delete: if request.auth != null;
+          }
+          match /settings/{id} {
+            allow read: if true;
+            allow write: if request.auth != null;
+          }
+        }
+      }
+      ---------------------------------------------------------------
+   2. In Firebase Console → Authentication → Users, create ONE admin
+      user. Turn OFF "Enable create (sign-up)" so nobody can register.
+   3. Set ADMIN_EMAILS below to that admin's email for an extra
+      client-side guard (belt & braces).
+   4. All user text is HTML-escaped; inline on* handlers were removed
+      to prevent XSS.
+   ===================================================================== */
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, doc, addDoc, getDoc, deleteDoc, updateDoc,
+         onSnapshot, query, serverTimestamp, increment, writeBatch, setDoc }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* ───────── CONFIG ───────── */
 const firebaseConfig = {
   apiKey: "AIzaSyDqVPnKIwuJzJVOaGqTzD4IIFysVpJ6g4Y",
   authDomain: "website-hariom.firebaseapp.com",
@@ -71,26 +537,969 @@ const firebaseConfig = {
   appId: "1:602644625906:web:7db11a4e6eb16beeb7536b",
   measurementId: "G-CEPT6GQZQS"
 };
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getDatabase(app);
-const appsRef = ref(db, 'apps');
-let appsData = {}; let isAdmin = localStorage.getItem('hm_admin')==='1'; let tap=0;
-document.getElementById('logoTap').addEventListener('click',()=>{tap++;setTimeout(()=>tap=0,2000);if(tap>=5){if(isAdmin)toggleAdmin(true);else{let p=prompt("Admin Password:");if(p==="HARIOM123"){localStorage.setItem('hm_admin','1');isAdmin=true;toggleAdmin(true);}}tap=0;}});
-function toggleAdmin(s){const bar=document.getElementById('adminBar');if(s)bar.classList.add('active');else bar.classList.toggle('active');document.getElementById('badge').style.display=isAdmin?'inline':'none';}
-window.logoutAdmin=()=>{localStorage.removeItem('hm_admin');isAdmin=false;document.getElementById('adminBar').classList.remove('active');document.getElementById('badge').style.display='none';render();};
-function getDirect(link){if(link.includes("drive.google.com")){const m=link.match(/\/d\/([^/]+)/)||link.match(/id=([^&]+)/);if(m)return`https://drive.google.com/uc?export=download&id=${m[1]}`;}return link;}
-onValue(appsRef,(snap)=>{appsData=snap.val()||{};render();});
-function render(filter=""){const el=document.getElementById('list');const entries=Object.entries(appsData);if(entries.length===0){el.innerHTML="<p style='grid-column:1/-1;text-align:center;color:#666;margin-top:50px'>No Apps Yet</p>";return;}el.innerHTML="";entries.reverse().forEach(([key,a])=>{if(!a.name.toLowerCase().includes(filter.toLowerCase()))return;el.innerHTML+=`<div class="card"><div class="three" onclick="window.openMenu('${key}')">⋮<div class="menu" id="menu-${key}"><button onclick="window.shareApp('${a.name}','${a.drive}')">Share</button>${isAdmin?`<button onclick="window.deleteApp('${key}')" style="color:#ff5555">Delete</button>`:``}</div></div><img src="${a.icon}"><h3>${a.name}</h3><div class="meta">${a.version} • ${a.size}</div><div class="dl" onclick="window.startDownload('${key}')">DOWNLOAD</div></div>`;});}
-window.openMenu=(k)=>{document.querySelectorAll('.menu').forEach(m=>{if(m.id!==`menu-${k}`)m.classList.remove('show');});document.getElementById(`menu-${k}`).classList.toggle('show');}
-window.deleteApp=(k)=>{if(confirm("Delete?"))remove(ref(db,'apps/'+k));}
-window.shareApp=(n,l)=>{navigator.clipboard.writeText(l);alert("Link Copied");}
-let dlInterval=null;
-window.startDownload=(key)=>{const a=appsData[key];const overlay=document.getElementById('dl-overlay');document.getElementById('dl-icon').src=a.icon;document.getElementById('dl-name').innerText=a.name;document.getElementById('dl-meta').innerText=a.version+" • "+a.size;document.getElementById('dl-fill').style.width="0%";overlay.style.display="flex";let p=0;clearInterval(dlInterval);dlInterval=setInterval(()=>{p+=Math.random()*12+2;if(p>=100){p=100;clearInterval(dlInterval);document.getElementById('dl-fill').style.width="100%";document.getElementById('dl-percent').innerText="100%";setTimeout(()=>{closeDl();window.open(getDirect(a.drive),"_blank");},500);return;}document.getElementById('dl-fill').style.width=p+"%";document.getElementById('dl-percent').innerText=Math.floor(p)+"%";document.getElementById('dl-speed').innerText=(Math.random()*3+1).toFixed(1)+" MB/s";},200);}
-window.closeDl=()=>{document.getElementById('dl-overlay').style.display="none";clearInterval(dlInterval);}
-document.getElementById('search').addEventListener('input',e=>render(e.target.value));
-document.getElementById('addBtn').addEventListener('click',()=>{const obj={name:document.getElementById('a_name').value.trim(),version:document.getElementById('a_ver').value.trim()||"v1.0",size:document.getElementById('a_size').value.trim()||"100 MB",icon:document.getElementById('a_icon').value.trim()||"https://cdn-icons-png.flaticon.com/512/888/888879.png",drive:document.getElementById('a_drive').value.trim(),time:Date.now()};if(!obj.name||!obj.drive)return alert("Name + Drive zaruri");push(appsRef,obj).then(()=>{alert("Uploaded!");document.getElementById('a_name').value="";document.getElementById('a_drive').value="";});});
-if(isAdmin)toggleAdmin(true);
+
+/* Optional extra guard — put your admin email(s) here.
+   Leave empty [] to allow any authenticated user. */
+const ADMIN_EMAILS = [];
+
+/* ───────── INIT ───────── */
+let app = null, auth = null, db = null;
+try {
+  app  = initializeApp(firebaseConfig);
+  auth = getAuth(app);
+  db   = getFirestore(app);
+} catch (e) { console.error('Firebase init failed:', e); }
+
+/* ───────── STATE ───────── */
+let APPS = [];
+let siteCfg = {};
+let currentCat = 'all';
+let currentSort = 'new';
+let searchQ = '';
+let isAdmin = false;
+let dlController = null;
+let dlStartTime = 0;
+let renderQueued = false;
+
+/* ───────── HELPERS ───────── */
+const $ = id => document.getElementById(id);
+
+function esc(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => (
+    {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]
+  ));
+}
+const escAttr = esc; // same rules apply inside quoted attributes
+
+function isHttps(url){
+  try { const u = new URL(url); return u.protocol === 'https:'; }
+  catch { return false; }
+}
+
+function clampStr(s, n){
+  s = String(s ?? '').trim();
+  return s.length > n ? s.slice(0, n) : s;
+}
+
+function fmtSize(b){
+  b = Number(b) || 0;
+  if (b <= 0) return '0 B';
+  const u = ['B','KB','MB','GB'];
+  const i = Math.min(Math.floor(Math.log(b)/Math.log(1024)), u.length-1);
+  return (b/Math.pow(1024,i)).toFixed(i ? 1 : 0) + ' ' + u[i];
+}
+function fmtNum(n){
+  n = Number(n) || 0;
+  if (n >= 1e9) return (n/1e9).toFixed(1)+'B';
+  if (n >= 1e6) return (n/1e6).toFixed(1)+'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1)+'K';
+  return String(n);
+}
+function timeAgo(ts){
+  if (!ts) return 'just now';
+  let d;
+  try { d = ts.toDate ? ts.toDate() : new Date(ts); } catch { return 'recently'; }
+  const s = (Date.now() - d.getTime()) / 1000;
+  if (!isFinite(s) || s < 0) return 'just now';
+  if (s < 60) return 'just now';
+  if (s < 3600) return Math.floor(s/60) + 'm ago';
+  if (s < 86400) return Math.floor(s/3600) + 'h ago';
+  if (s < 2592000) return Math.floor(s/86400) + 'd ago';
+  return d.toLocaleDateString();
+}
+
+/* ───────── TOAST ───────── */
+function toast(msg, type='info', ms=2800){
+  const box = $('toastBox');
+  if (!box) return;
+  const icons = { ok:'✓', err:'✕', info:'ℹ', warn:'⚠' };
+  const el = document.createElement('div');
+  el.className = 'toast ' + type;
+  const ico = document.createElement('span');
+  ico.className = 'tIco';
+  ico.textContent = icons[type] || 'ℹ';
+  const txt = document.createElement('span');
+  txt.textContent = String(msg);           // safe — no HTML
+  el.append(ico, txt);
+  box.appendChild(el);
+  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 300); }, ms);
+}
+
+/* ───────── SAFE ICON BUILDER (no inline onerror injection) ───────── */
+function iconHTML(app, sizeClass){
+  const name = String(app?.name || '?');
+  const letter = (name.trim().charAt(0) || '?').toUpperCase();
+  const url = (app?.iconUrl && isHttps(app.iconUrl)) ? app.iconUrl : '';
+  // onerror removes the <img> so the ::before letter shows through
+  const img = url
+    ? `<img src="${escAttr(url)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.remove()">`
+    : '';
+  return `<div class="ic ${sizeClass}" data-l="${escAttr(letter)}" aria-hidden="true">${img}</div>`;
+}
+
+/* ───────── DRIVE HELPERS ───────── */
+function driveId(url){
+  if (!url) return '';
+  const s = String(url);
+  let m = s.match(/\/file\/d\/([A-Za-z0-9_-]{20,})/);
+  if (m) return m[1];
+  m = s.match(/[?&]id=([A-Za-z0-9_-]{20,})/);
+  if (m) return m[1];
+  m = s.match(/\/d\/([A-Za-z0-9_-]{20,})/);
+  if (m) return m[1];
+  return '';
+}
+function driveDirect(url){
+  const id = driveId(url);
+  return id ? `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t` : '';
+}
+function drivePreview(url){
+  const id = driveId(url);
+  return id ? `https://lh3.googleusercontent.com/d/${id}=w400` : '';
+}
+
+/* ───────── THEME ───────── */
+const savedTheme = localStorage.getItem('hm_theme') === 'light' ? 'light' : 'dark';
+document.documentElement.setAttribute('data-theme', savedTheme);
+function toggleTheme(){
+  const cur = document.documentElement.getAttribute('data-theme');
+  const next = cur === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', next);
+  try { localStorage.setItem('hm_theme', next); } catch {}
+  const btn = $('themeBtn');
+  if (btn) btn.textContent = next === 'dark' ? '🌙' : '☀️';
+  toast(next === 'dark' ? '🌙 Dark mode' : '☀️ Light mode', 'info', 1400);
+}
+
+/* ───────── MODALS ───────── */
+function openModal(id){
+  const el = $(id);
+  if (!el) return;
+  el.classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal(id){
+  const el = $(id);
+  if (!el) return;
+  el.classList.remove('on');
+  if (!document.querySelector('.modal.on')) document.body.style.overflow = '';
+}
+
+/* ───────── AUTH ───────── */
+function isAllowedAdmin(user){
+  if (!user) return false;
+  if (!ADMIN_EMAILS.length) return true;   // permissive mode
+  const em = String(user.email || '').toLowerCase();
+  return ADMIN_EMAILS.map(x => x.toLowerCase()).includes(em);
+}
+
+async function doLogin(){
+  if (!auth) { toast('Firebase not ready', 'err'); return; }
+  const email = clampStr($('logEmail').value, 120);
+  const pass  = String($('logPass').value || '');
+  const err   = $('logErr');
+  const btn   = $('logBtn');
+
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || pass.length < 6){
+    err.innerHTML = '<div class="notice err">Enter a valid email and password (min 6 chars).</div>';
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = 'Logging in...';
+  err.innerHTML = '';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+    $('logPass').value = '';
+  } catch (e) {
+    const safeMsg = esc(String(e?.code || e?.message || 'Login failed'));
+    err.innerHTML = `<div class="notice err">${safeMsg}</div>`;
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Login';
+  }
+}
+
+async function doLogout(){
+  try { await signOut(auth); } catch {}
+  closeModal('adminModal');
+  toast('Logged out', 'info');
+}
+
+/* ───────── FIRESTORE LISTENER ───────── */
+function loadApps(){
+  if (!db) { showEmpty(); return; }
+  const q = query(collection(db, 'apps'));
+  onSnapshot(q, snap => {
+    APPS = [];
+    snap.forEach(d => APPS.push({ id: d.id, ...d.data() }));
+    renderAll();
+    updateStats();
+    if (isAdmin) renderAdminList();
+  }, err => {
+    console.error('Snapshot error:', err);
+    showEmpty();
+  });
+}
+
+function showEmpty(){
+  const g = $('appsGrid'); if (g) g.innerHTML = '';
+  $('emptyBox')?.classList.remove('hidden');
+}
+
+/* ───────── RENDER ───────── */
+function filtered(){
+  let list = APPS.filter(a => {
+    if (currentCat !== 'all' && a.category !== currentCat) return false;
+    if (searchQ){
+      const s = searchQ.toLowerCase();
+      const hay = String(a.name||'') + ' ' + String(a.desc||'') + ' ' + String(a.category||'');
+      if (!hay.toLowerCase().includes(s)) return false;
+    }
+    return true;
+  });
+  const s = currentSort;
+  list.sort((a, b) => {
+    if (s === 'new')  return (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0);
+    if (s === 'pop')  return (b.downloads || 0) - (a.downloads || 0);
+    if (s === 'rate') return (b.rating || 0) - (a.rating || 0);
+    if (s === 'name') return String(a.name||'').localeCompare(String(b.name||''));
+    if (s === 'size') return (a.size || 0) - (b.size || 0);
+    return 0;
+  });
+  return list;
+}
+
+function cardHTML(a){
+  const id    = escAttr(a.id);
+  const name  = esc(a.name || 'Untitled');
+  const ver   = esc(a.version || '1.0');
+  const cat   = esc(a.category || 'App');
+  const desc  = esc(a.desc || 'No description');
+  const stars = a.rating ? `<span class="starF">★</span> ${Number(a.rating).toFixed(1)}` : `<span>☆ New</span>`;
+  return `
+    <div class="card glass gloss" data-app-id="${id}" role="button" tabindex="0">
+      ${a.featured ? '<span class="badgeFeat">⭐ FEATURED</span>' : ''}
+      <div class="top">
+        ${iconHTML(a, 'card-ic')}
+        <div class="meta">
+          <div class="name">${name}</div>
+          <div class="ver">v${ver}</div>
+          <span class="cat">${cat}</span>
+        </div>
+      </div>
+      <div class="desc">${desc}</div>
+      <div class="foot">
+        <div class="stats2">
+          <span>⬇ ${fmtNum(a.downloads || 0)}</span>
+          <span>${stars}</span>
+        </div>
+        <span style="font-size:11px;color:var(--txt3);font-family:monospace">${fmtSize(a.size)}</span>
+      </div>
+    </div>`;
+}
+
+function renderAll(){
+  if (renderQueued) return;
+  renderQueued = true;
+  requestAnimationFrame(() => {
+    renderQueued = false;
+    const list = filtered();
+    const grid = $('appsGrid');
+    const feat = $('featGrid');
+    const featSec = $('featSection');
+
+    if (!list.length){
+      if (grid) grid.innerHTML = '';
+      $('emptyBox')?.classList.remove('hidden');
+    } else {
+      $('emptyBox')?.classList.add('hidden');
+      if (grid) grid.innerHTML = list.map(cardHTML).join('');
+    }
+
+    const featured = list.filter(a => a.featured);
+    if (featured.length && currentCat === 'all' && !searchQ){
+      featSec?.classList.remove('hidden');
+      if (feat) feat.innerHTML = featured.slice(0, 4).map(cardHTML).join('');
+    } else {
+      featSec?.classList.add('hidden');
+    }
+  });
+}
+
+function updateStats(){
+  const totalDl = APPS.reduce((s, a) => s + (a.downloads || 0), 0);
+  const cats = new Set(APPS.map(a => a.category).filter(Boolean));
+  const rated = APPS.filter(a => a.rating);
+  const avg = rated.length ? rated.reduce((s, a) => s + a.rating, 0) / rated.length : 0;
+
+  $('stApps').textContent = fmtNum(APPS.length);
+  $('stDl').textContent   = fmtNum(totalDl);
+  $('stCat').textContent  = cats.size || 0;
+  $('stRate').textContent = avg ? avg.toFixed(1) : '0.0';
+  $('heroLive').textContent = `${APPS.length} apps • ${fmtNum(totalDl)} downloads`;
+}
+
+/* ───────── DETAIL MODAL ───────── */
+function openDetail(id){
+  const a = APPS.find(x => x.id === id);
+  if (!a) return;
+  const stars = a.rating ? `${Number(a.rating).toFixed(1)} ★` : 'New';
+  const safeId = escAttr(a.id);
+
+  $('detailBody').innerHTML = `
+    <div class="detailHead">
+      ${iconHTML(a, 'detail-ic')}
+      <div style="flex:1;min-width:0">
+        <div class="nm">${esc(a.name || 'Untitled')}</div>
+        <div class="vr">v${esc(a.version || '1.0')} • ${fmtSize(a.size)}</div>
+        <span class="cat2">${esc(a.category || 'App')}</span>
+      </div>
+    </div>
+    <div class="metaGrid">
+      <div class="metaItem"><div class="v">${fmtNum(a.downloads || 0)}</div><div class="k">Downloads</div></div>
+      <div class="metaItem"><div class="v">${esc(stars)}</div><div class="k">Rating</div></div>
+      <div class="metaItem"><div class="v">${esc(timeAgo(a.createdAt))}</div><div class="k">Added</div></div>
+    </div>
+    <div class="descBox">${esc(a.desc || 'No description available.')}</div>
+    <button class="dlBtnBig" data-act="download" data-id="${safeId}">⬇ Download APK</button>
+    <div style="display:flex;gap:8px;margin-top:12px">
+      <button class="btn ghost" style="flex:1;justify-content:center" data-act="share" data-id="${safeId}">🔗 Share</button>
+      <button class="btn ghost" style="flex:1;justify-content:center" data-act="copy" data-id="${safeId}">📋 Copy Link</button>
+    </div>`;
+  openModal('detailModal');
+}
+
+/* ───────── DOWNLOAD ───────── */
+function resetDlModal(a){
+  const wrap = $('dlAppIconWrap');
+  if (wrap) wrap.innerHTML = iconHTML(a, 'dl-ic');
+
+  $('dlAppName').textContent = a.name || 'App';
+  $('dlAppVer').textContent  = `v${a.version || '1.0'} • ${fmtSize(a.size || 0)}`;
+
+  const bar = $('dlBar');
+  bar.style.width = '0%';
+  bar.className = 'dlBar';
+  $('dlPct').textContent = '0%';
+  $('dlPct').style.color = 'var(--p2)';
+  $('dlStatus').textContent = 'Preparing...';
+  $('dlStatus').style.color = 'var(--txt2)';
+  $('dlBytes').textContent = '0 B / ' + (a.size ? fmtSize(a.size) : '?');
+  $('dlSpeed').textContent = '—';
+  $('dlNote').innerHTML = '⏳ Preparing download...<br>File will be saved by your browser';
+  dlController = null;
+}
+
+async function downloadApp(id){
+  const a = APPS.find(x => x.id === id);
+  if (!a || !a.apkUrl) { toast('APK link missing', 'err'); return; }
+  if (!isHttps(a.apkUrl)) { toast('Unsafe APK link blocked', 'err'); return; }
+
+  closeModal('detailModal');
+  resetDlModal(a);
+  openModal('dlModal');
+
+  // Fire-and-forget download counter
+  try { await updateDoc(doc(db, 'apps', id), { downloads: increment(1) }); } catch {}
+
+  dlController = new AbortController();
+  dlStartTime = Date.now();
+
+  const bar    = $('dlBar');
+  const pct    = $('dlPct');
+  const status = $('dlStatus');
+  const bytes  = $('dlBytes');
+  const speed  = $('dlSpeed');
+  const note   = $('dlNote');
+
+  // Abort after 6s if the host blocks CORS (typical for Drive)
+  const timeoutId = setTimeout(() => {
+    try { dlController?.abort(); } catch {}
+  }, 6000);
+
+  // Fake creep-up so the bar feels alive during connection
+  let simP = 0;
+  const simInt = setInterval(() => {
+    if (simP < 85){
+      simP += 4;
+      const cur = parseFloat(bar.style.width) || 0;
+      if (cur < simP) bar.style.width = simP + '%';
+    }
+  }, 180);
+
+  let lastUI = 0;
+
+  try {
+    status.textContent = '🌐 Connecting...';
+    const res = await fetch(a.apkUrl, {
+      signal: dlController.signal,
+      mode: 'cors',
+      cache: 'no-store',
+      credentials: 'omit',
+      referrerPolicy: 'no-referrer'
+    });
+
+    clearTimeout(timeoutId);
+    clearInterval(simInt);
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    if (!res.body) throw new Error('No stream available');
+
+    const total = parseInt(res.headers.get('content-length') || '0', 10) || (a.size || 0);
+    const reader = res.body.getReader();
+    const chunks = [];
+    let received = 0;
+
+    status.textContent = '⬇ Downloading...';
+    bar.style.width = '0%';
+
+    while (true){
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      received += value.length;
+
+      const now = Date.now();
+      if (now - lastUI > 100 || (total && received >= total)){
+        lastUI = now;
+        const p = total ? Math.min(received / total * 100, 99.5) : 0;
+        bar.style.width = p + '%';
+        pct.textContent = Math.floor(p) + '%';
+        bytes.textContent = fmtSize(received) + ' / ' + (total ? fmtSize(total) : '?');
+        const elapsed = (now - dlStartTime) / 1000;
+        if (elapsed > 0.5) speed.textContent = fmtSize(received / elapsed) + '/s';
+      }
+    }
+
+    bar.style.width = '100%';
+    bar.classList.add('dlSuccess');
+    pct.textContent = '100%';
+    pct.style.color = 'var(--ok)';
+    status.textContent = '✅ Complete!';
+    status.style.color = 'var(--ok)';
+    note.textContent = '📁 Saving file...';
+
+    const blob = new Blob(chunks, { type: 'application/vnd.android.package-archive' });
+    const url  = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = String(a.name || 'app').replace(/[^\w\d\-]+/g, '_').slice(0, 60) +
+                    `_v${String(a.version || '1.0').replace(/[^\w.\-]/g, '')}.apk`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+
+    note.innerHTML = '✅ File saved to your <b>Downloads</b> folder.';
+    setTimeout(() => closeModal('dlModal'), 2200);
+
+  } catch (err) {
+    clearTimeout(timeoutId);
+    clearInterval(simInt);
+
+    // Fallback: open the Drive page in a new tab (Google blocks direct CORS)
+    status.textContent = '⚠️ Opening Drive...';
+    status.style.color = 'var(--warn)';
+    bar.style.width = '100%';
+    bar.classList.add('dlFail');
+    pct.textContent = '→';
+    pct.style.color = 'var(--warn)';
+    speed.textContent = 'redirect';
+    note.innerHTML = '📱 The Drive page will open — tap <b style="color:#fbbf24">"Download anyway"</b>' +
+                     '<br><span style="font-size:11px;opacity:.7">(Google Drive blocks direct downloads)</span>';
+
+    setTimeout(() => {
+      try {
+        const w = window.open(a.apkUrl, '_blank', 'noopener,noreferrer');
+        if (w) w.opener = null;
+      } catch {}
+      setTimeout(() => closeModal('dlModal'), 2200);
+    }, 800);
+  }
+}
+
+function cancelDownload(){
+  try { dlController?.abort(); } catch {}
+  dlController = null;
+  closeModal('dlModal');
+}
+
+/* ───────── SHARE / COPY ───────── */
+function appLink(id){ return location.origin + location.pathname + '#app=' + encodeURIComponent(id); }
+
+async function shareApp(id){
+  const a = APPS.find(x => x.id === id);
+  if (!a) return;
+  const url = appLink(id);
+  if (navigator.share){
+    try { await navigator.share({ title: a.name, text: `Download ${a.name} v${a.version}`, url }); }
+    catch {}
+  } else {
+    copyText(url);
+  }
+}
+
+async function copyText(t){
+  try {
+    await navigator.clipboard.writeText(t);
+    toast('📋 Copied', 'ok');
+  } catch {
+    // Fallback for old browsers
+    const ta = document.createElement('textarea');
+    ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand('copy'); toast('📋 Copied', 'ok'); }
+    catch { toast('Copy failed', 'err'); }
+    ta.remove();
+  }
+}
+
+function copyLink(id){ copyText(appLink(id)); }
+
+async function shareSite(){
+  if (navigator.share){
+    try { await navigator.share({ title: 'HARIOM MODDER', text: 'Free premium APKs', url: location.href }); }
+    catch {}
+  } else copyText(location.href);
+}
+
+/* ───────── CONTACT / REQUESTS ───────── */
+function openContact(){ openModal('contactModal'); }
+
+/* simple client-side rate limit: 1 request / 30s */
+const REQ_COOLDOWN_MS = 30_000;
+async function sendReq(){
+  const name = clampStr($('reqName').value, 80);
+  const contact = clampStr($('reqContact').value, 80);
+  const message = clampStr($('reqMsg').value, 500);
+
+  if (name.length < 2){ toast('Enter an app name', 'warn'); return; }
+
+  let last = 0;
+  try { last = Number(localStorage.getItem('hm_last_req') || 0); } catch {}
+  const now = Date.now();
+  if (now - last < REQ_COOLDOWN_MS){
+    const s = Math.ceil((REQ_COOLDOWN_MS - (now - last)) / 1000);
+    toast(`Please wait ${s}s before the next request`, 'warn');
+    return;
+  }
+
+  try {
+    await addDoc(collection(db, 'requests'), {
+      name, contact, message,
+      ua: navigator.userAgent.slice(0, 200),
+      createdAt: serverTimestamp()
+    });
+    try { localStorage.setItem('hm_last_req', String(now)); } catch {}
+    toast('✅ Request sent!', 'ok');
+    closeModal('contactModal');
+    $('reqName').value = $('reqContact').value = $('reqMsg').value = '';
+  } catch (e) {
+    toast('Failed to send request', 'err');
+  }
+}
+
+/* ───────── LINK VALIDATION UI ───────── */
+document.addEventListener('input', e => {
+  if (e.target.id === 'upApkLink'){
+    const v = e.target.value.trim();
+    const el = $('apkLinkStatus');
+    if (!v){ el.textContent = ''; return; }
+    const ok = !!driveId(v);
+    el.innerHTML = ok
+      ? '<span style="color:#10b981">✅ Valid Drive link</span>'
+      : '<span style="color:#ef4444">❌ Invalid Drive link</span>';
+  }
+  if (e.target.id === 'upIconLink'){
+    const v = e.target.value.trim();
+    const el = $('iconLinkStatus');
+    if (!v){ el.textContent = ''; return; }
+    const ok = !!driveId(v);
+    el.innerHTML = ok
+      ? '<span style="color:#10b981">✅ Valid Drive link</span>'
+      : '<span style="color:#ef4444">❌ Invalid Drive link</span>';
+  }
+});
+
+/* ───────── UPLOAD ───────── */
+async function uploadApp(){
+  if (!db || !auth?.currentUser){ toast('Admin login required', 'err'); return; }
+
+  const name    = clampStr($('upName').value, 80);
+  const version = clampStr($('upVer').value, 24);
+  const cat     = $('upCat').value;
+  const desc    = clampStr($('upDesc').value, 1200);
+  const feat    = $('upFeat').value === 'yes';
+  const sizeMB  = parseFloat($('upSize').value) || 0;
+  const apkLink = clampStr($('upApkLink').value, 400);
+  const iconLink = clampStr($('upIconLink').value, 400);
+
+  if (name.length < 2)   { toast('Name is required', 'warn'); return; }
+  if (version.length < 1){ toast('Version is required', 'warn'); return; }
+  if (!driveId(apkLink)) { toast('Invalid APK Drive link', 'err'); return; }
+  if (!(sizeMB > 0) || sizeMB > 5000){ toast('Enter a valid file size (0–5000 MB)', 'warn'); return; }
+
+  const apkUrl  = driveDirect(apkLink);
+  const iconUrl = iconLink && driveId(iconLink) ? drivePreview(iconLink) : '';
+
+  const btn = $('upBtn');
+  btn.disabled = true;
+  btn.textContent = 'Saving...';
+
+  try {
+    const savePromise = addDoc(collection(db, 'apps'), {
+      name, version,
+      category: cat,
+      desc,
+      featured: feat,
+      iconUrl, apkUrl, apkLink,
+      size: Math.round(sizeMB * 1024 * 1024),
+      downloads: 0,
+      rating: 0,
+      ratingCount: 0,
+      createdAt: serverTimestamp()
+    });
+    const timeoutPromise = new Promise((_, rej) =>
+      setTimeout(() => rej(new Error('Timeout — check Firestore rules and connection')), 12000)
+    );
+    await Promise.race([savePromise, timeoutPromise]);
+
+    toast('🚀 App saved!', 'ok', 3000);
+    ['upName','upVer','upDesc','upSize','upApkLink','upIconLink']
+      .forEach(id => { $(id).value = ''; });
+    $('apkLinkStatus').textContent = '';
+    $('iconLinkStatus').textContent = '';
+  } catch (e) {
+    console.error(e);
+    toast('❌ ' + (e?.message || 'Upload failed'), 'err', 6000);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 Save App';
+  }
+}
+
+/* ───────── ADMIN LIST ───────── */
+function loadAdminData(){
+  renderAdminList();
+  loadSettings();
+}
+
+function renderAdminList(){
+  const list = $('admList');
+  if (!list) return;
+  const q = String($('admSearch')?.value || '').toLowerCase().slice(0, 60);
+  const arr = APPS.filter(a => !q || String(a.name || '').toLowerCase().includes(q));
+
+  if (!arr.length){
+    list.innerHTML = '<div style="text-align:center;padding:30px;color:var(--txt3)">No apps</div>';
+  } else {
+    list.innerHTML = arr.map(a => {
+      const id = escAttr(a.id);
+      return `
+        <div class="aRow">
+          ${iconHTML(a, 'row-ic')}
+          <div class="info">
+            <div class="nm">${esc(a.name || 'Untitled')}</div>
+            <div class="sb">v${esc(a.version || '1.0')} • ${fmtNum(a.downloads || 0)} dl • ${fmtSize(a.size)}</div>
+          </div>
+          <button class="miniBtn" data-act="toggle-feat" data-id="${id}" title="Feature">${a.featured ? '⭐' : '☆'}</button>
+          <button class="miniBtn del" data-act="delete-app" data-id="${id}" title="Delete">🗑</button>
+        </div>`;
+    }).join('');
+  }
+
+  $('mApps').textContent = APPS.length;
+  $('mDl').textContent   = fmtNum(APPS.reduce((s, a) => s + (a.downloads || 0), 0));
+  $('mFeat').textContent = APPS.filter(a => a.featured).length;
+}
+
+async function deleteApp(id){
+  const a = APPS.find(x => x.id === id);
+  if (!a) return;
+  if (!confirm(`Delete "${a.name}"?`)) return;
+  try { await deleteDoc(doc(db, 'apps', id)); toast('🗑 Deleted', 'ok'); }
+  catch { toast('Delete failed', 'err'); }
+}
+
+async function toggleFeat(id){
+  const a = APPS.find(x => x.id === id);
+  if (!a) return;
+  try {
+    await updateDoc(doc(db, 'apps', id), { featured: !a.featured });
+    toast(a.featured ? 'Featured OFF' : '⭐ Featured ON', 'ok');
+  } catch { toast('Failed', 'err'); }
+}
+
+async function deleteAllApps(){
+  if (!APPS.length) { toast('Nothing to delete', 'warn'); return; }
+  if (!confirm(`Delete ALL ${APPS.length} apps?`)) return;
+  if (!confirm('Are you absolutely sure?')) return;
+  try {
+    // Firestore batches cap at 500 writes
+    for (let i = 0; i < APPS.length; i += 450){
+      const batch = writeBatch(db);
+      APPS.slice(i, i + 450).forEach(a => batch.delete(doc(db, 'apps', a.id)));
+      await batch.commit();
+    }
+    toast('💥 All apps deleted', 'ok');
+  } catch { toast('Delete failed', 'err'); }
+}
+
+/* ───────── SETTINGS ───────── */
+async function loadSettings(){
+  if (!db) return;
+  try {
+    const d = await getDoc(doc(db, 'settings', 'site'));
+    if (d.exists()){
+      siteCfg = d.data() || {};
+      $('setTitle').value = siteCfg.title || '';
+      $('setTag').value   = siteCfg.tagline || '';
+      $('setTg').value    = siteCfg.telegram || '';
+      $('setWa').value    = siteCfg.whatsapp || '';
+      $('setYt').value    = siteCfg.youtube || '';
+      applySettings();
+    }
+  } catch {}
+}
+
+function applySettings(){
+  const set = (sel, url) => {
+    const el = document.querySelector(sel);
+    if (!el) return;
+    if (url && isHttps(url)) { el.href = url; el.style.display = ''; }
+    else { el.removeAttribute('href'); }
+  };
+  set('[data-s="tg"]', siteCfg.telegram);
+  set('[data-s="wa"]', siteCfg.whatsapp);
+  set('[data-s="yt"]', siteCfg.youtube);
+}
+
+async function saveSettings(){
+  if (!db || !auth?.currentUser){ toast('Admin login required', 'err'); return; }
+  const clean = (v, n) => { v = clampStr(v, n); return isHttps(v) ? v : ''; };
+  try {
+    await setDoc(doc(db, 'settings', 'site'), {
+      title:    clampStr($('setTitle').value, 40),
+      tagline:  clampStr($('setTag').value, 80),
+      telegram: clean($('setTg').value, 200),
+      whatsapp: clean($('setWa').value, 200),
+      youtube:  clean($('setYt').value, 200),
+      updatedAt: serverTimestamp()
+    });
+    siteCfg = {
+      ...siteCfg,
+      title: $('setTitle').value, tagline: $('setTag').value,
+      telegram: $('setTg').value, whatsapp: $('setWa').value, youtube: $('setYt').value
+    };
+    applySettings();
+    toast('💾 Saved', 'ok');
+  } catch { toast('Save failed', 'err'); }
+}
+
+/* ───────── EXPORT / IMPORT ───────── */
+function exportData(){
+  const clean = APPS.map(a => ({
+    name: a.name, version: a.version, category: a.category,
+    desc: a.desc, featured: !!a.featured,
+    iconUrl: a.iconUrl, apkUrl: a.apkUrl, apkLink: a.apkLink,
+    size: a.size, downloads: a.downloads || 0,
+    rating: a.rating || 0, ratingCount: a.ratingCount || 0
+  }));
+  const blob = new Blob([JSON.stringify(clean, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `hariom_backup_${Date.now()}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  toast('📥 Exported', 'ok');
+}
+
+$('importFile').addEventListener('change', async e => {
+  const f = e.target.files?.[0];
+  e.target.value = '';
+  if (!f) return;
+  if (f.size > 5 * 1024 * 1024){ toast('File too large (max 5MB)', 'err'); return; }
+  try {
+    const txt = await f.text();
+    const raw = JSON.parse(txt);
+    if (!Array.isArray(raw)) throw new Error('Invalid format');
+
+    // Sanitize keys to avoid prototype pollution
+    const safeKeys = ['name','version','category','desc','featured','iconUrl','apkUrl','apkLink','size','downloads','rating','ratingCount'];
+    const arr = raw.slice(0, 500).map(o => {
+      const out = {};
+      if (o && typeof o === 'object'){
+        for (const k of safeKeys) if (k in o) out[k] = o[k];
+      }
+      return out;
+    }).filter(o => o.name && o.version && o.apkUrl && isHttps(o.apkUrl));
+
+    if (!arr.length){ toast('No valid apps found', 'warn'); return; }
+    if (!confirm(`Import ${arr.length} apps?`)) return;
+
+    for (let i = 0; i < arr.length; i += 450){
+      const batch = writeBatch(db);
+      arr.slice(i, i + 450).forEach(a => {
+        const ref = doc(collection(db, 'apps'));
+        batch.set(ref, {
+          name: clampStr(a.name, 80),
+          version: clampStr(a.version, 24),
+          category: clampStr(a.category || 'Mod', 24),
+          desc: clampStr(a.desc || '', 1200),
+          featured: !!a.featured,
+          iconUrl: a.iconUrl && isHttps(a.iconUrl) ? a.iconUrl : '',
+          apkUrl: a.apkUrl,
+          apkLink: a.apkLink || '',
+          size: Math.min(Math.max(Number(a.size) || 0, 0), 5 * 1024 * 1024 * 1024),
+          downloads: Math.max(Number(a.downloads) || 0, 0),
+          rating: 0, ratingCount: 0,
+          createdAt: serverTimestamp()
+        });
+      });
+      await batch.commit();
+    }
+    toast('📤 Imported successfully', 'ok');
+  } catch (err) {
+    toast('Import failed: ' + (err?.message || 'bad file'), 'err');
+  }
+});
+
+/* ───────── GLOBAL EVENT DELEGATION (no inline handlers) ───────── */
+document.addEventListener('click', e => {
+  // Backdrop close
+  const backdrop = e.target.closest('.modal[data-backdrop]');
+  if (backdrop && e.target === backdrop){
+    closeModal(backdrop.dataset.backdrop);
+    return;
+  }
+
+  // Action buttons
+  const actBtn = e.target.closest('[data-act]');
+  if (actBtn){
+    const act = actBtn.dataset.act;
+    const id  = actBtn.dataset.id;
+    switch (act){
+      case 'top':            window.scrollTo({ top: 0, behavior: 'smooth' }); break;
+      case 'scroll-apps':    $('appsSection').scrollIntoView({ behavior: 'smooth' }); break;
+      case 'contact':        closeModal('menuModal'); openContact(); break;
+      case 'toggle-theme':   closeModal('menuModal'); toggleTheme(); break;
+      case 'share-site':     closeModal('menuModal'); shareSite(); break;
+      case 'open-admin':     closeModal('menuModal'); isAdmin ? (openModal('adminModal'), loadAdminData()) : openModal('loginModal'); break;
+      case 'close':          closeModal(actBtn.dataset.modal); break;
+      case 'do-login':       doLogin(); break;
+      case 'logout':         doLogout(); break;
+      case 'send-req':       sendReq(); break;
+      case 'download':       downloadApp(id); break;
+      case 'share':          shareApp(id); break;
+      case 'copy':           copyLink(id); break;
+      case 'cancel-dl':      cancelDownload(); break;
+      case 'upload-app':     uploadApp(); break;
+      case 'delete-app':     deleteApp(id); break;
+      case 'toggle-feat':    toggleFeat(id); break;
+      case 'delete-all':     deleteAllApps(); break;
+      case 'save-settings':  saveSettings(); break;
+      case 'export':         exportData(); break;
+      case 'import-trigger': $('importFile').click(); break;
+    }
+    return;
+  }
+
+  // App cards
+  const card = e.target.closest('[data-app-id]');
+  if (card){ openDetail(card.dataset.appId); }
+});
+
+// Keyboard support for cards
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Enter' && e.key !== ' ') return;
+  const card = e.target.closest?.('[data-app-id]');
+  if (card){
+    e.preventDefault();
+    openDetail(card.dataset.appId);
+  }
+  if (e.key === 'Escape'){
+    document.querySelectorAll('.modal.on').forEach(m => closeModal(m.id));
+  }
+});
+
+/* ───────── MISC UI WIRING ───────── */
+$('themeBtn').addEventListener('click', toggleTheme);
+$('menuBtn').addEventListener('click', () => openModal('menuModal'));
+
+$('searchInput').addEventListener('input', e => {
+  searchQ = clampStr(e.target.value, 60);
+  renderAll();
+});
+$('sortSel').addEventListener('change', e => {
+  currentSort = e.target.value;
+  renderAll();
+});
+
+document.querySelectorAll('.chip[data-cat]').forEach(c => {
+  c.addEventListener('click', () => {
+    document.querySelectorAll('.chip[data-cat]').forEach(x => x.classList.remove('on'));
+    c.classList.add('on');
+    currentCat = c.dataset.cat;
+    $('appsTitle').textContent = currentCat === 'all' ? 'All Apps' : currentCat;
+    renderAll();
+  });
+});
+
+document.querySelectorAll('.adminTab').forEach(t => {
+  t.addEventListener('click', () => {
+    document.querySelectorAll('.adminTab').forEach(x => x.classList.remove('on'));
+    t.classList.add('on');
+    document.querySelectorAll('.adminPane').forEach(p => p.classList.remove('on'));
+    document.querySelector(`[data-pane="${t.dataset.tab}"]`)?.classList.add('on');
+  });
+});
+
+$('admSearch')?.addEventListener('input', renderAdminList);
+
+let scrollTick = false;
+window.addEventListener('scroll', () => {
+  if (scrollTick) return;
+  scrollTick = true;
+  requestAnimationFrame(() => {
+    $('topFab').classList.toggle('hide', window.scrollY < 400);
+    scrollTick = false;
+  });
+}, { passive: true });
+
+$('yr').textContent = new Date().getFullYear();
+
+/* ───────── AUTH STATE ───────── */
+if (auth){
+  onAuthStateChanged(auth, user => {
+    const allowed = isAllowedAdmin(user);
+    isAdmin = allowed;
+
+    if (user && !allowed){
+      // Signed in but not on allowlist → force logout
+      toast('This account is not authorized as admin', 'err', 4000);
+      signOut(auth).catch(() => {});
+      return;
+    }
+
+    if (allowed){
+      closeModal('loginModal');
+      openModal('adminModal');
+      loadAdminData();
+    } else {
+      closeModal('adminModal');
+    }
+  });
+}
+
+/* ───────── BOOT ───────── */
+loadApps();
+
+// Deep-link support: #app=<id>
+if (location.hash.startsWith('#app=')){
+  const id = decodeURIComponent(location.hash.slice(5));
+  setTimeout(() => { if (APPS.find(a => a.id === id)) openDetail(id); }, 1200);
+}
 </script>
 </body>
-</html>
+  </html>
